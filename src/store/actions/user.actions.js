@@ -32,6 +32,7 @@ export function login(email, password) {
   return (dispatch) => {
     dispatch(request({ email }));
     const { LOGIN_URL } = urlConstants;
+
     const requestOptions = {
       method: 'POST',
       credentials: 'include',
