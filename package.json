@@ -28,6 +28,7 @@
   "eslintConfig": {
     "extends": "react-app"
   },
+  "proxy": "https://doublej.herokuapp.com/",
   "browserslist": {
     "production": [
       ">0.2%",
