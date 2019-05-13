@@ -6,9 +6,11 @@ import { logout } from '../store/actions/user.actions';
 import { goToUrl } from '../store/actions/router.actions';
 import { fetchSearchResults } from '../store/actions/data.actions';
 import { urlConstants } from '../constants/url.constants'
-// import logo from '../img/logo.svg';
-import '../css/App.css';
 import Header from './pure/Header.jsx';
+import Form from './Form.jsx';
+import '../css/Home.css'
+
+const backgroundImage = require('../img/room.jpeg')
 
 class Home extends Component {
   state = {
@@ -18,10 +20,7 @@ class Home extends Component {
     searchTerm: ''
   };
 
-  componentDidMount() {
-    const { dispatch } = this.props;
-    // dispatch(get('/salles/1'));
-  }
+  componentDidMount() {}
 
   handleSubmit = e => {
     e.preventDefault();
@@ -51,8 +50,9 @@ class Home extends Component {
     const { user, item, history } = this.props;
     const { searchTerm } = this.state;
     return (
-      <div className="App">
-        <Header logout={this.logout} searchTerm={searchTerm} handleSearchBarChange={this.handleSearchBarChange} handleSearchBarKeyUp={this.handleSearchBarKeyUp} goToUrl={goToUrl} history={history} user={user}></Header>
+      <div className='home-container'>
+        <Header logout={this.logout} searchTerm={searchTerm} goToUrl={goToUrl} history={history} user={user}></Header>
+        <Form></Form>
       </div>
     );
   }

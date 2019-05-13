@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import LoginPage from './Login.jsx';
-import { checkSession, logout, updateUser } from '../../store/actions/user.actions';
+import { checkSession, logout, updateUser } from '../store/actions/user.actions';
 
 class MyAccount extends Component {
   constructor(props) {

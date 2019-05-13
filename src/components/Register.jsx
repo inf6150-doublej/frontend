@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Image from 'react-image-resizer';
-import { userActions } from '../../store/actions/user.actions';
+import { userActions } from '../store/actions/user.actions';
 
-const logo = require('../../img/logo.svg');
+const logo = require('../img/logo.svg');
 
 class RegisterPage extends Component {
   constructor(props) {
@@ -12,9 +12,9 @@ class RegisterPage extends Component {
 
     this.state = {
       user: {
-        first_name: '',
+        name: '',
         last_name: '',
-        gender: '',
+        address: '',
         phone: '',
         email: '',
         username: '',
@@ -42,19 +42,19 @@ class RegisterPage extends Component {
     event.preventDefault();
     this.setState({ submitted: true });
     const { user } = this.state;
-    const { dispatch } = this.props;
+    const { dispatch, history } = this.props;
     const { register } = userActions;
-    if (user.first_name && user.last_name && user.username && user.password && user.gender && user.phone && user.email) {
-      dispatch(register(user));
+    if (user.name && user.last_name && user.username && user.password && user.address && user.phone && user.email) {
+      dispatch(register(user, history));
     }
   }
 
   render() {
     const { registering } = this.props;
     const { user, submitted } = this.state;
-    const { first_name, last_name, gender, phone, username, password, email } = user;
+    const { name, last_name, address, phone, username, password, email } = user;
     let formClassName = 'form-group';
-    if (submitted && !(first_name || last_name || gender || phone || username || password || email)) {
+    if (submitted && !(name || last_name || address || phone || username || password || email)) {
       formClassName = 'form-group has-error';
     }
     return (
@@ -66,9 +66,9 @@ class RegisterPage extends Component {
           <h2>Register</h2>
 
           <div className={formClassName}>
-            <label htmlFor='first_name'>First Name</label>
-            <input type='text' className='form-control' name='first_name' value={user.first_name} onChange={this.handleChange} />
-            {submitted && !user.first_name && <div className='help-block'>First Name is required</div>}
+            <label htmlFor='name'>First Name</label>
+            <input type='text' className='form-control' name='name' value={user.name} onChange={this.handleChange} />
+            {submitted && !user.name && <div className='help-block'>First Name is required</div>}
           </div>
           <div className={formClassName}>
             <label htmlFor='last_name'>Last Name</label>
@@ -76,9 +76,9 @@ class RegisterPage extends Component {
             {submitted && !user.last_name && <div className='help-block'>Last Name is required</div>}
           </div>
           <div className={formClassName}>
-            <label htmlFor='gender'>Gender</label>
-            <input type='text' className='form-control' name='gender' value={user.gender} onChange={this.handleChange} />
-            {submitted && !user.gender && <div className='help-block'>Gender is required</div>}
+            <label htmlFor='address'>Address</label>
+            <input type='text' className='form-control' name='address' value={user.address} onChange={this.handleChange} />
+            {submitted && !user.address && <div className='help-block'>Address is required</div>}
           </div>
           <div className={formClassName}>
             <label htmlFor='phone'>Phone Number</label>

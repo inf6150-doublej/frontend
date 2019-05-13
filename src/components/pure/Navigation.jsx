@@ -1,14 +1,15 @@
 import React from 'react';
+import '../../css/Navigation.css'
 
 const Navigation = () => {
   return (
-    <div id="navigation" className="navigation">
+    <div className="navigation-container">
       <nav>
         <ul>
-          <li>Browse</li>
-          <li>My list</li>
-          <li>Top picks</li>
-          <li>Recent</li>
+          <li>Be hote</li>
+          <li>Help</li>
+          <li>Register</li>
+          <li>Login</li>
         </ul>
       </nav>
     </div>

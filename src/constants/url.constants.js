@@ -6,6 +6,6 @@ export const urlConstants = {
   LOGIN_URL: '/login',
   SEARCH_URL: '/search',
   USER_URL: '/user',
-  SALLE_URL: '/salles',
+  ROOM_URL: '/rooms',
 };
 

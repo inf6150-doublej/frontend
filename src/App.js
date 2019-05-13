@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, withRouter } from 'react-router-dom';
-import Login from './components/pure/Login.jsx';
-import MyAccount from './components/pure/MyAccount.jsx';
+import Login from './components/Login.jsx';
+import MyAccount from './components/MyAccount.jsx';
 import Home from './components/Home.jsx';
-import Register from './components/pure/Register.jsx';
+import Register from './components/Register.jsx';
+import './css/normalize.css'
 
 class App extends Component {
   constructor() {

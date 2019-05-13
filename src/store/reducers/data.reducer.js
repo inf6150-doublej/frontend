@@ -27,7 +27,7 @@ export function fetchSearchResults(state = initialState, action) {
 }
 
 
-export function fetchSalle(state = initialState, action) {
+export function fetchRoom(state = initialState, action) {
   const { FETCH_SUCCESS_PRODUCT, FETCH_FAILURE_PRODUCT, FETCH_REQUEST_PRODUCT } = dataConstants;
   switch (action.type) {
     case FETCH_REQUEST_PRODUCT:

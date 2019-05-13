@@ -1,13 +1,16 @@
 import React from 'react';
 import Image from 'react-image-resizer';
 
+const logo = require('../../img/logo.svg');
+
+
 const Logo = (props) => {
-  const { logo, viewHome } = props;
+  const { viewHome } = props;
   return (
-    <div id="logo" className="logo" onClick={() => viewHome('/')}>
+    <div id="logo" onClick={() => viewHome('/')}>
       <Image
         src={logo}
-        alt="apples in the bowl"
+        alt="react logo"
         width={230}
         height={50}
       />

@@ -24,19 +24,19 @@ export function checkSession() {
   };
 }
 
-export function login(username, password) {
+export function login(email, password) {
   function request(user) { return { type: userConstants.LOGIN_REQUEST, user }; }
   function success(user) { return { type: userConstants.LOGIN_SUCCESS, user }; }
   function failure(err) { return { type: userConstants.LOGIN_FAILURE, err }; }
 
   return (dispatch) => {
-    dispatch(request({ username }));
+    dispatch(request({ email }));
     const { LOGIN_URL } = urlConstants;
     const requestOptions = {
       method: 'POST',
       credentials: 'include',
       headers: { 'Content-Type': 'application/json'},
-      body: JSON.stringify({ username, password }),
+      body: JSON.stringify({ email, password }),
     };
   
     fetch(LOGIN_URL, requestOptions)
@@ -54,7 +54,7 @@ export function logout() {
   return { type: userConstants.LOGOUT };
 }
 
-function register(user) {
+function register(user, history) {
   function request(user) { return { type: userConstants.REGISTER_REQUEST, user }; }
   function success(user) { return { type: userConstants.REGISTER_SUCCESS, user }; }
   function failure(err) { return { type: userConstants.REGISTER_FAILURE, err }; }
@@ -68,7 +68,10 @@ function register(user) {
     };
     fetch(urlConstants.REGISTER_URL, requestOptions)
       .then(handleResponse)
-      .then((user)=>dispatch(success(user)))
+      .then((user)=> {
+        dispatch(success(user));
+        history.push('/');
+      })
       .catch((err)=>dispatch(failure(err)))
   };
 }

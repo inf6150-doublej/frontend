@@ -1,0 +1,18 @@
+.user-profile-container{
+    /* display:flex;
+    justify-content: right; */
+}
+
+.user-profile-wrapper{
+    display:flex;
+    width: 100%;
+    justify-content: space-evenly;
+}
+
+.user-profile{
+    padding: 0 10px 0 10px;
+}
+
+.user-profile:hover{
+    border-bottom: 3px solid #aaa;
+}

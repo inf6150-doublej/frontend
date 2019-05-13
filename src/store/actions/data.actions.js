@@ -11,7 +11,7 @@ function handleResponse(response) {
 }
 
 
-export function fetchSalle(id) {
+export function fetchRoom(id) {
   const { PRODUCT_URL } = urlConstants;
   const { FETCH_SUCCESS_PRODUCT, FETCH_FAILURE_PRODUCT, FETCH_REQUEST_PRODUCT } = dataConstants;
   function request() { return { type: FETCH_REQUEST_PRODUCT }; }
@@ -44,16 +44,16 @@ export function fetchSearchResults(endpoint) {
 }
 
 
-export function viewSalle(salle, history) {
+export function viewRoom(room, history) {
   function success(_item) { return { type: dataConstants.VIEW_HERO_ITEM, _item }; }
   return (dispatch) => {
-    dispatch(success(salle));
-    history.push(`/salles/${salle.id}`);
+    dispatch(success(room));
+    history.push(`/rooms/${room.id}`);
   };
 }
 
 export const dataActions = {
   fetchSearchResults,
-  viewSalle,
-  fetchSalle,
+  viewRoom,
+  fetchRoom,
 };
