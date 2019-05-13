@@ -1,33 +1,26 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Route, withRouter } from 'react-router-dom';
-import Login from './components/Login.jsx';
-import MyAccount from './components/MyAccount.jsx';
-import Home from './components/Home.jsx';
-import Register from './components/Register.jsx';
-import './css/normalize.css'
+import React from 'react';
+import logo from './logo.svg';
+import './App.css';
 
-class App extends Component {
-  constructor() {
-    super();
-  }
-  componentDidMount() {}
-
-  render() {
-    return (
-        <div>
-          <Route exact path='/' component={Home} />
-          <Route path='/login' component={Login} />
-          <Route path='/register' component={Register} />
-          <Route path='/myaccount' component={MyAccount} />
-        </div>
-    );
-  }
+function App() {
+  return (
+    <div className="App">
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <p>
+          Edit <code>src/App.js</code> and save to reload.
+        </p>
+        <a
+          className="App-link"
+          href="https://reactjs.org"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Learn React
+        </a>
+      </header>
+    </div>
+  );
 }
 
-function mapStateToProps() {
-  return {
-  };
-}
-
-export default withRouter(connect(mapStateToProps)(App));
+export default App;
