@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { logout } from '../store/actions/user.actions';
+import { logout, checkSession } from '../store/actions/user.actions';
 import { goToUrl } from '../store/actions/router.actions';
 import { fetchSearchResults } from '../store/actions/data.actions';
 import { urlConstants } from '../constants/url.constants'
@@ -10,7 +10,6 @@ import Header from './pure/Header.jsx';
 import Form from './Form.jsx';
 import '../css/Home.css'
 
-const backgroundImage = require('../img/room.jpeg')
 
 class Home extends Component {
   state = {
@@ -20,7 +19,10 @@ class Home extends Component {
     searchTerm: ''
   };
 
-  componentDidMount() {}
+  componentDidMount() {
+    const {dispatch, user} = this.props;
+    if(!user)dispatch(checkSession());
+  }
 
   handleSubmit = e => {
     e.preventDefault();
