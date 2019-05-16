@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Route, withRouter } from 'react-router-dom';
+import { Route, withRouter, Switch } from 'react-router-dom';
 import Login from './components/Login.jsx';
-import MyAccount from './components/MyAccount.jsx';
+import Admin from './components/Admin.jsx';
 import Home from './components/Home.jsx';
 import Register from './components/Register.jsx';
 import './css/normalize.css'
@@ -15,12 +15,13 @@ class App extends Component {
 
   render() {
     return (
-        <div>
+        <Switch>
           <Route exact path='/' component={Home} />
           <Route path='/login' component={Login} />
           <Route path='/register' component={Register} />
-          <Route path='/myaccount' component={MyAccount} />
-        </div>
+          <Route path='/admin' component={Admin} />
+          <Route path="*" component={Home}/>
+        </Switch>
     );
   }
 }
