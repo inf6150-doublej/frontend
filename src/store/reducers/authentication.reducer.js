@@ -3,11 +3,9 @@ import { userConstants } from '../../constants/user.constants';
 
 const cookies = new Cookies();
 const { LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT, SESSION_FAILURE, SESSION_SUCCESS, SESSION_REQUEST } = userConstants;
+const user = cookies.get('user');
+const initialState = user ? {loggedIn: true, ...user} : {};
 
-// const user = JSON.parse(localStorage.getItem('user'));
-const session = cookies.get('session');
-// const session = { loggedIn: true };
-const initialState = session ? { loggedIn: true } : {};
 
 function authentication(state = initialState, action) {
   switch (action.type) {
@@ -16,8 +14,8 @@ function authentication(state = initialState, action) {
     case SESSION_SUCCESS:
       return {
         ...state,
+        ...action.user,
         loggedIn: true,
-        user: action.user,
       };
     case SESSION_FAILURE:
       return {};
@@ -26,7 +24,7 @@ function authentication(state = initialState, action) {
         loggingIn: true,
       };
     case LOGIN_SUCCESS:
-      return { loggedIn: true, user: action.user };
+      return { loggedIn: true, ...action.user };
     case LOGIN_FAILURE:
       return {};
     case LOGOUT:

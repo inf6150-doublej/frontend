@@ -1,6 +1,6 @@
 import Cookies from 'universal-cookie';
 import { userConstants, urlConstants } from '../../constants';
-
+const cookies = new Cookies();
 const { HOME_URL } = urlConstants;
 
 function handleResponse(response) {
@@ -15,11 +15,20 @@ export function checkSession() {
   function success(user) { return { type: userConstants.SESSION_SUCCESS, user }; }
   function failure(err) { return { type: userConstants.SESSION_FAILURE, err }; }
 
+  const requestOptions = {
+    method: 'POST',
+    credentials: 'include',
+    headers: { 'Content-Type': 'application/json'},
+  };
+
   return (dispatch) => {
     dispatch(request());
-    fetch(HOME_URL, { credentials: 'include' })
+    fetch('/getuser', requestOptions)
       .then(handleResponse)
-      .then((user) => {dispatch(success(user));})
+      .then((user) => {
+        cookies.set('user', user);
+        dispatch(success(user));
+      })
       .catch((err) => {dispatch(failure(err));});
   };
 }
@@ -45,13 +54,15 @@ export function login(email, password) {
       .then((user) => {
                 // TODO add history push myaccount
         dispatch(success(user));
+        checkSession();
       })
       .catch((err) => {dispatch(failure(err));});
   };
 }
 
 export function logout() {
-  Cookies.remove('session');
+  cookies.remove('session');
+  cookies.remove('user');
   return { type: userConstants.LOGOUT };
 }
 
@@ -77,51 +88,11 @@ function register(user, history) {
   };
 }
 
-export function updateUser(user) {
-  const { UPDATE_USER_REQUEST, UPDATE_USER_SUCCESS, UPDATE_USER_FAILURE } = userConstants;
-  const { UPDATE_USER_URL } = urlConstants;
-  const url = `${UPDATE_USER_URL}${user.id}`;
-  const requestOptions = {
-    method: 'UPDATE',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ user }),
-  };
 
-  function request() { return { type: UPDATE_USER_REQUEST }; }
-  function success(_user) { return { type: UPDATE_USER_SUCCESS, _user }; }
-  function failure(err) { return { type: UPDATE_USER_FAILURE, err }; }
-
-  return (dispatch) => {
-    dispatch(request());
-    fetch(url, requestOptions)
-      .then(handleResponse)
-      .then((user) => {dispatch(success(user));})
-      .catch((err) => {dispatch(failure(err));});
-  };
-}
-
-
-export function deleteUser(id) {
-  function request(id) { return { type: userConstants.DELETE_REQUEST, id }; }
-  function success(id) { return { type: userConstants.DELETE_SUCCESS, id }; }
-  function failure(id, err) { return { type: userConstants.DELETE_FAILURE, id, err }; }
-
-  return (dispatch) => {
-    dispatch(request(id));
-
-    const requestOptions = {method: 'DELETE'};
-    fetch(`${'/users/'}${id}`, requestOptions)
-      .then(handleResponse)
-      .then((id)=>{dispatch(success(id))})
-      .catch((err)=>{dispatch(failure(id, err))})
-  }
-}
 
 export const userActions = {
   login,
   logout,
   register,
-  delete: deleteUser,
   checkSession,
-  updateUser,
 };

@@ -58,9 +58,9 @@ class LoginPage extends Component {
           {error && <div className='help-block'>{error}</div>}
           <div
             className={formClassName}>
-            <label htmlFor='email'>Username</label>
+            <label htmlFor='email'>Email</label>
             <input type='text' className='form-control' name='email' value={email} onChange={this.handleChange} />
-            {submitted && !email && <div className='help-block'>Username is required</div>}
+            {submitted && !email && <div className='help-block'>Email is required</div>}
           </div>
 
           <div
