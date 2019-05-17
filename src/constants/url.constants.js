@@ -1,5 +1,9 @@
+import API_ROOT from './api-config';
+
+const { BASE_URL } = API_ROOT;
+
 export const urlConstants = {
-  HOME_URL: '/',
+  HOME_URL: {BASE_URL}+'/',
   MYACCOUNT_URL: '/myaccount',
   API_URL: '/api',
   REGISTER_URL: '/register',
