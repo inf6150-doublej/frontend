@@ -51,10 +51,11 @@ class Home extends Component {
   render() {
     const { user, item, history } = this.props;
     const { searchTerm } = this.state;
-
+    const { REGISTER_URL } = urlConstants;
     return (
       <div className='home-container'>
         <Header logout={this.logout} searchTerm={searchTerm} goToUrl={goToUrl} history={history} user={user}></Header>
+        Test: {REGISTER_URL}
 
         <Form></Form>
       </div>
