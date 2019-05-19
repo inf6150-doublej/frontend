@@ -20,7 +20,7 @@
     "universal-cookie": "^4.0.0"
   },
   "scripts": {
-    "start": "PORT=process.env.PORT react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -29,7 +29,6 @@
     "extends": "react-app"
   },
   "proxy": "http://localhost:5000/",
-  "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build",
   "browserslist": {
     "production": [
       ">0.2%",
