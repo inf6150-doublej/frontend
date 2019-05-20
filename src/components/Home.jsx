@@ -12,36 +12,16 @@ import '../css/Home.css'
 
 
 class Home extends Component {
-  state = {
-    response: '',
-    data: '',
-    responseToPost: '',
-    searchTerm: ''
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+    };
+  }
 
   componentDidMount() {
     const {dispatch, user} = this.props;
     if(!user)dispatch(checkSession());
   }
-
-  handleSubmit = e => {
-    e.preventDefault();
-    const { dispatch } = this.props;
-    // dispatch(post('/login', {username : 'luce', password: 'ju'}));
-  };
-
-  handleSearchBarKeyUp = (e) => {
-    if (e.key === 'Enter' && this.state.searchTerm !== '') {
-      const { searchTerm } = this.state;
-      const { dispatch } = this.props;
-      const { SEARCH_URL } = urlConstants;
-      dispatch(fetchSearchResults(`${SEARCH_URL}${searchTerm}`));
-    }
-  };
-
-  handleSearchBarChange = (e) => {
-    this.setState({ searchTerm: e.target.value });
-  };
 
   logout = () => {
     const { dispatch } = this.props;
@@ -49,14 +29,10 @@ class Home extends Component {
   }
 
   render() {
-    const { user, item, history } = this.props;
-    const { searchTerm } = this.state;
-    const { REGISTER_URL } = urlConstants;
+    const { user, history } = this.props;
     return (
       <div className='home-container'>
-        <Header logout={this.logout} searchTerm={searchTerm} goToUrl={goToUrl} history={history} user={user}></Header>
-        Test: {REGISTER_URL}
-
+        <Header logout={this.logout} goToUrl={goToUrl} history={history} user={user}></Header>
         <Form></Form>
       </div>
     );
