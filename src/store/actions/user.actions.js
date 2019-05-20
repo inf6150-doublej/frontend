@@ -1,5 +1,6 @@
 import Cookies from 'universal-cookie';
 import { userConstants, urlConstants } from '../../constants';
+
 const cookies = new Cookies();
 const { HOME_URL } = urlConstants;
 
@@ -21,9 +22,10 @@ export function checkSession() {
     headers: { 'Content-Type': 'application/json'},
   };
 
+  const {GET_USER}= urlConstants;
   return (dispatch) => {
     dispatch(request());
-    fetch('/getuser', requestOptions)
+    fetch(GET_USER, requestOptions)
       .then(handleResponse)
       .then((user) => {
         cookies.set('user', user);
@@ -33,7 +35,7 @@ export function checkSession() {
   };
 }
 
-export function login(email, password) {
+export function login(email, password, history) {
   function request(user) { return { type: userConstants.LOGIN_REQUEST, user }; }
   function success(user) { return { type: userConstants.LOGIN_SUCCESS, user }; }
   function failure(err) { return { type: userConstants.LOGIN_FAILURE, err }; }
@@ -54,15 +56,25 @@ export function login(email, password) {
       .then((user) => {
                 // TODO add history push myaccount
         dispatch(success(user));
-        checkSession();
+        history.push('/');
       })
       .catch((err) => {dispatch(failure(err));});
   };
 }
 
-export function logout() {
-  cookies.remove('session');
-  cookies.remove('user');
+export function logout(history) {
+  const{LOGOUT_URL} = urlConstants;
+  const requestOptions = {
+    method: 'POST',
+    credentials: 'include',
+    headers: { 'Content-Type': 'application/json'},
+  };
+  fetch(LOGOUT_URL, requestOptions)
+  .then(handleResponse)
+  .then((res)=>console.log(res))
+  .catch(err=>console.log(err))
+  history.push('/');
+  cookies.remove('user', { path: '/' });
   return { type: userConstants.LOGOUT };
 }
 

@@ -104,11 +104,11 @@ export function updateUser(user) {
     function success(users) { return { type: adminConstants.GET_USERS_SUCCESS, users }; }
     function failure(err) { return { type: adminConstants.GET_USERS_FAILURE, err }; }
   
-    const url = 'http//localhost:5000/admin/users';
+    const {ADMIN_USERS} = urlConstants;
     return (dispatch) => {
       dispatch(request());
       const requestOptions = {method: 'POST'};
-      fetch('/admin/users', requestOptions)
+      fetch(ADMIN_USERS, requestOptions)
         .then(handleResponse)
         .then((users)=>{dispatch(success(users))})
         .catch((err)=>{dispatch(failure(err))})
