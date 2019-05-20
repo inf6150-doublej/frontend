@@ -20,7 +20,6 @@ class Form extends Component {
   handleSubmit = e => {
     e.preventDefault();
     const { dispatch } = this.props;
-    // dispatch(post('/login', {username : 'luce', password: 'ju'}));
   };
 
   handleSearchBarKeyUp = (e) => {

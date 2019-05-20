@@ -10,14 +10,15 @@ import '../css/Admin.css'
 
 
 class Admin extends Component {
-  state = {
-  };
 
-  componentDidMount() {}
+  componentDidMount() {
+    const { user, history } = this.props;
+    if(!user || !user.admin)goToUrl(history, '/')
+  }
 
   logout = () => {
-    const { dispatch } = this.props;
-    dispatch(logout());
+    const { dispatch, history } = this.props;
+    dispatch(logout(history));
   }
 
   render() {
