@@ -22,8 +22,8 @@ class Home extends Component {
   }
 
   logout = () => {
-    const { dispatch } = this.props;
-    dispatch(logout());
+    const { dispatch, history } = this.props;
+    dispatch(logout(history));
   }
 
   render() {
