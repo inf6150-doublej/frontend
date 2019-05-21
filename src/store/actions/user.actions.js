@@ -1,7 +1,7 @@
 import Cookies from 'universal-cookie';
 import { userConstants, urlConstants } from '../../constants';
 const cookies = new Cookies();
-const { HOME_URL } = urlConstants;
+
 
 function handleResponse(response) {
   if (!response.ok) {
@@ -21,9 +21,10 @@ export function checkSession() {
     headers: { 'Content-Type': 'application/json'},
   };
 
+  const { GET_USER } = urlConstants
   return (dispatch) => {
     dispatch(request());
-    fetch('/getuser', requestOptions)
+    fetch(GET_USER, requestOptions)
       .then(handleResponse)
       .then((user) => {
         cookies.set('user', user);
@@ -66,7 +67,7 @@ export function logout() {
   return { type: userConstants.LOGOUT };
 }
 
-function register(user, history) {
+export function register(user, history) {
   function request(user) { return { type: userConstants.REGISTER_REQUEST, user }; }
   function success(user) { return { type: userConstants.REGISTER_SUCCESS, user }; }
   function failure(err) { return { type: userConstants.REGISTER_FAILURE, err }; }
@@ -88,11 +89,41 @@ function register(user, history) {
   };
 }
 
+export function reserve(room, user, begin, end, history) {
+  function request(room) { return { type: userConstants.RESERVATION_REQUEST, room }; }
+  function success(confirmation) { return { type: userConstants.RESERVATION_SUCCESS, confirmation }; }
+  function failure(err) { return { type: userConstants.RESERVATION_FAILURE, err }; }
 
+  const data = {
+    room,
+    user,
+    begin,
+    end
+  };
+
+  const requestOptions = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({data}),
+  };
+
+  const { RESERVATION_URL } = urlConstants;
+  return (dispatch) => {
+    dispatch(request(room));
+    fetch(RESERVATION_URL, requestOptions)
+      .then(handleResponse)
+      .then((confirmation) => {
+        dispatch(success(confirmation));
+        history.push('/confirmation');
+      })
+      .catch((err)=>dispatch(failure(err)))
+  };
+}
 
 export const userActions = {
   login,
   logout,
   register,
   checkSession,
+  reserve
 };

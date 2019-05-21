@@ -1,52 +1,47 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
 import MyCalendar from 'react-calendar';
 import TimePickers  from './pure/TimePickers.jsx';
-import { urlConstants } from '../constants/url.constants'
 import '../css/Calendar.css';
 
 class Calendar extends Component {
-  state = {
-    date: new Date(),
-    time_begin: 0,
-    time_end: 0,
-    showCalendar:false
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      showCalendar:false
+    };
+  }
 
   componentDidMount() {}
 
   showCalendar = (e) => {
+    e.preventDefault();
     this.setState({showCalendar:true})
   }
 
   hideCalendar = (date) => {
-    this.setState({ date, showCalendar:false })
-    // this.setState({showCalendar:false})
+    const { onChangeDate } = this.props;
+    this.setState({ showCalendar:false })
+    onChangeDate(date);
   }
 
-  onChangeDate = date => {
-    this.setState({ date })
-  }
 
-  onTimeChange = (e) => {
-    console.log(e);
-  }
 
   render() {
-    const { location, showCalendar, date } = this.state;
+    const { showCalendar} = this.state;
+    const { onTimeChange, date } = this.props;
     return (
       <div className='calendar-container'>
         <div className='calendar-wrapper'>
           <div>
             <h2>when</h2>
             <input id='begin' onFocus={this.showCalendar} placeholder={date}></input>
-            {showCalendar && <MyCalendar onChange={this.onChangeDate} onClickDay={this.hideCalendar} value={this.state.date} />}
+            {showCalendar && <MyCalendar onClickDay={this.hideCalendar} value={date} />}
           </div>
           <div className='time-picker-container'>
-            <TimePickers label="time begin" onChange></TimePickers>
-            <TimePickers label="time end"></TimePickers>
+            <TimePickers name='time-picker-begin' label="time begin" onChange={onTimeChange}></TimePickers>
+            <TimePickers name='time-picker-end' label="time end" onChange={onTimeChange}></TimePickers>
           </div>
         </div>
       </div>
@@ -62,11 +57,8 @@ Calendar.propTypes = {
   username: PropTypes.string,
 };
 
-function mapStateToProps(state) {
-  const { dataSearchResults, isFetchingSearchResults } = state.fetchSearchResults;
+function mapStateToProps() {
   return {
-    dataSearchResults,
-    isFetchingSearchResults,
   };
 }
 
