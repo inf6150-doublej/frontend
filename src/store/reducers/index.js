@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import { authentication } from './authentication.reducer';
 import { registration } from './registration.reducer';
-import { fetchRoom, fetchSearchResults } from './data.reducer';
+import { fetchRoom, fetchAllRooms } from './data.reducer';
 import { administrator } from './admin.reducer';
 
 
@@ -10,7 +10,7 @@ const rootReducer = combineReducers({
   registration,
   administrator,
   fetchRoom,
-  fetchSearchResults
+  fetchAllRooms
 });
 
 export default rootReducer;

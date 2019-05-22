@@ -5,12 +5,10 @@ import Login from './components/Login.jsx';
 import Admin from './components/Admin.jsx';
 import Home from './components/Home.jsx';
 import Register from './components/Register.jsx';
+import SearchEngine from './components/pure/SearchEngine'
 import './css/normalize.css'
 
 class App extends Component {
-  constructor() {
-    super();
-  }
   componentDidMount() {}
 
   render() {
@@ -20,6 +18,7 @@ class App extends Component {
           <Route path='/login' component={Login} />
           <Route path='/register' component={Register} />
           <Route path='/admin' component={Admin} />
+          <Route path='/:capacity?/:begin?/:end?/:equipment?' component={SearchEngine} />
           <Route path="*" component={Home}/>
         </Switch>
     );

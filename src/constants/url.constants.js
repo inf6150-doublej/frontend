@@ -2,7 +2,6 @@ import API_ROOT from './api-config';
 
 export const urlConstants = {
   HOME_URL: API_ROOT+'/',
-  MYACCOUNT_URL: API_ROOT+'/myaccount',
   API_URL: API_ROOT+'/api',
   REGISTER_URL: API_ROOT+'/register',
   LOGIN_URL: API_ROOT+'/login',
@@ -10,7 +9,8 @@ export const urlConstants = {
   SEARCH_URL: API_ROOT+'/search',
   USER_URL: API_ROOT+'/user',
   ROOM_URL: API_ROOT+'/rooms',
-  GET_USER: API_ROOT + '/getuser',
+  RESERVATION_URL: API_ROOT+'/reservation',
+  GET_USER: API_ROOT+'/getuser',
   ADMIN_USERS: API_ROOT + '/admin/users',
 };
 

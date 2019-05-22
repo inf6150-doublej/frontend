@@ -11,34 +11,26 @@ function handleResponse(response) {
 }
 
 
-export function fetchRoom(id) {
-  const { PRODUCT_URL } = urlConstants;
-  const { FETCH_SUCCESS_PRODUCT, FETCH_FAILURE_PRODUCT, FETCH_REQUEST_PRODUCT } = dataConstants;
-  function request() { return { type: FETCH_REQUEST_PRODUCT }; }
-  function success(data) { return { type: FETCH_SUCCESS_PRODUCT, data }; }
-  function failure(error) { return { type: FETCH_FAILURE_PRODUCT, error }; }
-
-  return (dispatch) => {
-    dispatch(request());
-    fetch(`${PRODUCT_URL}${id}`)
-      .then(handleResponse)
-      .then(data => dispatch(success(data)))
-      .catch(err => dispatch(failure, err))
-  };
-}
-
-
-export function fetchSearchResults(endpoint) {
+export function fetchAllRooms(data) {
   const { FETCH_SUCCESS_SEARCH_RESULT, FETCH_FAILURE_SEARCH_RESULT, FETCH_REQUEST_SEARCH_RESULT } = dataConstants;
+  const { SEARCH_URL } = urlConstants;
   function request() { return { type: FETCH_REQUEST_SEARCH_RESULT }; }
   function success(data) { return { type: FETCH_SUCCESS_SEARCH_RESULT, data }; }
   function failure(error) { return { type: FETCH_FAILURE_SEARCH_RESULT, error }; }
 
+  const requestOptions = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({data}),
+  };
+
   return (dispatch) => {
     dispatch(request());
-    fetch(endpoint)
+    fetch(SEARCH_URL, requestOptions )
       .then(handleResponse)
-      .then(data => dispatch(success(data)))
+      .then(data => {
+        dispatch(success(data));
+      })
       .catch(err => dispatch(failure, err))
   };
 }
@@ -53,7 +45,6 @@ export function viewRoom(room, history) {
 }
 
 export const dataActions = {
-  fetchSearchResults,
+  fetchAllRooms,
   viewRoom,
-  fetchRoom,
 };
