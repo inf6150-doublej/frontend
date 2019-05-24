@@ -13,8 +13,7 @@ class LoginPage extends Component {
     this.state = {
       email: '',
       password: '',
-      submitted: false,
-      passwordError: false,
+      submitted: false
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -42,11 +41,12 @@ class LoginPage extends Component {
     const { loggingIn, error } = this.props;
     const { email, password, submitted } = this.state;
     let formClassName = 'form-group';
-    if (submitted || !(email || password)) {
+    if (submitted && (!(email || password) || error)) {
       formClassName = 'form-group has-error';
     }
 
     return (
+      <form className='form-horizontal'>
       <div className='Hero-login'>
         <div className='foto-login'>
           <Image src={logo} alt='logo' width={240} height={240} />
@@ -54,17 +54,17 @@ class LoginPage extends Component {
 
         <div className='col-md-6 col-md-offset-3 '>
           <h2>Login</h2>
-          {error && <div className='help-block'>Wrong password or email</div>}
+          {error && <div className='help-block text-danger'>Wrong password or email</div>}
           <div
             className={formClassName}>
-            <label htmlFor='email'>Email</label>
+            <label htmlFor='email' className='control-label'>Email</label>
             <input type='text' className='form-control' name='email' value={email} onChange={this.handleChange} />
             {submitted && !email && <div className='help-block'>Email is required</div>}
           </div>
 
           <div
             className={formClassName}>
-            <label htmlFor='password'>Password</label>
+            <label htmlFor='password' className='control-label'>Password</label>
             <input type='password' className='form-control' name='password' value={password} onChange={this.handleChange} />
             {submitted && !password && <div className='help-block'>Password is required</div>}
 
@@ -79,6 +79,7 @@ class LoginPage extends Component {
           </div>
         </div>
       </div>
+      </form>
     );
   }
 }

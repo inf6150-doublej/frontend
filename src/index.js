@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import App from './App';
 import rootreducer from './store/reducers';
-
+import 'bootstrap/dist/css/bootstrap.css';
 
 const middleware = [thunk];
 if (process.env.NODE_ENV !== 'production') {
