@@ -40,9 +40,9 @@ class LoginPage extends Component {
 
   render() {
     const { loggingIn, error } = this.props;
-    const { email, password, submitted, passwordError } = this.state;
+    const { email, password, submitted } = this.state;
     let formClassName = 'form-group';
-    if (submitted && !(email || password)) {
+    if (submitted || !(email || password)) {
       formClassName = 'form-group has-error';
     }
 
@@ -54,8 +54,7 @@ class LoginPage extends Component {
 
         <div className='col-md-6 col-md-offset-3 '>
           <h2>Login</h2>
-          {passwordError && <div className='help-block'>Wrong password or email</div>}
-          {error && <div className='help-block'>{error}</div>}
+          {error && <div className='help-block'>Wrong password or email</div>}
           <div
             className={formClassName}>
             <label htmlFor='email'>Email</label>
@@ -85,9 +84,10 @@ class LoginPage extends Component {
 }
 
 function mapStateToProps(state) {
-  const { loggingIn } = state.authentication;
+  const { loggingIn, error } = state.authentication;
   return {
     loggingIn,
+    error
   };
 }
 

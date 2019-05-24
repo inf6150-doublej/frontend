@@ -26,7 +26,7 @@ function authentication(state = initialState, action) {
     case LOGIN_SUCCESS:
       return { loggedIn: true, ...action.user };
     case LOGIN_FAILURE:
-      return {};
+      return { loggedIn: false, error: action.err};
     case LOGOUT:
       return {};
     default:
