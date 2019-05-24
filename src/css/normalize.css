@@ -64,6 +64,7 @@ p{
   border: none;
   color: white;
   padding: 22px;
+  padding-right: 10px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -95,4 +96,12 @@ img {
 #logo {
   text-align: center;
   position: unset;
+}
+
+label {
+  padding-right: 15px
+}
+
+.btn #a {
+  padding-left: 15px;
 }
