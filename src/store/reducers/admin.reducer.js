@@ -24,7 +24,6 @@ export function administrator(state = {}, action) {
         users: state.users.map(user => user.id === action.id ? { ...user, deleted: true } : user),
       };
     case DELETE_USER_SUCCESS:
-      // remove deleted user from state
       return {
         users: state.users.filter(user => user.id !== action.id),
       };
@@ -37,32 +36,36 @@ export function administrator(state = {}, action) {
             // make copy of user without 'deleting:true' property
             const { deleted, ...userCopy } = user;
             // return copy of user with 'deleteError:[error]' property
-            return { ...userCopy, deleteError: action.error };
+            return { ...userCopy, error: action.err };
           }
           return user;
         }),
       };
 
-      case GET_USERS_REQUEST:
-        return {users:[], fetching :true}
-      case GET_USERS_FAILURE:
-        return {users:[], fetching:false};
-      case GET_USERS_SUCCESS:
-        return {...action.users, fetching:false};
+    case GET_USERS_REQUEST:
+      return {users:[], fetching :true}
+    case GET_USERS_FAILURE:
+      return {users:[], fetching:false, error:action.err};
+    case GET_USERS_SUCCESS:
+      return {...action.users, fetching:false};
 
-      case UPDATE_USER_REQUEST:
-        return {users:[], fetching :true}
-      case UPDATE_USER_FAILURE:
-        return {users:[], fetching:false};
-      case UPDATE_USER_SUCCESS:
-        return {...action.users, fetching:false};
-        
-      case CREATE_USER_REQUEST:
-        return {users:[], fetching :true}
-      case CREATE_USER_FAILURE:
-        return {users:[], fetching:false};
-      case CREATE_USER_SUCCESS:
-        return {...action.users, fetching:false};    
+    case UPDATE_USER_REQUEST:
+      return {...state, fetching :true}
+    case UPDATE_USER_FAILURE:
+      return {...state, fetching:false, error:action.err};
+    case UPDATE_USER_SUCCESS:
+      return {
+        ...state, 
+        users: state.users.map(user => user.id === action.user.id ? action.user : user),
+        fetching:false
+      };
+      
+    case CREATE_USER_REQUEST:
+        return {fetching :true}
+    case CREATE_USER_FAILURE:
+      return {fetching:false, error:action.err};
+    case CREATE_USER_SUCCESS:
+      return {users:[{...action.user}], fetching:false};    
     default:
       return state;
   }

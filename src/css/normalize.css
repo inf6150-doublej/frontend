@@ -21,10 +21,7 @@ body {
 }
 
 header {
-  position: fixed;
-  right: 0;
-  left: 0;
-  z-index: 999;
+display: flex;
 }
 
 table, td, th, tr {
@@ -93,15 +90,7 @@ img {
   margin-right: auto;
 }
 
-#logo {
-  text-align: center;
-  position: unset;
-}
 
 label {
   padding-right: 15px
-}
-
-.btn #a {
-  padding-left: 15px;
 }
