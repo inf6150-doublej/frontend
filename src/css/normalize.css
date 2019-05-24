@@ -1,10 +1,13 @@
 html{
-  height: 100%
+  color: gray;
+  background-color: ghostwhite;
+  padding: 25px;
 }
 
 div{
   width: 100%;
   height: 100%;
+  justify-content: center;
 }
 p{
 
@@ -17,8 +20,11 @@ body {
   height: 100%; */
 }
 
-header{
-  display: flex;
+header {
+  position: fixed;
+  right: 0;
+  left: 0;
+  z-index: 999;
 }
 
 table, td, th, tr {
@@ -58,6 +64,7 @@ p{
   border: none;
   color: white;
   padding: 22px;
+  padding-right: 10px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -71,8 +78,8 @@ p{
 
 
 h1{
-  font-family: "Times New Roman", Times, serif;
-  font-style: italic;
+  font-family: Tahoma, Geneva, sans-serif;
+  font-style: normal;
 }
 
 span{
@@ -82,8 +89,19 @@ span{
 }
 
 img {
-  display: block;
   margin-left: auto;
   margin-right: auto;
 }
 
+#logo {
+  text-align: center;
+  position: unset;
+}
+
+label {
+  padding-right: 15px
+}
+
+.btn #a {
+  padding-left: 15px;
+}

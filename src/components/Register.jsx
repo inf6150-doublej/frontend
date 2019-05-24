@@ -66,37 +66,37 @@ class RegisterPage extends Component {
           <h2>Register</h2>
 
           <div className={formClassName}>
-            <label htmlFor='name'>First Name</label>
+            <label htmlFor='name'>First Name </label>
             <input type='text' className='form-control' name='name' value={user.name} onChange={this.handleChange} />
             {submitted && !user.name && <div className='help-block'>First Name is required</div>}
           </div>
           <div className={formClassName}>
-            <label htmlFor='last_name'>Last Name</label>
+            <label htmlFor='last_name'>Last Name </label>
             <input type='text' className='form-control' name='last_name' value={user.last_name} onChange={this.handleChange} />
             {submitted && !user.last_name && <div className='help-block'>Last Name is required</div>}
           </div>
           <div className={formClassName}>
-            <label htmlFor='address'>Address</label>
+            <label htmlFor='address'>Address </label>
             <input type='text' className='form-control' name='address' value={user.address} onChange={this.handleChange} />
             {submitted && !user.address && <div className='help-block'>Address is required</div>}
           </div>
           <div className={formClassName}>
-            <label htmlFor='phone'>Phone Number</label>
+            <label htmlFor='phone'>Phone Number </label>
             <input type='text' className='form-control' name='phone' value={user.phone} onChange={this.handleChange} />
             {submitted && !user.phone && <div className='help-block'>Phone Number is required</div>}
           </div>
           <div className={formClassName}>
-            <label htmlFor='email'>Email</label>
+            <label htmlFor='email'>Email </label>
             <input type='text' className='form-control' name='email' value={user.email} onChange={this.handleChange} />
             {submitted && !user.email && <div className='help-block'>Email is required</div>}
           </div>
           <div className={formClassName}>
-            <label htmlFor='username'>Username</label>
+            <label htmlFor='username'>Username </label>
             <input type='text' className='form-control' name='username' value={user.username} onChange={this.handleChange} />
             {submitted && !user.username && <div className='help-block'>Username is required</div>}
           </div>
           <div className={formClassName}>
-            <label htmlFor='password'>Password</label>
+            <label htmlFor='password'>Password </label>
             <input type='password' className='form-control' name='password' value={user.password} onChange={this.handleChange} />
             {submitted && !user.password && <div className='help-block'>Password is required</div>}
           </div>

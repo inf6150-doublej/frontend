@@ -11,7 +11,6 @@ const Logo = (props) => {
       <Image
         src={logo}
         alt="react logo"
-        width={230}
         height={50}
       />
     </div>

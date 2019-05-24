@@ -8,8 +8,8 @@ const UserProfile = (props) => {
   return (
     <div className='user-profile-container'>
       <div className='user-profile-wrapper'>
-        <div className='user-profile'>Devenez hote</div>
-        <div className='user-profile'>Aide</div>
+        <div className='user-profile'>Host your own rooms</div>
+        <div className='user-profile'>Help</div>
         <Link to='/register' className='user-profile'>Register</Link>
         {user && <div className='user-profile' onClick={logout}>Logout</div>}
         {!user && <Link to="/login" className="user-profile">Login</Link>}
