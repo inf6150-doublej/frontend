@@ -7,11 +7,21 @@ import {
   updateRoom,
   getRooms,
 } from '../store/actions/admin.actions'
+import { template } from '@babel/core';
 class RoomManager extends Component{
   constructor(props) {
     super(props);
     this.state = {
       rooms:{},
+      room: {
+        name: '',
+        type: '',
+        capacity: '',
+        description: '',
+        reservation_id: '',
+        equipment_id: '',
+        id: '',
+      },
       showRoomList: false,
       showUpdateForm: false,
       showCreateForm: false,
@@ -25,13 +35,12 @@ class RoomManager extends Component{
     const onDelete = (id) => {
       const confirmation = window.confirm('Confirm delete');
       if(confirmation){
-        dispatch(deleteRoom(id));
-        this.handleRoomList() 
+        dispatch(deleteRoom(id));        
       }
     };
 
     const onUpdate = (room) => {
-      this.setState({room:room, showUpdateForm:true, showRoomList:false})
+      this.setState({room:room, showUpdateForm:true, showRoomList:false})     
     };
 
     let roomMap = []
@@ -41,10 +50,17 @@ class RoomManager extends Component{
     return (<div>{roomMap}</div>)
   }
 
+  cancel = () =>{this.setState({ showRoomList: false, showCreateForm:false, showUpdateForm:false, showDeleteForm:false })}
+
+
   handleRoomList = () => {
     const { dispatch } = this.props;
     dispatch(getRooms());
-    this.setState({ showRoomList: true, showUpdateForm:false, showCreateForm:false, showDeleteForm:false })
+    this.setState({ showRoomList: true, showUpdateForm:false, showCreateForm:false})
+  };
+
+  handleCreateForm = () =>{
+    this.setState({ showRoomList: false, showUpdateForm:false, showCreateForm:true})
   };
 
   createForm = () => {
@@ -55,37 +71,77 @@ class RoomManager extends Component{
         <div>
           <div >
             <label htmlFor='name'>Name</label>
-            <input type='text' className='form-control' name='name' />
+            <input type='text' className='form-control' name='name'  ref='name' />
           </div>
           <div >
-            <label htmlFor='Type'>Type</label>
-            <input type='text' className='form-control' name='Type'/>
+            <label htmlFor='type'>Type</label>
+            <input type='text' className='form-control' name='type'  ref='type'/>
           </div>          
           <div >
             <label htmlFor='capacity'>Capacity</label>
-            <input type='text' className='form-control' name='capacity' />
+            <input type='text' className='form-control' name='capacity'  ref='capacity' />
           </div>
           <div >
-            <label htmlFor='Description'>Description</label>
-            <input type='text' className='form-control' name='Description'/>
+            <label htmlFor='description'>Description</label>
+            <input type='text' className='form-control' name='description'  ref='description'/>
           </div>          
         </div>
-        <div><button onClick={() => dispatch(createRoom(room))}>create</button></div>
+        <div><button onClick={() => {
+          room.name = this.refs.name.value;
+          room.description = this.refs.description.value;
+          room.type = this.refs.type.value;
+          room.capacity = this.refs.capacity.value;
+          dispatch(createRoom(room))}}>create</button></div>
         <div><button onClick={()=>this.cancel()}>cancel</button></div>
       </div>
       )
   }
 
+  updateForm = () => {
+    const {room} = this.state;
+    const {dispatch} = this.props;
+    return (
+      <div>
+        <div>
+        <div>
+          <div >
+            <label htmlFor='name'>Name</label>
+            <input type='text' className='form-control' name='name' value={room.name} />
+          </div>
+          <div >
+            <label htmlFor='type'>Type</label>
+            <input type='text' className='form-control' name='type'  ref='type' defaultValue ={this.state.room.type}/>
+          </div>          
+          <div >
+            <label htmlFor='capacity'>Capacity</label>
+            <input type='text' className='form-control' name='capacity'  ref='capacity' defaultValue ={room.capacity}/>
+          </div>
+          <div >
+            <label htmlFor='description'>Description</label>
+            <input type='text' className='form-control' name='description'  ref='description' defaultValue ={room.description}/>
+          </div>          
+        </div>
+        </div>
+        <div><button onClick={() => {
+          room.description = this.refs.description.value;
+          room.type = this.refs.type.value;
+          room.capacity = this.refs.capacity.value;
+           dispatch(updateRoom(room))}}>update</button></div>
+           
+        <div><button onClick={this.cancel}>cancel</button></div>
+      </div>
+      )
+  }
+
   render() {
-    const { showRoomList, showUpdateForm, showCreateForm, showDeleteForm } = this.state;
+    const { showRoomList, showUpdateForm, showCreateForm} = this.state;
     return (
       <div>
         <button name='create' onClick={this.handleCreateForm}>create room</button>        
         <button name='read' onClick={this.handleRoomList}>list rooms </button>
         {showRoomList && this.roomList()}
         {showUpdateForm && this.updateForm()}
-        {showCreateForm && this.createForm()}
-        {showDeleteForm && this.deleteForm()}
+        {showCreateForm && this.createForm()}       
       </div>
     )
 }

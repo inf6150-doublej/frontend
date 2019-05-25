@@ -17,7 +17,10 @@ const {
     GET_ROOMS_FAILURE,
     CREATE_ROOMS_REQUEST,
     CREATE_ROOMS_SUCCESS,
-    CREATE_ROOMS_FAILURE
+    CREATE_ROOMS_FAILURE,
+    UPDATE_ROOMS_REQUEST,
+    UPDATE_ROOMS_SUCCESS,
+    UPDATE_ROOMS_FAILURE
 } = adminConstants;
 
 
@@ -62,6 +65,17 @@ export function administrator(state = {}, action) {
         return {rooms:[], fetching:false};
       case CREATE_ROOMS_SUCCESS:
         return {...action.rooms, fetching:false};
+
+      case UPDATE_ROOMS_REQUEST:
+        return {
+          ...state.room
+        };
+      case UPDATE_ROOMS_FAILURE:
+        
+      case UPDATE_ROOMS_SUCCESS:
+        return {
+          rooms: state.rooms.filter(room => room.id !== action.id),
+        };
         
         
       case GET_USERS_REQUEST:

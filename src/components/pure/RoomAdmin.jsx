@@ -16,7 +16,7 @@ const Room = (props) => {
           <li>{room.equipment_id}</li>
         </ul>
         <div><button onClick={() => onDelete(room.id)} value={room}>Delete</button></div>
-        <div><button onClick={() => onUpdate(room.id)} value={room}>Update</button></div>
+        <div><button onClick={() => onUpdate(room)} value={room}>Update</button></div>
     </div>
   );
 };
