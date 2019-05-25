@@ -148,27 +148,27 @@ export function updateUser(user) {
   
     return (dispatch) => {
       dispatch(request(id));
-  
+      const {ROOM_URL} = urlConstants;
       const requestOptions = {method: 'DELETE'};
-      fetch(`${'/users/'}${id}`, requestOptions)
+      fetch(`${ROOM_URL}/${id}`, requestOptions)
         .then(handleResponse)
         .then((id)=>{dispatch(success(id))})
         .catch((err)=>{dispatch(failure(id, err))})
     }
   }
 
-  export function createRoom(user) {
+  export function createRoom(room) {
     function request() { return { type: adminConstants.CREATE_ROOM_REQUEST}; }
     function success(user) { return { type: adminConstants.CREATE_ROOM_SUCCESS, user }; }
     function failure(err) { return { type: adminConstants.CREATE_ROOM_FAILURE, err }; }
   
     return (dispatch) => {
       dispatch(request());
-  
+      const {ROOM_URL} = urlConstants;
       const requestOptions = {method: 'POST'};
-      fetch(`${'/users/'}${user}`, requestOptions)
+      fetch(ROOM_URL, requestOptions)
         .then(handleResponse)
-        .then((user)=>{dispatch(success(user))})
+        .then((room)=>{dispatch(success(room))})
         .catch((err)=>{dispatch(failure(err))})
     }
   }

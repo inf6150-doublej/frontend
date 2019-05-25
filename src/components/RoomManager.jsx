@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Room from './pure/Room'
+import Room from './pure/RoomAdmin'
 import {
   deleteRoom,
   createRoom,
@@ -26,6 +26,7 @@ class RoomManager extends Component{
       const confirmation = window.confirm('Confirm delete');
       if(confirmation){
         dispatch(deleteRoom(id));
+        this.handleRoomList() 
       }
     };
 
@@ -35,7 +36,7 @@ class RoomManager extends Component{
 
     let roomMap = []
     if (rooms && rooms.length) {
-      roomMap = rooms.map((room, i) => <Room key={i} room={room} onReservation={onDelete} />);
+      roomMap = rooms.map((room, i) => <Room key={i} room={room} onDelete={onDelete} onUpdate={onUpdate} />);
     }
     return (<div>{roomMap}</div>)
   }
@@ -46,12 +47,40 @@ class RoomManager extends Component{
     this.setState({ showRoomList: true, showUpdateForm:false, showCreateForm:false, showDeleteForm:false })
   };
 
+  createForm = () => {
+    const {room} = this.state;
+    const {dispatch} = this.props;
+    return (
+      <div>
+        <div>
+          <div >
+            <label htmlFor='name'>Name</label>
+            <input type='text' className='form-control' name='name' />
+          </div>
+          <div >
+            <label htmlFor='Type'>Type</label>
+            <input type='text' className='form-control' name='Type'/>
+          </div>          
+          <div >
+            <label htmlFor='capacity'>Capacity</label>
+            <input type='text' className='form-control' name='capacity' />
+          </div>
+          <div >
+            <label htmlFor='Description'>Description</label>
+            <input type='text' className='form-control' name='Description'/>
+          </div>          
+        </div>
+        <div><button onClick={() => dispatch(createRoom(room))}>create</button></div>
+        <div><button onClick={()=>this.cancel()}>cancel</button></div>
+      </div>
+      )
+  }
+
   render() {
     const { showRoomList, showUpdateForm, showCreateForm, showDeleteForm } = this.state;
     return (
       <div>
-        <button name='create' onClick={this.handleCreateForm}>create room</button>
-        <button name='delete' onClick={this.handleDeleteForm}>delete room</button>
+        <button name='create' onClick={this.handleCreateForm}>create room</button>        
         <button name='read' onClick={this.handleRoomList}>list rooms </button>
         {showRoomList && this.roomList()}
         {showUpdateForm && this.updateForm()}
