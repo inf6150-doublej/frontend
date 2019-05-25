@@ -3,7 +3,7 @@ import '../../css/User.css'
 
 
 const User = (props) => {
-    const {user, onDelete, onUpdate} = props
+    const {user, onDelete, onUpdate} = props;
 
   return (
     <div className="user-container">
@@ -13,7 +13,7 @@ const User = (props) => {
           <li>{user.email}</li>
           <li>{user.family_name}</li>
           <button onClick={()=>onUpdate(user)}>update</button>
-          <button onClick={()=>onDelete(user.email)}>delete</button>
+          <button onClick={()=>onDelete(user.id)}>delete</button>
         </ul>
     </div>
   );
