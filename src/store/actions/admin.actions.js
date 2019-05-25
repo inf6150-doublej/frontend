@@ -107,7 +107,7 @@ export function updateUser(user) {
     const {ADMIN_USERS} = urlConstants;
     return (dispatch) => {
       dispatch(request());
-      const requestOptions = {method: 'POST'};
+      const requestOptions = {method: 'GET'};
       fetch(ADMIN_USERS, requestOptions)
         .then(handleResponse)
         .then((users)=>{dispatch(success(users))})
@@ -178,11 +178,11 @@ export function updateUser(user) {
     function success(rooms) { return { type: adminConstants.GET_ROOMS_SUCCESS, rooms }; }
     function failure(err) { return { type: adminConstants.GET_ROOMS_FAILURE, err }; }
   
-    
+    const {ROOM_URL} = urlConstants;
     return (dispatch) => {
       dispatch(request());
-      const requestOptions = {method: 'POST'};
-      fetch('/admin/rooms', requestOptions)
+      const requestOptions = {method: 'GET'};
+      fetch(ROOM_URL, requestOptions)
         .then(handleResponse)
         .then((rooms)=>{dispatch(success(rooms))})
         .catch((err)=>{dispatch(failure(err))})

@@ -24,10 +24,13 @@ class Admin extends Component {
   render() {
     const { user, history } = this.props;
     return (
-      <div className='home-container'>
-        <Header logout={this.logout} goToUrl={goToUrl} history={history} user={user}></Header>
-        <Manager></Manager>
-      </div>
+      
+        
+        <div className='home-container'>
+          
+          <Manager></Manager>
+        </div>
+      
     );
   }
 }

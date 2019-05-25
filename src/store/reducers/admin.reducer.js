@@ -11,7 +11,10 @@ const {
     DELETE_USER_SUCCESS, 
     CREATE_USER_FAILURE, 
     CREATE_USER_REQUEST, 
-    CREATE_USER_SUCCESS
+    CREATE_USER_SUCCESS,
+    GET_ROOMS_REQUEST,
+    GET_ROOMS_SUCCESS,
+    GET_ROOMS_FAILURE,
 } = adminConstants;
 
 
@@ -43,11 +46,18 @@ export function administrator(state = {}, action) {
         }),
       };
 
+      case GET_ROOMS_REQUEST:
+        return {rooms:[], fetching :true}
+      case GET_ROOMS_FAILURE:
+        return {rooms:[], fetching:false};
+      case GET_ROOMS_SUCCESS:
+        return {...action.rooms, fetching:false};
+
       case GET_USERS_REQUEST:
         return {users:[], fetching :true}
       case GET_USERS_FAILURE:
         return {users:[], fetching:false};
-      case GET_USERS_SUCCESS:
+      case GET_USERS_SUCCESS:      
         return {...action.users, fetching:false};
 
       case UPDATE_USER_REQUEST:
