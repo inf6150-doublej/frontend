@@ -14,7 +14,17 @@ class UserManager extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user:{},
+      user:{
+        name: "",
+        family_name: "",
+        address: "",
+        phone: "",
+        email: "",
+        username: "",
+        password: "",
+        admin: 0
+
+      },
       showUserList: false,
       showUpdateForm: false,
       showCreateForm: false,
@@ -46,6 +56,17 @@ class UserManager extends Component {
 
   createForm = () => {
     const { user } = this.state;
+    /*let user = {
+      name: "",
+      family_name: "",
+      address: "",
+      phone: "",
+      email: "",
+      username: "",
+      password: "",
+      admin: 0
+    };*/
+
     const { dispatch } = this.props;
 
 
@@ -60,50 +81,51 @@ class UserManager extends Component {
       });
     }
 
+    console.log(user);
     const create = async (user) => {
       dispatch(createUser(user));
       this.setState({ showUserList: true, showUpdateForm:false, showCreateForm:false, showDeleteForm:false })
     }
 
     return (
-      <div>
+      <form autoComplete="new-password2">
         <div>
           <div >
             <label htmlFor='name'>First Name</label>
-            <input type='text' className='form-control' name='name' onChange={onChange} />
+            <input type='text' className='form-control' name='name' value={user.name} onChange={onChange} />
           </div>
           <div >
             <label htmlFor='family_name'>Last Name</label>
-            <input type='text' className='form-control' name='family_name' onChange={onChange}/>
+            <input type='text' className='form-control' name='family_name' value={user.family_name} onChange={onChange}/>
           </div>
           <div >
             <label htmlFor='address'>Address</label>
-            <input type='text' className='form-control' name='address' onChange={onChange}/>
+            <input type='text' className='form-control' name='address' value={user.address} onChange={onChange}/>
           </div>
           <div >
             <label htmlFor='phone'>Phone Number</label>
-            <input type='text' className='form-control' name='phone' onChange={onChange}/>
+            <input type='text' className='form-control' name='phone' value={user.phone} onChange={onChange}/>
           </div>
           <div >
             <label htmlFor='email'>Email</label>
-            <input type='text' className='form-control' name='email' onChange={onChange}/>
+            <input type='text' className='form-control' name='email' value={user.email} onChange={onChange}/>
           </div>
           <div >
             <label htmlFor='username'>Username</label>
-            <input type='text' className='form-control' name='username' onChange={onChange}/>
+            <input type='text' className='form-control' name='username' value={user.username} onChange={onChange}/>
           </div>
           <div >
             <label htmlFor='password'>Password</label>
-            <input type='password' className='form-control' name='password' onChange={onChange}/>
+            <input type='password' className='form-control' name='password' value={user.password} onChange={onChange}/>
           </div>
           <div >
             <label htmlFor='admin'>Administrator</label>
-            <input type='text' className='form-control' name='admin' onChange={onChange}/>
+            <input type='text' className='form-control' name='admin' value={user.admin} onChange={onChange}/>
           </div>
         </div>
         <div><button onClick={() => create(user)}>create</button></div>
         <div><button onClick={()=>this.cancel()}>cancel</button></div>
-      </div>
+      </form>
       )
   }
 
@@ -127,8 +149,9 @@ class UserManager extends Component {
       this.setState({showUpdateForm:false, showUserList:true})
     }
 
+    console.log(user);
     return (
-      <div>
+      <form autoComplete="new-password">
         <div>
           <div >
             <label htmlFor='name'>First Name</label>
@@ -140,28 +163,28 @@ class UserManager extends Component {
           </div>
           <div >
             <label htmlFor='address'>Address</label>
-            <input type='text' className='form-control' name='address' onChange={onChange}/>
+            <input type='text' className='form-control' name='address' value={user.address} onChange={onChange}/>
           </div>
           <div >
             <label htmlFor='phone'>Phone Number</label>
-            <input type='text' className='form-control' name='phone' onChange={onChange}/>
+            <input type='text' className='form-control' name='phone' value={user.phone} onChange={onChange}/>
           </div>
           <div >
             <label htmlFor='email'>Email</label>
             <input type='text' className='form-control' name='email' value={user.email} onChange={onChange}/>
           </div>
-          <div >
+          <div>
             <label htmlFor='username'>Username</label>
-            <input type='text' className='form-control' name='username' onChange={onChange}/>
+            <input type='text' className='form-control' name='username' value={user.username} onChange={onChange}/>
           </div>
-          <div >
+          {/*<div >
             <label htmlFor='password'>Password</label>
-            <input type='password' className='form-control' name='password' onChange={onChange}/>
-          </div>
+            <input type='password' className='form-control' name='password' value={user.password} onChange={onChange}/>
+          </div>*/}
         </div>
         <div><button onClick={() => update(user)}>update</button></div>
         <div><button onClick={this.cancel}>cancel</button></div>
-      </div>
+      </form>
       )
   }
 
