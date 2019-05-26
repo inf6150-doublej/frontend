@@ -2,7 +2,7 @@ import React from 'react';
 import '../../css/Room.css'
 
 const Room = (props) => {
-  const { room, onReservation } = props;
+  const { room, onDelete, onUpdate } = props;
   //const [id, name, type, capacity, description, reservation_id, equipment_id] = room;
   return (
     <div className="room-container">
@@ -15,9 +15,11 @@ const Room = (props) => {
           <li>{room.reservation_id}</li>
           <li>{room.equipment_id}</li>
         </ul>
-        <div><button onClick={() => onReservation(room)} value={room}>reserve</button></div>
+        <div><button onClick={() => onDelete(room.id)} value={room}>Delete</button></div>
+        <div><button onClick={() => onUpdate(room)} value={room}>Update</button></div>
     </div>
   );
 };
+
 
 export default Room;
