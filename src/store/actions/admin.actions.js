@@ -196,3 +196,15 @@ export function updateUser(user) {
         .catch((err)=>{dispatch(failure(err))})
     }
   }
+
+  export function deleteReservation() {
+  }
+  
+  export function createReservation() {
+  }
+
+  export function updateReservation() {
+  }
+
+  export function getReservations() {
+  }
