@@ -104,8 +104,9 @@ export function register(user, history) {
 }
 
 export function reserve(room, user, begin, end, history) {
-  function request(room) { return { type: userConstants.RESERVATION_REQUEST, room }; }
-  function success(confirmation) { return { type: userConstants.RESERVATION_SUCCESS, confirmation }; }
+  function request() { return { type: userConstants.RESERVATION_REQUEST }; }
+  function success(confirmation) { 
+    return { type: userConstants.RESERVATION_SUCCESS, confirmation }; }
   function failure(err) { return { type: userConstants.RESERVATION_FAILURE, err }; }
 
   const data = {
@@ -126,8 +127,8 @@ export function reserve(room, user, begin, end, history) {
     dispatch(request(room));
     fetch(RESERVATION_URL, requestOptions)
       .then(handleResponse)
-      .then((confirmation) => {
-        dispatch(success(confirmation));
+      .then(() => {
+        dispatch(success(data));
         history.push('/confirmation');
       })
       .catch((err)=>dispatch(failure(err)))

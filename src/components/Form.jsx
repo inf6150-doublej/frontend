@@ -55,14 +55,12 @@ class Form extends Component {
 
   render() {
     const { date } = this.state;
-    const { REGISTER_URL } = urlConstants;
 
     return (
       <div className='form-container'>
         <div className='form-wrapper'>
             <div><h1>make a reservation</h1></div>
             <div><h2>where</h2><input className='form-location' placeholder='everywhere' onChange={this.onLocationChange}></input></div>
-            Test: {REGISTER_URL}
             <Calendar onChangeDate={this.onChangeDate} onTimeChange={this.onTimeChange} date={date}/>
             <div>
               <h2>max capacity</h2>
