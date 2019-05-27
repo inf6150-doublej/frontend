@@ -9,11 +9,11 @@ const {
 export function reservation(state = {}, action) {
   switch (action.type) {
       case RESERVATION_REQUEST:
-        return {room:{}, fetching :true, success: false }
+        return {fetching :true }
       case RESERVATION_FAILURE:
-        return {room:{...action.data.room}, fetching:false, success: true};
+        return {fetching:false, error: action.err };
       case RESERVATION_SUCCESS:
-        return {room:{}, fetching:false, success: false}; 
+        return {confirmation:{...action.confirmation}, fetching:false}; 
     default:
       return state;
   }

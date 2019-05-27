@@ -12,8 +12,8 @@ const User = (props) => {
           <li>{user.name}</li>
           <li>{user.email}</li>
           <li>{user.family_name}</li>
-          <button onClick={()=>onUpdate(user)}>update</button>
-          <button onClick={()=>onDelete(user.id)}>delete</button>
+          {onDelete && <button onClick={()=>onUpdate(user)}>update</button>}
+          {onUpdate && <button onClick={()=>onDelete(user.id)}>delete</button>}
         </ul>
     </div>
   );
