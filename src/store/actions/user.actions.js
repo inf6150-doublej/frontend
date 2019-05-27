@@ -70,6 +70,7 @@ export function logout(history) {
     credentials: 'include',
     headers: { 'Content-Type': 'application/json'},
   };
+
   fetch(LOGOUT_URL, requestOptions)
   .then(handleResponse)
   .then((res)=>console.log(res))
@@ -83,18 +84,19 @@ export function register(user, history) {
   function request(user) { return { type: userConstants.REGISTER_REQUEST, user }; }
   function success(user) { return { type: userConstants.REGISTER_SUCCESS, user }; }
   function failure(err) { return { type: userConstants.REGISTER_FAILURE, err }; }
-
+  
+  const requestOptions = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+    body: JSON.stringify({user}),
+  };
   return (dispatch) => {
     dispatch(request(user));
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(user),
-    };
     fetch(urlConstants.REGISTER_URL, requestOptions)
       .then(handleResponse)
-      .then((user)=> {
-        dispatch(success(user));
+      .then((res)=> {
+        dispatch(success(res.user));
         history.push('/');
       })
       .catch((err)=>dispatch(failure(err)))

@@ -117,7 +117,6 @@ export function updateUser(user) {
     return (dispatch) => {
       dispatch(request());
 
-      const requestOptions = {method: 'GET'};
 
       fetch(ADMIN_USERS, requestOptions)
         .then(handleResponse)
@@ -136,16 +135,15 @@ export function updateUser(user) {
     function success(room) { return { type: adminConstants.UPDATE_ROOM_SUCCESS, room }; }
     function failure(err) { return { type: adminConstants.UPDATE_ROOM_FAILURE, err }; }
 
+    const {ROOM_URL} = urlConstants;
+    const requestOptions = {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ room }),
+    };
   
     return (dispatch) => {
-      
       dispatch(request(room));
-      const {ROOM_URL} = urlConstants;
-      const requestOptions = {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ room }),
-      };
       fetch(`${ROOM_URL}/${room.id}`, requestOptions)
         .then(handleResponse)
         .then((room) => {dispatch(success(room));})
@@ -160,12 +158,10 @@ export function updateUser(user) {
     function failure(id, err) { return { type: adminConstants.DELETE_ROOM_FAILURE, id, err }; }
   
     const requestOptions = {method: 'DELETE'};
+    const {ROOM_URL} = urlConstants;
     
     return (dispatch) => {
       dispatch(request(id));
-
-      const {ROOM_URL} = urlConstants;
-      const requestOptions = {method: 'DELETE'};
       fetch(`${ROOM_URL}/${id}`, requestOptions)
         .then(handleResponse)
         .then((id)=>{dispatch(success(id))})
@@ -178,16 +174,15 @@ export function updateUser(user) {
     function success(room) { return { type: adminConstants.CREATE_ROOM_SUCCESS, room }; }
     function failure(err) { return { type: adminConstants.CREATE_ROOM_FAILURE, err }; }
   
-    const requestOptions = {method: 'POST'};
+    const {ROOM_URL} = urlConstants;
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ room }),
+    };
 
     return (dispatch) => {
       dispatch(request());
-      const {ROOM_URL} = urlConstants;
-      const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ room }),
-      };
       fetch(ROOM_URL, requestOptions)
         .then(handleResponse)
         .then((room)=>{dispatch(success(room))})
@@ -200,11 +195,11 @@ export function updateUser(user) {
     function success(rooms) { return { type: adminConstants.GET_ROOMS_SUCCESS, rooms }; }
     function failure(err) { return { type: adminConstants.GET_ROOMS_FAILURE, err }; }
   
-
     const {ROOM_URL} = urlConstants;
+    const requestOptions = {method: 'GET'};
+    
     return (dispatch) => {
       dispatch(request());
-      const requestOptions = {method: 'GET'};
       fetch(ROOM_URL, requestOptions)
         .then(handleResponse)
         .then((rooms)=>{dispatch(success(rooms))})

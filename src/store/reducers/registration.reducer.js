@@ -5,9 +5,12 @@ function registration(state = {}, action) {
     case userConstants.REGISTER_REQUEST:
       return { registering: true };
     case userConstants.REGISTER_SUCCESS:
-      return {};
+      return { 
+        registering: false,
+        user: action.user
+      };
     case userConstants.REGISTER_FAILURE:
-      return {};
+      return {registering: false, error:action.err};
     default:
       return state;
   }

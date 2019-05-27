@@ -51,38 +51,38 @@ export function administrator(state = {}, action) {
         }),
       };
 
-      case GET_ROOMS_REQUEST:
-        return {rooms:[], fetching :true}
-      case GET_ROOMS_FAILURE:
-        return {rooms:[], fetching:false};
-      case GET_ROOMS_SUCCESS:
-        return {...action.rooms, fetching:false};
+    case GET_ROOMS_REQUEST:
+      return {rooms:[], fetching :true}
+    case GET_ROOMS_FAILURE:
+      return {rooms:[], fetching:false};
+    case GET_ROOMS_SUCCESS:
+      return {...action.rooms, fetching:false};
 
-      case CREATE_ROOMS_REQUEST:
-        return {rooms:[], fetching :true}
-      case CREATE_ROOMS_FAILURE:
-        return {rooms:[], fetching:false};
-      case CREATE_ROOMS_SUCCESS:
-        return {...action.rooms, fetching:false};
+    case CREATE_ROOMS_REQUEST:
+      return {rooms:[], fetching :true}
+    case CREATE_ROOMS_FAILURE:
+      return {rooms:[], fetching:false};
+    case CREATE_ROOMS_SUCCESS:
+      return {...action.rooms, fetching:false};
 
-      case UPDATE_ROOMS_REQUEST:
-        return {
-          ...state.room
-        };
-      case UPDATE_ROOMS_FAILURE:
-        
-      case UPDATE_ROOMS_SUCCESS:
-        return {
-          rooms: state.rooms.filter(room => room.id !== action.id),
-        };
-        
-        
-      case GET_USERS_REQUEST:
-        return {users:[], fetching :true}
-      case GET_USERS_FAILURE:
-        return {users:[], fetching:false};
-      case GET_USERS_SUCCESS:      
-        return {...action.users, fetching:false};
+    case UPDATE_ROOMS_REQUEST:
+      return {
+        ...state.room
+      };
+    case UPDATE_ROOMS_FAILURE:
+      return {error: action.err}
+    case UPDATE_ROOMS_SUCCESS:
+      return {
+        rooms: state.rooms.filter(room => room.id !== action.id),
+      };
+      
+      
+    case GET_USERS_REQUEST:
+      return {users:[], fetching :true}
+    case GET_USERS_FAILURE:
+      return {users:[], fetching:false};
+    case GET_USERS_SUCCESS:      
+      return {...action.users, fetching:false};
       
     case UPDATE_USER_REQUEST:
       return {...state, fetching :true}
