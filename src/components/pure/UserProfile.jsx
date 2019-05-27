@@ -10,7 +10,7 @@ const UserProfile = (props) => {
       <div className='user-profile-wrapper'>
         <div className='user-profile'>Host your own rooms</div>
         <div className='user-profile'>Help</div>
-        <Link to='/register' className='user-profile'>Register</Link>
+        {!user && <Link to='/register' className='user-profile'>Register</Link>}
         {user && <div className='user-profile' onClick={logout}>Logout</div>}
         {!user && <Link to="/login" className="user-profile">Login</Link>}
         {user && user.admin && <div className="image" onClick={viewAdmin}>Manage</div>}
