@@ -103,6 +103,10 @@ export function register(user, history) {
   };
 }
 
+export function isAuthenticated() {
+  return cookies.get('user');
+}
+
 export function reserve(room, user, begin, end, history) {
   function request() { return { type: userConstants.RESERVATION_REQUEST }; }
   function success(confirmation) { 
@@ -140,5 +144,6 @@ export const userActions = {
   logout,
   register,
   checkSession,
-  reserve
+  reserve,
+  isAuthenticated
 };

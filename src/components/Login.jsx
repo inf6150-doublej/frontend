@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Image from 'react-image-resizer';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { userActions } from '../store/actions/user.actions';
+import { userActions, isAuthenticated } from '../store/actions/user.actions';
 
 const logo = require('../img/logo.svg');
 
@@ -18,6 +18,12 @@ class LoginPage extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.login.bind(this);
+
+    if(!!isAuthenticated()) {
+      const { dispatch, history } = this.props;
+      history.push('/');
+    }
+
   }
 
   handleChange(e) {
@@ -51,7 +57,6 @@ class LoginPage extends Component {
         <div className='foto-login'>
           <Image src={logo} alt='logo' width={240} height={240} />
         </div>
-
         <div className='col-md-6 col-md-offset-3 '>
           <h2>Login</h2>
           {error && <div className='help-block text-danger'>Wrong password or email</div>}
