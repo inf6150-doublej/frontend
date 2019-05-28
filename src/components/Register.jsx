@@ -50,13 +50,14 @@ class RegisterPage extends Component {
   }
 
   render() {
-    const { registering } = this.props;
+    const { registering, error } = this.props;
     const { user, submitted } = this.state;
     const { name, last_name, address, phone, username, password, email } = user;
     let formClassName = 'form-group';
     if (submitted && !(name || last_name || address || phone || username || password || email)) {
       formClassName = 'form-group has-error';
     }
+
     return (
       <form className='form-horizontal'>
       <div className='Hero-register'>
@@ -65,6 +66,8 @@ class RegisterPage extends Component {
         </div>
         <div className='col-md-6 col-md-offset-3'>
           <h2>Register</h2>
+
+          {error && <div className='help-block text-danger'>Unable to register.  E-mail address already used.</div>}
 
           <div className={formClassName}>
             <label htmlFor='name'>First Name </label>
@@ -113,9 +116,10 @@ class RegisterPage extends Component {
 }
 
 function mapStateToProps(state) {
-  const { registering } = state.registration;
+  const { registering, error } = state.registration;
   return {
     registering,
+    error
   };
 }
 
