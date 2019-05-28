@@ -16,6 +16,12 @@ class Form extends Component {
       begin: '07:30',
       end: '07:30',
       capacity:0,
+      equipment:{
+        computer: false,
+        whiteboard: false,
+        soundsystem: false,
+        projector: false,
+      }
     };
   }
 
@@ -25,13 +31,13 @@ class Form extends Component {
   handleSearch = (e) => {
     e.preventDefault();
     const { history } = this.props;
-    const { date, begin, end, capacity } = this.state;
+    const { date, begin, end, capacity, equipment } = this.state;
     let [hour, min] = begin.split(':');
     date.setHours(hour, min, '0')
     const dateEnd = new Date(date);
     [hour, min] = end.split(':');
     dateEnd.setHours(hour, min, '0');
-    history.push(`/${capacity}/${date}/${dateEnd}`);
+    history.push(`/${capacity}/${date}/${dateEnd}/${JSON.stringify(equipment)}`);
   }
 
   onLocationChange = (e) => {
@@ -53,6 +59,17 @@ class Form extends Component {
     }
   }
 
+  onEquipmentChange = (e) => {
+    const { name, checked } = e.target;
+    const { equipment } = this.state;
+    this.setState({
+      equipment:{
+        ...equipment,
+        [name] : checked,
+      }
+    })
+  }
+
   render() {
     const { date } = this.state;
 
@@ -62,13 +79,35 @@ class Form extends Component {
             <div><h1>make a reservation</h1></div>
             <div><h2>where</h2><input className='form-location' placeholder='everywhere' onChange={this.onLocationChange}></input></div>
             <Calendar onChangeDate={this.onChangeDate} onTimeChange={this.onTimeChange} date={date}/>
-            <div>
+            <div className='form-capacity-container'>
               <h2>max capacity</h2>
               <InputRange
-              maxValue={10000}
-              minValue={0}
-              value={this.state.capacity}
-              onChange={value => this.setState({ capacity:value })} />
+                maxValue={10000}
+                minValue={0}
+                value={this.state.capacity}
+                onChange={value => this.setState({ capacity:value })} 
+              />
+            </div>
+            <div className='form-equipment-container'>
+              <h2>equipment</h2>
+              <div className='form-equipment-wrapper'>
+                <div>
+                  <input type='checkbox' id='form-computer' name='computer' onChange={this.onEquipmentChange}/>
+                  <label htmlFor='form-computer'>Computer</label>
+                </div>
+                <div>
+                  <input type='checkbox' id='form-whiteboard' name='whiteboard' onChange={this.onEquipmentChange}/>
+                  <label htmlFor='form-whiteboard'>White Board</label>
+                </div>
+                <div>
+                  <input type='checkbox' id='form-soundsystem' name='soundsystem' onChange={this.onEquipmentChange}/>
+                  <label htmlFor='form-soundsystem'>Sound System</label>
+                </div>
+                <div>
+                  <input type='checkbox' id='form-projector' name='projector' onChange={this.onEquipmentChange}/>
+                  <label htmlFor='form-projector'>projector</label>
+                </div>
+              </div>
             </div>
             <div className='form-button-container'><button onClick={this.handleSearch}>search</button></div>
         </div>

@@ -15,7 +15,9 @@ class SearchEngine extends Component {
 
   componentDidMount() {
     const { dispatch } = this.props;
-    const { capacity, begin, end, equipment } = this.props.match.params;
+    const { capacity, begin, end } = this.props.match.params;
+    const equipment = JSON.parse(this.props.match.params.equipment);
+
     const data = {
       capacity,
       begin,
@@ -47,7 +49,7 @@ class SearchEngine extends Component {
 
 
 function mapStateToProps(state) {
-    const { rooms, fetching } = state.fetchAllRooms;
+    const { rooms, fetching } = state.roomsFetcher;
     const { user } = state.authentication
     return {
       rooms,
