@@ -59,7 +59,7 @@ class LoginPage extends Component {
         </div>
         <div className='col-md-6 col-md-offset-3 '>
           <h2>Login</h2>
-          {error && <div className='help-block text-danger'>Wrong password or email</div>}
+          {error && <div className='help-block text-danger'>Invalid password or email</div>}
           <div
             className={formClassName}>
             <label htmlFor='email' className='control-label'>Email</label>
