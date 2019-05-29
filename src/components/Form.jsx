@@ -5,6 +5,9 @@ import InputRange from 'react-input-range';
 import Calendar from './Calendar.jsx';
 import 'react-input-range/lib/css/index.css';
 import '../css/Form.css';
+import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
 import {urlConstants} from '../constants/url.constants';
 
 class Form extends Component {
@@ -76,20 +79,14 @@ class Form extends Component {
     return (
       <div className='form-container'>
         <div className='form-wrapper'>
-            <div><h1>make a reservation</h1></div>
-            <div><h2>where</h2><input className='form-location' placeholder='everywhere' onChange={this.onLocationChange}></input></div>
-            <Calendar onChangeDate={this.onChangeDate} onTimeChange={this.onTimeChange} date={date}/>
-            <div className='form-capacity-container'>
-              <h2>max capacity</h2>
-              <InputRange
-                maxValue={10000}
-                minValue={0}
-                value={this.state.capacity}
-                onChange={value => this.setState({ capacity:value })} 
-              />
-            </div>
-            <div className='form-equipment-container'>
-              <h2>equipment</h2>
+          <div><h1>Create a reservation</h1></div>
+           <Container>
+            <Row>
+              <Col><div><br></br><h3>Location</h3><input className='form-location' placeholder='everywhere' onChange={this.onLocationChange}></input></div></Col>
+              <Col xs={6}><Calendar onChangeDate={this.onChangeDate} onTimeChange={this.onTimeChange} date={date}/></Col>
+              <Col><div className='form-equipment-container'>
+                <br></br>
+              <h3>Equipment</h3>
               <div className='form-equipment-wrapper'>
                 <div>
                   <input type='checkbox' id='form-computer' name='computer' onChange={this.onEquipmentChange}/>
@@ -108,8 +105,24 @@ class Form extends Component {
                   <label htmlFor='form-projector'>projector</label>
                 </div>
               </div>
+            </div></Col>
+            </Row>
+            <Row>
+            <div className='form-capacity-container'>
+              <h3>Capacity</h3>
+              <br></br>
+              <InputRange
+                maxValue={1000}
+                minValue={0}
+                value={this.state.capacity}
+                onChange={value => this.setState({ capacity:value })} 
+              />
             </div>
+            </Row>
+            <Row>
             <div className='form-button-container'><button onClick={this.handleSearch}>search</button></div>
+            </Row>
+            </Container>;
         </div>
       </div>
     );
