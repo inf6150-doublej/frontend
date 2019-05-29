@@ -104,7 +104,7 @@ export function register(user, history) {
 }
 
 export function isAuthenticated() {
-  return cookies.get('user');
+  return cookies.get('user') && cookies.get('user').user;
 }
 
 export function reserve(room, user, begin, end, history) {

@@ -19,7 +19,7 @@ class LoginPage extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.login.bind(this);
 
-    if(!!isAuthenticated()) {
+    if(isAuthenticated()) {
       const { dispatch, history } = this.props;
       history.push('/');
     }
