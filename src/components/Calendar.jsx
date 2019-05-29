@@ -35,13 +35,14 @@ class Calendar extends Component {
       <div className='calendar-container'>
         <div className='calendar-wrapper'>
           <div>
-            <h2>when</h2>
+            <h3>Date</h3>
             <input id='begin' onFocus={this.showCalendar} placeholder={date}></input>
             {showCalendar && <MyCalendar onClickDay={this.hideCalendar} value={date} />}
           </div>
           <div className='time-picker-container'>
-            <TimePickers name='time-picker-begin' label="time begin" onChange={onTimeChange}></TimePickers>
-            <TimePickers name='time-picker-end' label="time end" onChange={onTimeChange}></TimePickers>
+            <h3>Time</h3>
+            <TimePickers name='time-picker-begin' label="Start time" onChange={onTimeChange}></TimePickers>
+            <TimePickers name='time-picker-end' label="End time" onChange={onTimeChange}></TimePickers>
           </div>
         </div>
       </div>
