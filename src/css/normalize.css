@@ -94,3 +94,7 @@ img {
 label {
   padding-right: 15px
 }
+
+#logo {
+  cursor: pointer; 
+}
