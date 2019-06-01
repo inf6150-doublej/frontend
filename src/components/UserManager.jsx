@@ -8,6 +8,18 @@ import {
   getUsers,
 } from '../store/actions/admin.actions'
 import '../css/UserManager.css'
+import Button from 'react-bootstrap/Button';
+//font-awesome
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
+
+// React-Bootstrap
+var ReactBsTable  = require('react-bootstrap-table');
+var BootstrapTable = ReactBsTable.BootstrapTable;
+var TableHeaderColumn = ReactBsTable.TableHeaderColumn;
+require('../../node_modules/react-bootstrap-table/dist/react-bootstrap-table-all.min.css');
 
 
 class UserManager extends Component {
@@ -25,13 +37,29 @@ class UserManager extends Component {
         admin: 0
 
       },
-      showUserList: false,
+      showUserList: true,
       showUpdateForm: false,
       showCreateForm: false,
     };
+
+    const { dispatch } = this.props;
+    dispatch(getUsers());
+
   }
 
-  cancel = () =>{this.setState({ showUserList: false, showCreateForm:false, showUpdateForm:false, showDeleteForm:false })}
+  cancel = () =>{this.setState({ showUserList: true, showCreateForm:false, showUpdateForm:false })}
+
+  rowClassNameFormat = (row, rowIdx) => {
+    // row is whole row object
+    // rowIdx is index of row
+    return rowIdx % 2 === 0 ? 'td-even' : 'td-odd';
+  };
+  
+  createCustomInsertButton = (onClick) => {
+    return (
+      <Button size="sm" className="btnCreate" variant="info" onClick={() => this.onCreateClick(null)}><FontAwesomeIcon icon={faPlus} />&nbsp;Create</Button>
+    );
+  }
 
   userList = () => {
     const { users, dispatch } = this.props;
@@ -47,26 +75,23 @@ class UserManager extends Component {
       this.setState({user:user, showUpdateForm:true, showUserList:false})
     };
 
-    let userMap = []
-    if (users && users.length) {
-      userMap = users.map((user, i) => <User key={i} user={user} onDelete={onDelete} onUpdate={onUpdate}/>);
-    }
-    return (<div>{userMap}</div>)
+    const options = {
+      insertBtn: this.createCustomInsertButton
+    };
+    
+      return (<BootstrapTable data={users} version='4'   hover condensed pagination search insertRow trClassName={this.rowClassNameFormat} options={options}>
+      <TableHeaderColumn dataField='edit' width={'80px'}  dataFormat={ this.editFormatter.bind(this) }></TableHeaderColumn>
+      <TableHeaderColumn dataField='delete'  width={'90px'} dataFormat={ this.deleteFormatter.bind(this) }></TableHeaderColumn>
+      <TableHeaderColumn isKey dataField='id' dataSort hidden={true}></TableHeaderColumn>
+      <TableHeaderColumn dataField='username' dataSort>User name</TableHeaderColumn>
+      <TableHeaderColumn dataField='name' dataSort>First name</TableHeaderColumn>
+      <TableHeaderColumn dataField='family_name' dataSort>Last name</TableHeaderColumn>
+      <TableHeaderColumn dataField='email' dataSort>E-mail</TableHeaderColumn>
+  </BootstrapTable>)
   }
 
   createForm = () => {
     const { user } = this.state;
-    /*let user = {
-      name: "",
-      family_name: "",
-      address: "",
-      phone: "",
-      email: "",
-      username: "",
-      password: "",
-      admin: 0
-    };*/
-
     const { dispatch } = this.props;
 
 
@@ -84,7 +109,10 @@ class UserManager extends Component {
     console.log(user);
     const create = async (user) => {
       dispatch(createUser(user));
-      this.setState({ showUserList: true, showUpdateForm:false, showCreateForm:false, showDeleteForm:false })
+      this.setState({ showUserList: true, showUpdateForm:false, showCreateForm:false })
+
+      dispatch(getUsers());
+ 
     }
 
     return (
@@ -188,50 +216,64 @@ class UserManager extends Component {
       )
   }
 
-  deleteForm = () =>{
-    const {user} = this.state;
-    const {dispatch} = this.props;
-    return (
-      <div>
-        <div>
-          <div >
-            <label htmlFor='email'>Email</label>
-            <input type='text' className='form-control' name='email'/>
-          </div>
-        </div>
-        <div><button onClick={() => dispatch(deleteUser(user))}>delete</button></div>
-        <div><button onClick={() =>this.cancel()}>cancel</button></div>
-      </div>
-      )
-  }
-
   handleUsersList = () => {
     const { dispatch } = this.props;
     dispatch(getUsers());
-    this.setState({ showUserList: true, showUpdateForm:false, showCreateForm:false, showDeleteForm:false })
+    this.setState({ showUserList: true, showUpdateForm:false, showCreateForm:false })
   };
 
   handleCreateForm = () =>{
-    this.setState({ showUserList: false, showUpdateForm:false, showCreateForm:true, showDeleteForm:false })
+    this.setState({ showUserList: false, showUpdateForm:false, showCreateForm:true })
   };
 
-  handleDeleteForm = () =>{
-    this.setState({ showUserList: false, showUpdateForm:false, showCreateForm:false, showDeleteForm:true })
-  };
+  
+onEditClick = user => 
+{
+  this.setState({ user: user, showUserList: false, showUpdateForm:true, showCreateForm:false })
+};
+
+onCreateClick = user => 
+{
+  this.setState({ user: {
+    name: "",
+    family_name: "",
+    address: "",
+    phone: "",
+    email: "",
+    username: "",
+    password: "",
+    admin: 0
+  }, showUserList: false, showUpdateForm:false, showCreateForm:true })
+};
+
+onDeleteClick = user => 
+{
+  const {dispatch} = this.props;
+
+  const confirmation = window.confirm('Confirm delete');
+  if(confirmation){
+    dispatch(deleteUser(user.id));
+  }
+};
+
+  editFormatter(cell,user) {
+    return  <Button size="sm"  variant="primary" onClick={() => this.onEditClick(user)}><FontAwesomeIcon icon={faPencilAlt} /> Edit</Button>
+}
+
+deleteFormatter(cell,user) {
+  return  <Button size="sm" variant="danger" className="btnGrid2" onClick={() => this.onDeleteClick(user)}><FontAwesomeIcon icon={faTrashAlt} /> Delete</Button>
+}
 
   render() {
-    const { showUserList, showUpdateForm, showCreateForm, showDeleteForm } = this.state;
+    const { showUserList, showUpdateForm, showCreateForm } = this.state;
+
     return (
-      <div className='user-manager-container'>
-        <button name='create' onClick={this.handleCreateForm}>create user</button>
-        <button name='delete' onClick={this.handleDeleteForm}>delete user</button>
-        <button name='read' onClick={this.handleUsersList}>read users </button>
+      <div  className='user-manager-container container-fluid'style={{ marginTop: 50 }}>
         {showUserList && this.userList()}
         {showUpdateForm && this.updateForm()}
         {showCreateForm && this.createForm()}
-        {showDeleteForm && this.deleteForm()}
       </div>
-    )
+    );
   }
 }
 
