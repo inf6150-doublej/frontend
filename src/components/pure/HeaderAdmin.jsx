@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Logo from './Logo.jsx';
 import { Link } from 'react-router-dom';
 

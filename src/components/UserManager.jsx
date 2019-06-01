@@ -28,17 +28,7 @@ class UserManager extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user:{
-        name: "",
-        family_name: "",
-        address: "",
-        phone: "",
-        email: "",
-        username: "",
-        password: "",
-        admin: 0
-
-      },
+      user: {},
       showUserList: true,
       showUpdateForm: false,
       showCreateForm: false,
@@ -103,8 +93,6 @@ class UserManager extends Component {
     const create = async (user) => {
 
       dispatch(createUser(user, history));
-
-      this.setState({ showUserList: true, showUpdateForm:false, showCreateForm:false })
       
     }
 
@@ -170,7 +158,6 @@ class UserManager extends Component {
       this.setState({showUpdateForm:false, showUserList:true})
     }
 
-    console.log(user);
     return (
       <form autoComplete="new-password">
         <div>
@@ -208,16 +195,6 @@ class UserManager extends Component {
       </form>
       )
   }
-
-  handleUsersList = () => {
-    const { dispatch } = this.props;
-    dispatch(getUsers());
-    this.setState({ showUserList: true, showUpdateForm:false, showCreateForm:false })
-  };
-
-  handleCreateForm = () =>{
-    this.setState({ showUserList: false, showUpdateForm:false, showCreateForm:true })
-  };
 
   
 onEditClick = user => 
