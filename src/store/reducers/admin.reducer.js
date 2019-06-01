@@ -63,7 +63,7 @@ export function administrator(state = {}, action) {
     case CREATE_ROOMS_FAILURE:
       return {rooms:[], fetching:false};
     case CREATE_ROOMS_SUCCESS:
-      return {...action.rooms, fetching:false};
+      return {...action.rooms, fetching:false, shouldRefresh: true};
 
     case UPDATE_ROOMS_REQUEST:
       return {
