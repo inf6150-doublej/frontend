@@ -8,7 +8,7 @@ export const urlConstants = {
   LOGOUT_URL: API_ROOT+'/logout',
   SEARCH_URL: API_ROOT+'/search',
   USER_URL: API_ROOT+'/user',
-  ROOM_URL: API_ROOT+'/rooms',
+  ROOM_URL: API_ROOT+'/admin/rooms',
   RESERVATION_URL: API_ROOT+'/reservation',
   GET_USER: API_ROOT+'/getuser',
   ADMIN_USERS: API_ROOT + '/admin/users',

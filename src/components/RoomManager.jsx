@@ -28,7 +28,6 @@ class RoomManager extends Component{
   constructor(props) {
     super(props);
     this.state = {
-      rooms:{},
       room: {
         name: '',
         type: '',
@@ -41,6 +40,7 @@ class RoomManager extends Component{
       showRoomList: true,
       showUpdateForm: false,
       showCreateForm: false,
+      shouldReload: false
     };
 
     const { dispatch } = this.props;
@@ -201,7 +201,7 @@ class RoomManager extends Component{
           </div>
           <div >
             <label htmlFor='description'>Description</label>
-            <input type='text' className='form-control' name='description' value={room.description} defaultValue ={room.description} onChange={onChange}/>
+            <input type='text' className='form-control' name='description' value={room.description} onChange={onChange}/>
           </div>          
         </div>
         </div>
@@ -225,9 +225,9 @@ onCreateClick = room =>
     type: "",
     capacity: "",
     description: "",
-    reservation_id: '',
-    equipment_id: '',
-    id: '',
+    reservation_id: "",
+    equipment_id: "",
+    id: "",
 
   }, showRoomList: false, showUpdateForm:false, showCreateForm:true, isSubmitted: false })
 };
@@ -273,11 +273,11 @@ deleteFormatter(cell,room) {
 }
 
 function mapStateToProps(state) {
-  const { rooms, fetching, shouldReload } = state.administrator;
+  const { rooms, fetching, shouldRefresh } = state.administrator;
   return {
     rooms,
     fetching,
-    shouldReload
+    shouldRefresh
   };
 }
 

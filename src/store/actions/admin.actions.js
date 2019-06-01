@@ -152,7 +152,10 @@ export function updateUser(user) {
       dispatch(request(room));
       fetch(`${ROOM_URL}/${room.id}`, requestOptions)
         .then(handleResponse)
-        .then((room) => {dispatch(success(room));})
+        .then((res) => {
+          dispatch(success(res.room));
+          console.log({"upd": res });
+        })
         .catch((err) => {dispatch(failure(err));});
     };
   }
@@ -170,7 +173,7 @@ export function updateUser(user) {
       dispatch(request(id));
       fetch(`${ROOM_URL}/${id}`, requestOptions)
         .then(handleResponse)
-        .then((id)=>{dispatch(success(id))})
+        .then((res)=>{dispatch(success(res.id))})
         .catch((err)=>{dispatch(failure(id, err))})
     }
   }
@@ -191,7 +194,7 @@ export function updateUser(user) {
       dispatch(request());
       fetch(ROOM_URL, requestOptions)
         .then(handleResponse)
-        .then((room)=>{dispatch(success(room))})
+        .then((res)=>{dispatch(success(res.room))})
         .catch((err)=>{dispatch(failure(err))})
     }
   }
