@@ -263,7 +263,7 @@ deleteFormatter(cell,user) {
     
     return (
       <div  className='user-manager-container'>
-      <HeaderAdmin></HeaderAdmin>
+      <HeaderAdmin history={history}></HeaderAdmin>
       <div  className='user-manager-body container-fluid'>
         {showUserList && this.userList()}
         {showUpdateForm && this.updateForm()}
