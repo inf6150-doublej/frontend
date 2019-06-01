@@ -8,7 +8,7 @@ const Header = (props) => {
   return (
     <header>
       <Logo viewHome={() => goToUrl(history, '/')} />
-      <UserProfile user={user} logout={logout} viewAdmin={() => goToUrl(history, '/admin')} />
+      <UserProfile user={user} logout={logout} viewAdmin={() => goToUrl(history, '/admin/users')} />
     </header>
   );
 };
