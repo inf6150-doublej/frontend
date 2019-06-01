@@ -100,11 +100,7 @@ export function administrator(state = {}, action) {
     case CREATE_USER_FAILURE:
       return {fetching:false, error:action.err};
     case CREATE_USER_SUCCESS:
-      return {
-        ...action.users,
-        fetching:false
-      };
-
+      return {users:[{...action.user}], fetching:false};   
     default:
       return state;
   }

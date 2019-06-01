@@ -76,10 +76,12 @@ class UserManager extends Component {
     };
 
     const options = {
-      insertBtn: this.createCustomInsertButton
+      insertBtn: this.createCustomInsertButton,
+      defaultSortName: 'username',  // default sort column name
+      defaultSortOrder: 'asc'  // default sort order
     };
     
-      return (<BootstrapTable data={users} version='4'   hover condensed pagination search insertRow trClassName={this.rowClassNameFormat} options={options}>
+      return (<BootstrapTable data={users} version='4' hover condensed pagination search insertRow trClassName={this.rowClassNameFormat} options={options}>
       <TableHeaderColumn dataField='edit' width={'80px'}  dataFormat={ this.editFormatter.bind(this) }></TableHeaderColumn>
       <TableHeaderColumn dataField='delete'  width={'90px'} dataFormat={ this.deleteFormatter.bind(this) }></TableHeaderColumn>
       <TableHeaderColumn isKey dataField='id' dataSort hidden={true}></TableHeaderColumn>
@@ -106,13 +108,13 @@ class UserManager extends Component {
       });
     }
 
-    console.log(user);
     const create = async (user) => {
       dispatch(createUser(user));
+      //dispatch(getUsers());
+
       this.setState({ showUserList: true, showUpdateForm:false, showCreateForm:false })
 
-      dispatch(getUsers());
- 
+      
     }
 
     return (
