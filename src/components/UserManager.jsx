@@ -32,14 +32,19 @@ class UserManager extends Component {
       showUserList: true,
       showUpdateForm: false,
       showCreateForm: false,
+      isSubmitted: false,
+      shouldReload: false
     };
 
     const { dispatch } = this.props;
     dispatch(getUsers());
 
+    
+    this.handleSubmitCreate = this.handleSubmitCreate.bind(this);
+    this.handleSubmitUpdate = this.handleSubmitUpdate.bind(this);
   }
 
-  cancel = () =>{this.setState({ showUserList: true, showCreateForm:false, showUpdateForm:false })}
+  cancel = () =>{this.setState({ showUserList: true, showCreateForm:false, showUpdateForm:false, isSubmitted: false })}
 
   rowClassNameFormat = (row, rowIdx) => {
     // row is whole row object
@@ -74,8 +79,44 @@ class UserManager extends Component {
   </BootstrapTable>)
   }
 
-  createForm = () => {
+  handleSubmitCreate(event) {
+
     const { user } = this.state;
+    const { dispatch, history } = this.props;
+
+    if(user.name && user.family_name && user.email && user.username) {
+
+      dispatch(createUser(user, history));
+
+      this.setState({user: user, showUserList: true, showUpdateForm:false, showCreateForm:false, isSubmitted: false, shouldReload: true })
+    } else {
+      this.setState({user: user, showUserList: false, showUpdateForm:false, showCreateForm:true, isSubmitted: true })  
+    }
+  
+    
+  
+  }
+
+  handleSubmitUpdate(event) {
+    event.preventDefault();
+
+    const { user } = this.state;
+    const { dispatch, history } = this.props;
+
+    if(user.name && user.family_name && user.email && user.username) {
+      dispatch(updateUser(user, history));
+
+      this.setState({user: user, showUserList: true, showUpdateForm:false, showCreateForm:false, isSubmitted: false })
+    } else {
+      
+      this.setState({user: user, showUserList: false, showUpdateForm:true, showCreateForm:false, isSubmitted: true })
+    }
+  
+  }
+
+
+  createForm = () => {
+    const { user, isSubmitted } = this.state;
     const { dispatch, history } = this.props;
 
 
@@ -90,22 +131,18 @@ class UserManager extends Component {
       });
     }
 
-    const create = async (user) => {
-
-      dispatch(createUser(user, history));
-      
-    }
-
     return (
-      <form autoComplete="new-password2">
+      <form autoComplete="new-password2" onSubmit={this.handleSubmitCreate}>
         <div>
           <div >
             <label htmlFor='name'>First Name</label>
             <input type='text' className='form-control' name='name' value={user.name} onChange={onChange} />
+            {isSubmitted && !user.name && <div className='help-block text-danger'>First Name is required</div>}
           </div>
           <div >
             <label htmlFor='family_name'>Last Name</label>
             <input type='text' className='form-control' name='family_name' value={user.family_name} onChange={onChange}/>
+            {isSubmitted && !user.family_name && <div className='help-block text-danger'>Last Name is required</div>}
           </div>
           <div >
             <label htmlFor='address'>Address</label>
@@ -118,29 +155,30 @@ class UserManager extends Component {
           <div >
             <label htmlFor='email'>Email</label>
             <input type='text' className='form-control' name='email' value={user.email} onChange={onChange}/>
+            {isSubmitted && !user.email && <div className='help-block text-danger'>Email is required</div>}
           </div>
           <div >
             <label htmlFor='username'>Username</label>
-            <input type='text' className='form-control' name='username' value={user.username} onChange={onChange}/>
+            <input type='text' className='form-control' name='username' value={user.username} onChange={onChange} required/>
+            {isSubmitted && !user.username && <div className='help-block text-danger'>User name is required</div>}
           </div>
           <div >
             <label htmlFor='password'>Password</label>
-            <input type='password' className='form-control' name='password' value={user.password} onChange={onChange}/>
+            <input type='password' className='form-control' name='password' value={user.password} onChange={onChange} required/>
           </div>
           <div >
             <label htmlFor='admin'>Administrator</label>
             <input type='text' className='form-control' name='admin' value={user.admin} onChange={onChange}/>
           </div>
         </div>
-        <div><button onClick={() => create(user)}>create</button></div>
+        <div><input type="submit" value="Create" /></div>
         <div><button onClick={()=>this.cancel()}>cancel</button></div>
       </form>
       )
   }
 
   updateForm = () => {
-    const { user } = this.state;
-    const { dispatch } = this.props;
+    const { user, isSubmitted } = this.state;
 
     const onChange = (event) => {
       const { name, value } = event.target;
@@ -153,21 +191,18 @@ class UserManager extends Component {
       });
     }
 
-    const update = async (user) => {
-      dispatch(updateUser(user));
-      this.setState({showUpdateForm:false, showUserList:true})
-    }
-
     return (
-      <form autoComplete="new-password">
+      <form autoComplete="new-password3" onSubmit={this.handleSubmitUpdate}>
         <div>
           <div >
             <label htmlFor='name'>First Name</label>
             <input type='text' className='form-control' name='name' value={user.name} onChange={onChange}/>
+            {isSubmitted && !user.name && <div className='help-block text-danger'>First Name is required</div>}
           </div>
           <div >
             <label htmlFor='family_name'>Last Name</label>
             <input type='text' className='form-control' name='family_name' value={user.family_name} onChange={onChange}/>
+            {isSubmitted && !user.family_name && <div className='help-block text-danger'>Last Name is required</div>}
           </div>
           <div >
             <label htmlFor='address'>Address</label>
@@ -180,17 +215,15 @@ class UserManager extends Component {
           <div >
             <label htmlFor='email'>Email</label>
             <input type='text' className='form-control' name='email' value={user.email} onChange={onChange}/>
+            {isSubmitted && !user.email && <div className='help-block text-danger'>Email is required</div>}
           </div>
           <div>
             <label htmlFor='username'>Username</label>
             <input type='text' className='form-control' name='username' value={user.username} onChange={onChange}/>
+            {isSubmitted && !user.username && <div className='help-block text-danger'>Username is required</div>}
           </div>
-          {/*<div >
-            <label htmlFor='password'>Password</label>
-            <input type='password' className='form-control' name='password' value={user.password} onChange={onChange}/>
-          </div>*/}
         </div>
-        <div><button onClick={() => update(user)}>update</button></div>
+        <div><input type="submit" value="Update" /></div>
         <div><button onClick={this.cancel}>cancel</button></div>
       </form>
       )
@@ -199,7 +232,7 @@ class UserManager extends Component {
   
 onEditClick = user => 
 {
-  this.setState({ user: user, showUserList: false, showUpdateForm:true, showCreateForm:false })
+  this.setState({ user: user, showUserList: false, showUpdateForm:true, showCreateForm:false, isSubmitted: false })
 };
 
 onCreateClick = user => 
@@ -213,7 +246,7 @@ onCreateClick = user =>
     username: "",
     password: "",
     admin: 0
-  }, showUserList: false, showUpdateForm:false, showCreateForm:true })
+  }, showUserList: false, showUpdateForm:false, showCreateForm:true, isSubmitted: false })
 };
 
 onDeleteClick = user => 
@@ -235,9 +268,15 @@ deleteFormatter(cell,user) {
 }
 
   render() {
-    const { showUserList, showUpdateForm, showCreateForm } = this.state;
-    const {  history } = this.props;
+    const { showUserList, showUpdateForm, showCreateForm, shouldReload } = this.state;
+    const {  history, dispatch, shouldRefresh } = this.props;
     
+    console.log({"F": shouldRefresh, 'SR': shouldReload});
+    if(shouldRefresh && shouldReload) {
+      this.state.shouldReload = false;
+      dispatch(getUsers());
+    }
+
     return (
       <div  className='user-manager-container'>
       <HeaderAdmin history={history}></HeaderAdmin>
@@ -253,10 +292,11 @@ deleteFormatter(cell,user) {
 
 
 function mapStateToProps(state) {
-  const { users, fetching } = state.administrator;
+  const { users, fetching, shouldRefresh } = state.administrator;
   return {
     users,
-    fetching
+    fetching,
+    shouldRefresh
   };
 }
 

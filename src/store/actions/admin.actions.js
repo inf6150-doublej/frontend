@@ -104,7 +104,9 @@ export function updateUser(user) {
         .then((res)=>{
           dispatch(success(res.user));
 
-          history.push('/admin/users');
+          //console.log({"Histo create": history});
+
+          //history.push('/admin/users');
         })
         .catch((err)=>{dispatch(failure(err))})
     }
