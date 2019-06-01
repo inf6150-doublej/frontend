@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, withRouter, Switch } from 'react-router-dom';
 import Login from './components/Login.jsx';
-import Admin from './components/Admin.jsx';
 import Home from './components/Home.jsx';
 import Confirmation from './components/Confirmation';
 import Register from './components/Register.jsx';
@@ -24,7 +23,6 @@ class App extends Component {
           <Route path='/admin/users' component={UserManager} />
           <Route path='/admin/reservation' component={ReservationManager} />
           <Route path='/admin/rooms' component={RoomManager} />
-          <Route path='/admin' component={Admin} />
           <Route path='/confirmation' component={Confirmation} />
           <Route path='/:capacity?/:begin?/:end?/:equipment?' component={SearchEngine} />
           <Route path="*" component={Home}/>
