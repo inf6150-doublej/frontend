@@ -8,6 +8,7 @@ import {
   getUsers,
 } from '../store/actions/admin.actions'
 import '../css/UserManager.css'
+import '../css/CustomBootstrapTable.css'
 import Button from 'react-bootstrap/Button';
 //font-awesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'

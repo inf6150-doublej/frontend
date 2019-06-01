@@ -1,0 +1,21 @@
+.td-even {
+    background-color: rgb(210, 220, 252);
+}
+
+.td-odd {
+    background-color: rgb(227, 241, 240);
+}
+
+.btnCreate {
+    display: inline-flex !important;
+    flex: 0 !important;
+    width: 200px;
+}
+
+.btn-group {
+    justify-content: flex-start !important;
+}
+
+.btnCreate svg {
+    margin-top: 2px;
+}
