@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import User from './pure/User'
 import {
   deleteUser,
   createUser,
@@ -10,6 +10,7 @@ import {
 import '../css/UserManager.css'
 import '../css/CustomBootstrapTable.css'
 import Button from 'react-bootstrap/Button';
+import HeaderAdmin from './pure/HeaderAdmin'
 //font-awesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
@@ -63,18 +64,7 @@ class UserManager extends Component {
   }
 
   userList = () => {
-    const { users, dispatch } = this.props;
-
-    const onDelete = (id) => {
-      const confirmation = window.confirm('Confirm delete');
-      if(confirmation){
-        dispatch(deleteUser(id));
-      }
-    };
-
-    const onUpdate = (user) => {
-      this.setState({user:user, showUpdateForm:true, showUserList:false})
-    };
+    const { users } = this.props;
 
     const options = {
       insertBtn: this.createCustomInsertButton,
@@ -96,7 +86,7 @@ class UserManager extends Component {
 
   createForm = () => {
     const { user } = this.state;
-    const { dispatch } = this.props;
+    const { dispatch, history } = this.props;
 
 
     const onChange = (event) => {
@@ -111,11 +101,10 @@ class UserManager extends Component {
     }
 
     const create = async (user) => {
-      dispatch(createUser(user));
-      //dispatch(getUsers());
+
+      dispatch(createUser(user, history));
 
       this.setState({ showUserList: true, showUpdateForm:false, showCreateForm:false })
-
       
     }
 
@@ -270,12 +259,16 @@ deleteFormatter(cell,user) {
 
   render() {
     const { showUserList, showUpdateForm, showCreateForm } = this.state;
-
+    const {  history } = this.props;
+    
     return (
-      <div  className='user-manager-container container-fluid'style={{ marginTop: 50 }}>
+      <div  className='user-manager-container'>
+      <HeaderAdmin></HeaderAdmin>
+      <div  className='user-manager-body container-fluid'>
         {showUserList && this.userList()}
         {showUpdateForm && this.updateForm()}
         {showCreateForm && this.createForm()}
+      </div>
       </div>
     );
   }
@@ -291,4 +284,4 @@ function mapStateToProps(state) {
 }
 
 
-export default connect(mapStateToProps)(UserManager);
+export default withRouter(connect(mapStateToProps)(UserManager));

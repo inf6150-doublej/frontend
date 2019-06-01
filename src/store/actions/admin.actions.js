@@ -84,7 +84,7 @@ export function updateUser(user) {
     }
   }
 
-  export function createUser(user) {
+  export function createUser(user, history) {
     function request() { return { type: adminConstants.CREATE_USER_REQUEST}; }
     function success(user) { return { type: adminConstants.CREATE_USER_SUCCESS, user }; }
     function failure(err) { return { type: adminConstants.CREATE_USER_FAILURE, err }; }
@@ -101,7 +101,11 @@ export function updateUser(user) {
       dispatch(request());
       fetch(url, requestOptions)
         .then(handleResponse)
-        .then((res)=>{dispatch(success(res.user))})
+        .then((res)=>{
+          dispatch(success(res.user));
+
+          history.push('/admin/users');
+        })
         .catch((err)=>{dispatch(failure(err))})
     }
   }
