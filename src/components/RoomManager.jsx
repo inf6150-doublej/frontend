@@ -33,7 +33,6 @@ class RoomManager extends Component{
         type: '',
         capacity: '',
         description: '',
-        reservation_id: '',
         equipment_id: '',
         id: '',
       },
@@ -225,7 +224,6 @@ onCreateClick = room =>
     type: "",
     capacity: "",
     description: "",
-    reservation_id: "",
     equipment_id: "",
     id: "",
 
