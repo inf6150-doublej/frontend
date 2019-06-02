@@ -43,8 +43,7 @@ Home.propTypes = {
 };
 
 function mapStateToProps(state) {
-  const { loggedIn } = state.authentication;
-  const {user} = state.authentication.user ? state.authentication : state.registration;
+  const { loggedIn, user } = state.authentication;
   return {
     user,
     loggedIn
