@@ -6,7 +6,7 @@
 .user-profile-wrapper{
     display:flex;
     width: 100%;
-    justify-content: space-evenly;
+    justify-content: right;
 }
 
 .user-profile{

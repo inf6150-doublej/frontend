@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Image from 'react-image-resizer';
 import { userActions } from '../store/actions/user.actions';
 
-const logo = require('../img/logo.svg');
+const logo = require('../img/BE2.png');
 
 class RegisterPage extends Component {
   constructor(props) {
@@ -67,7 +67,7 @@ class RegisterPage extends Component {
       <form className='form-horizontal'>
       <div className='Hero-register'>
         <div className='foto-register'>
-          <Image src={logo} alt='logo' width={240} height={240} />
+          <Image src={logo} alt='logo' width={240} height={240}  /> {/*} onClick={() => goToUrl(history, '/')}  Comment faire? {*/}
         </div>
         <div className='col-md-6 col-md-offset-3'>
           <h2>Register</h2>
