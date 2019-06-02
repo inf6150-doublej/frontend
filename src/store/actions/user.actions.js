@@ -6,7 +6,8 @@ const cookies = new Cookies();
 
 function handleResponse(response) {
   if (!response.ok) {
-    return Promise.reject(response.statusText);
+    return response.json()
+    .then(res => { return Promise.reject(res.error)})
   }
   return response.json();
 }
@@ -97,7 +98,6 @@ export function register(user, history) {
       .then(handleResponse)
       .then((res)=> {
         dispatch(success(res.user));
-        history.push('/');
       })
       .catch((err)=>dispatch(failure(err)))
   };
@@ -109,9 +109,11 @@ export function isAuthenticated() {
 
 export function reserve(room, user, begin, end, history) {
   function request() { return { type: userConstants.RESERVATION_REQUEST }; }
-  function success(confirmation) { 
-    return { type: userConstants.RESERVATION_SUCCESS, confirmation }; }
-  function failure(err) { return { type: userConstants.RESERVATION_FAILURE, err }; }
+  function success(confirmation) { return { type: userConstants.RESERVATION_SUCCESS, confirmation }; }
+  function failure(err) { 
+    console.log(err)
+    return { type: userConstants.RESERVATION_FAILURE, err }; 
+  }
 
   const data = {
     room,
@@ -139,11 +141,35 @@ export function reserve(room, user, begin, end, history) {
   };
 }
 
+export function recoverPassword(email) {
+  function request() { return { type: userConstants.RECOVER_PASSWORD_REQUEST }; }
+  function success(message) { return { type: userConstants.RECOVER_PASSWORD_SUCCESS, message }; }
+  function failure(err) { return { type: userConstants.RECOVER_PASSWORD_FAILURE, err }; }
+
+  const { RECOVER_PASSWORD } = urlConstants;
+  const requestOptions = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({email}),
+  };
+
+  return (dispatch) => {
+    dispatch(request());
+    fetch(RECOVER_PASSWORD, requestOptions)
+    .then(handleResponse)
+    .then((res) => {
+      dispatch(success(res.msg))
+    })
+    .catch((err)=>dispatch(failure(err)))
+  };
+}
+
 export const userActions = {
   login,
   logout,
   register,
   checkSession,
   reserve,
-  isAuthenticated
+  isAuthenticated,
+  recoverPassword,
 };
