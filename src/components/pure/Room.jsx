@@ -1,7 +1,8 @@
 import React from 'react';
 import Media from 'react-bootstrap/Media'
+import logo from '../../img/BE2.png';
 
-const logo = require('../../img/BE3.png');
+
 {/*} Figure out how to display the logo and title at the top {*/}
 const Room = (props) => {
   const { room, onReservation } = props;

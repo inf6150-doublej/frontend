@@ -107,33 +107,30 @@ export function administrator(state = {}, action) {
         users: state.users.map(user => user.id === action.user.id ? action.user : user),
         fetching:false
       };
-
-      case DELETE_USER_REQUEST:
-          // add 'deleting:true' property to user being deleted
-          return {
-            ...state,
-            users: state.users.map(user => user.id === action.id ? { ...user, deleted: true } : user),
-          };
-        case DELETE_USER_SUCCESS:
-          return {
-            users: state.users.filter(user => user.id !== action.id),
-          };
-        case DELETE_USER_FAILURE:
-          // remove 'deleting:true' property and add 'deleteError:[error]' property to user
-          return {
-            ...state,
-            users: state.users.map((user) => {
-              if (user.id === action.id) {
-                // make copy of user without 'deleting:true' property
-                const { deleted, ...userCopy } = user;
-                // return copy of user with 'deleteError:[error]' property
-                return { ...userCopy, error: action.err };
-              }
-              return user;
-            }),
-          };
-          
-
+    case DELETE_USER_REQUEST:
+      // add 'deleting:true' property to user being deleted
+      return {
+        ...state,
+        users: state.users.map(user => user.id === action.id ? { ...user, deleted: true } : user),
+      };
+    case DELETE_USER_SUCCESS:
+      return {
+        users: state.users.filter(user => user.id !== action.id),
+      };
+    case DELETE_USER_FAILURE:
+      // remove 'deleting:true' property and add 'deleteError:[error]' property to user
+      return {
+        ...state,
+        users: state.users.map((user) => {
+          if (user.id === action.id) {
+            // make copy of user without 'deleting:true' property
+            const { deleted, ...userCopy } = user;
+            // return copy of user with 'deleteError:[error]' property
+            return { ...userCopy, error: action.err };
+          }
+          return user;
+        }),
+      };          
     default:
       return state;
   }

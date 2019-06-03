@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 import '../../css/UserProfile.css'
 import { Nav, Navbar, NavItem } from "react-bootstrap";
 import Image from 'react-image-resizer';
+import logo from '../../img/BE2.png';
 
-const logo = require('../../img/BE2.png');
+
 const UserProfile = (props) => {
   const { user, logout, viewAdmin} = props;
     return(

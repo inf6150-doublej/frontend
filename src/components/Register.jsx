@@ -5,8 +5,8 @@ import Image from 'react-image-resizer';
 import { userActions } from '../store/actions/user.actions';
 import { Dialog } from '@material-ui/core';
 import { goToUrl } from '../store/actions/router.actions';
+import logo from '../img/BE2.png';
 
-const logo = require('../img/BE2.png');
 
 class RegisterPage extends Component {
   constructor(props) {
@@ -76,13 +76,6 @@ class RegisterPage extends Component {
           </div>
           <div className='col-md-6 col-md-offset-3'>
             <h2>Register</h2>
-
-      <div className='Hero-register'>
-        <div className='foto-register'>
-          <Image src={logo} alt='logo' width={240} height={240}  /> {/*} onClick={() => goToUrl(history, '/')}  Comment faire? {*/}
-        </div>
-        <div className='col-md-6 col-md-offset-3'>
-          <h2>Register</h2>
 
             {error && <div className='help-block text-danger'>Unable to register.  E-mail address already used.</div>}
 

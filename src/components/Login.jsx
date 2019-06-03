@@ -6,8 +6,8 @@ import { withRouter } from 'react-router';
 import { userActions, isAuthenticated } from '../store/actions/user.actions';
 import Dialog from '@material-ui/core/Dialog';
 import { urlConstants } from '../constants/url.constants';
+import logo from '../img/BE2.png';
 
-const logo = require('../img/BE2.png');
 
 class LoginPage extends Component {
   constructor(props) {

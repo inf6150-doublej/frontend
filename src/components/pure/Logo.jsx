@@ -1,7 +1,6 @@
 import React from 'react';
 import Image from 'react-image-resizer';
-
-const logo = require('../../img/BE2.png');
+import logo from '../../img/BE2.png';
 
 
 const Logo = (props) => {

@@ -18,9 +18,9 @@ import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
 // React-Bootstrap
-var ReactBsTable  = require('react-bootstrap-table');
-var BootstrapTable = ReactBsTable.BootstrapTable;
-var TableHeaderColumn = ReactBsTable.TableHeaderColumn;
+const ReactBsTable  = require('react-bootstrap-table');
+const BootstrapTable = ReactBsTable.BootstrapTable;
+const TableHeaderColumn = ReactBsTable.TableHeaderColumn;
 require('../../node_modules/react-bootstrap-table/dist/react-bootstrap-table-all.min.css');
 
 
@@ -54,7 +54,7 @@ class UserManager extends Component {
   
   createCustomInsertButton = (onClick) => {
     return (
-      <Button size="sm" className="btnCreate" variant="info" onClick={() => this.onCreateClick(null)}><FontAwesomeIcon icon={faPlus} />&nbsp;Create</Button>
+      <Button size='sm' className='btnCreate' variant='info' onClick={() => this.onCreateClick(null)}><FontAwesomeIcon icon={faPlus} />&nbsp;Create</Button>
     );
   }
 
@@ -67,58 +67,49 @@ class UserManager extends Component {
       defaultSortOrder: 'asc'  // default sort order
     };
     
-      return (<BootstrapTable data={users} version='4' hover condensed pagination search insertRow trClassName={this.rowClassNameFormat} options={options}
+      return (
+      <BootstrapTable data={users} version='4' hover condensed pagination search insertRow trClassName={this.rowClassNameFormat} options={options}
       multiColumnSearch={ true }>
-      <TableHeaderColumn dataField='edit' width={'80px'}  dataFormat={ this.editFormatter.bind(this) }></TableHeaderColumn>
-      <TableHeaderColumn dataField='delete'  width={'90px'} dataFormat={ this.deleteFormatter.bind(this) }></TableHeaderColumn>
-      <TableHeaderColumn isKey dataField='id' dataSort hidden={true}></TableHeaderColumn>
-      <TableHeaderColumn dataField='username' dataSort>User name</TableHeaderColumn>
-      <TableHeaderColumn dataField='name' dataSort>First name</TableHeaderColumn>
-      <TableHeaderColumn dataField='family_name' dataSort>Last name</TableHeaderColumn>
-      <TableHeaderColumn dataField='email' dataSort>E-mail</TableHeaderColumn>
-  </BootstrapTable>)
+        <TableHeaderColumn dataField='edit' width={'80px'}  dataFormat={ this.editFormatter.bind(this) }></TableHeaderColumn>
+        <TableHeaderColumn dataField='delete'  width={'90px'} dataFormat={ this.deleteFormatter.bind(this) }></TableHeaderColumn>
+        <TableHeaderColumn isKey dataField='id' dataSort hidden={true}></TableHeaderColumn>
+        <TableHeaderColumn dataField='username' dataSort>User name</TableHeaderColumn>
+        <TableHeaderColumn dataField='name' dataSort>First name</TableHeaderColumn>
+        <TableHeaderColumn dataField='family_name' dataSort>Last name</TableHeaderColumn>
+        <TableHeaderColumn dataField='email' dataSort>E-mail</TableHeaderColumn>
+      </BootstrapTable>)
   }
 
   handleSubmitCreate(event) {
-
     const { user } = this.state;
     const { dispatch, history } = this.props;
 
     if(user.name && user.family_name && user.email && user.username) {
-
       dispatch(createUser(user, history));
-
       this.setState({user: user, showUserList: true, showUpdateForm:false, showCreateForm:false, isSubmitted: false, shouldReload: true })
     } else {
       this.setState({user: user, showUserList: false, showUpdateForm:false, showCreateForm:true, isSubmitted: true })  
     }
-  
-    
-  
   }
 
   handleSubmitUpdate(event) {
     event.preventDefault();
-
     const { user } = this.state;
     const { dispatch, history } = this.props;
 
     if(user.name && user.family_name && user.email && user.username) {
       dispatch(updateUser(user, history));
-
       this.setState({user: user, showUserList: true, showUpdateForm:false, showCreateForm:false, isSubmitted: false })
     } else {
       
       this.setState({user: user, showUserList: false, showUpdateForm:true, showCreateForm:false, isSubmitted: true })
     }
-  
   }
 
 
   createForm = () => {
     const { user, isSubmitted } = this.state;
     const { dispatch, history } = this.props;
-
 
     const onChange = (event) => {
       const { name, value } = event.target;
@@ -132,7 +123,7 @@ class UserManager extends Component {
     }
 
     return (
-      <form autoComplete="new-password2" onSubmit={this.handleSubmitCreate}>
+      <form autoComplete='new-password2' onSubmit={this.handleSubmitCreate}>
         <div>
           <div >
             <label htmlFor='name'>First Name</label>
@@ -171,7 +162,7 @@ class UserManager extends Component {
             <input type='text' className='form-control' name='admin' value={user.admin} onChange={onChange}/>
           </div>
         </div>
-        <div><input type="submit" value="Create" /></div>
+        <div><input type='submit' value='Create' /></div>
         <div><button onClick={()=>this.cancel()}>cancel</button></div>
       </form>
       )
@@ -192,7 +183,7 @@ class UserManager extends Component {
     }
 
     return (
-      <form autoComplete="new-password3" onSubmit={this.handleSubmitUpdate}>
+      <form autoComplete='new-password3' onSubmit={this.handleSubmitUpdate}>
         <div>
           <div >
             <label htmlFor='name'>First Name</label>
@@ -223,55 +214,52 @@ class UserManager extends Component {
             {isSubmitted && !user.username && <div className='help-block text-danger'>Username is required</div>}
           </div>
         </div>
-        <div><input type="submit" value="Update" /></div>
+        <div><input type='submit' value='Update' /></div>
         <div><button onClick={this.cancel}>cancel</button></div>
       </form>
       )
   }
 
   
-onEditClick = user => 
-{
-  this.setState({ user: user, showUserList: false, showUpdateForm:true, showCreateForm:false, isSubmitted: false })
-};
+  onEditClick = user => {
+    this.setState({ user: user, showUserList: false, showUpdateForm:true, showCreateForm:false, isSubmitted: false })
+  };
 
-onCreateClick = user => 
-{
-  this.setState({ user: {
-    name: "",
-    family_name: "",
-    address: "",
-    phone: "",
-    email: "",
-    username: "",
-    password: "",
-    admin: 0
-  }, showUserList: false, showUpdateForm:false, showCreateForm:true, isSubmitted: false })
-};
+  onCreateClick = user => {
+    this.setState({ user: {
+      name: '',
+      family_name: '',
+      address: '',
+      phone: '',
+      email: '',
+      username: '',
+      password: '',
+      admin: 0
+    }, showUserList: false, showUpdateForm:false, showCreateForm:true, isSubmitted: false })
+  };
 
-onDeleteClick = user => 
-{
-  const {dispatch} = this.props;
+  onDeleteClick = user => {
+    const {dispatch} = this.props;
 
-  const confirmation = window.confirm('Confirm delete');
-  if(confirmation){
-    dispatch(deleteUser(user.id));
-  }
-};
+    const confirmation = window.confirm('Confirm delete');
+    if(confirmation){
+      dispatch(deleteUser(user.id));
+    }
+  };
 
   editFormatter(cell,user) {
-    return  <Button size="sm"  variant="primary" onClick={() => this.onEditClick(user)}><FontAwesomeIcon icon={faPencilAlt} /> Edit</Button>
-}
+    return  <Button size='sm'  variant='primary' onClick={() => this.onEditClick(user)}><FontAwesomeIcon icon={faPencilAlt} /> Edit</Button>
+  }
 
-deleteFormatter(cell,user) {
-  return  <Button size="sm" variant="danger" className="btnGrid2" onClick={() => this.onDeleteClick(user)}><FontAwesomeIcon icon={faTrashAlt} /> Delete</Button>
-}
+  deleteFormatter(cell,user) {
+    return  <Button size='sm' variant='danger' className='btnGrid2' onClick={() => this.onDeleteClick(user)}><FontAwesomeIcon icon={faTrashAlt} /> Delete</Button>
+  }
 
   render() {
     const { showUserList, showUpdateForm, showCreateForm, shouldReload } = this.state;
     const {  history, dispatch, shouldRefresh } = this.props;
     
-    console.log({"F": shouldRefresh, 'SR': shouldReload});
+    console.log({'F': shouldRefresh, 'SR': shouldReload});
     if(shouldRefresh && shouldReload) {
       this.state.shouldReload = false;
       dispatch(getUsers());
