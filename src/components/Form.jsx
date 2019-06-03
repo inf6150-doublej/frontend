@@ -8,7 +8,8 @@ import '../css/Form.css';
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import {urlConstants} from '../constants/url.constants';
+import Select from '@material-ui/core/Select';
+
 
 class Form extends Component {
   constructor(props) {
@@ -19,6 +20,7 @@ class Form extends Component {
       begin: '07:30',
       end: '07:30',
       capacity:0,
+      type:0,
       equipment:{
         computer: false,
         whiteboard: false,
@@ -34,13 +36,13 @@ class Form extends Component {
   handleSearch = (e) => {
     e.preventDefault();
     const { history } = this.props;
-    const { date, begin, end, capacity, equipment } = this.state;
+    const { date, begin, end, capacity, equipment, type } = this.state;
     let [hour, min] = begin.split(':');
     date.setHours(hour, min, '0')
     const dateEnd = new Date(date);
     [hour, min] = end.split(':');
     dateEnd.setHours(hour, min, '0');
-    history.push(`/${capacity}/${date}/${dateEnd}/${JSON.stringify(equipment)}`);
+    history.push(`/${capacity}/${date}/${dateEnd}/${JSON.stringify(equipment)}/${type}`);
   }
 
   onLocationChange = (e) => {
@@ -49,6 +51,10 @@ class Form extends Component {
 
   onChangeDate = async(date) => {
     await this.setState({ date })
+  }
+
+  onTypeChange = (e) => {
+    this.setState({ type: e.target.value });
   }
 
   onTimeChange = async (e) => {
@@ -84,45 +90,74 @@ class Form extends Component {
             <Row>
               <Col><div><br></br><h3>Location</h3><input className='form-location' placeholder='everywhere' onChange={this.onLocationChange}></input></div></Col>
               <Col xs={6}><Calendar onChangeDate={this.onChangeDate} onTimeChange={this.onTimeChange} date={date}/></Col>
-              <Col><div className='form-equipment-container'>
+              <Col>
+                <div className='form-equipment-container'>
+                  <br></br>
+                  <h3>Equipment</h3>
+                  <div className='form-equipment-wrapper'>
+                    <div>
+                      <input type='checkbox' id='form-computer' name='computer' onChange={this.onEquipmentChange}/>
+                      <label htmlFor='form-computer'>Computer</label>
+                    </div>
+                    <div>
+                      <input type='checkbox' id='form-whiteboard' name='whiteboard' onChange={this.onEquipmentChange}/>
+                      <label htmlFor='form-whiteboard'>White Board</label>
+                    </div>
+                    <div>
+                      <input type='checkbox' id='form-soundsystem' name='soundsystem' onChange={this.onEquipmentChange}/>
+                      <label htmlFor='form-soundsystem'>Sound System</label>
+                    </div>
+                    <div>
+                      <input type='checkbox' id='form-projector' name='projector' onChange={this.onEquipmentChange}/>
+                      <label htmlFor='form-projector'>Projector</label>
+                    </div>
+                  </div>
+                </div>
+              </Col>
+              <Col>
+                <div className='form-type-container'>
+                  <br></br>
+                  <h3>Type</h3>
+                  <div className='form-type-wrapper'>
+                    <Select
+                      native
+                      value={this.state.type}
+                      onChange={this.onTypeChange}
+                      inputProps={{
+                        name: 'type',
+                        id: 'form-type',
+                      }}
+                    >
+                      <option value={0} />
+                      <option value={1}>arena</option>
+                      <option value={2}>auditorium</option>
+                      <option value={3}>bar</option>
+                      <option value={4}>university</option>
+                      <option value={5}>theatre</option>
+                      <option value={6}>cultural center</option>
+                      <option value={7}>house</option>
+                      <option value={8}>outdoor</option>
+                    </Select>
+                  </div>
+                </div>
+              </Col>
+            </Row>
+            <Row>
+              <div className='form-capacity-container'>
+                <h3>Capacity</h3>
                 <br></br>
-              <h3>Equipment</h3>
-              <div className='form-equipment-wrapper'>
-                <div>
-                  <input type='checkbox' id='form-computer' name='computer' onChange={this.onEquipmentChange}/>
-                  <label htmlFor='form-computer'>Computer</label>
-                </div>
-                <div>
-                  <input type='checkbox' id='form-whiteboard' name='whiteboard' onChange={this.onEquipmentChange}/>
-                  <label htmlFor='form-whiteboard'>White Board</label>
-                </div>
-                <div>
-                  <input type='checkbox' id='form-soundsystem' name='soundsystem' onChange={this.onEquipmentChange}/>
-                  <label htmlFor='form-soundsystem'>Sound System</label>
-                </div>
-                <div>
-                  <input type='checkbox' id='form-projector' name='projector' onChange={this.onEquipmentChange}/>
-                  <label htmlFor='form-projector'>projector</label>
-                </div>
+                <InputRange
+                  maxValue={1000}
+                  minValue={0}
+                  value={this.state.capacity}
+                  onChange={value => this.setState({ capacity:value })} 
+                />
               </div>
-            </div></Col>
             </Row>
             <Row>
-            <div className='form-capacity-container'>
-              <h3>Capacity</h3>
-              <br></br>
-              <InputRange
-                maxValue={1000}
-                minValue={0}
-                value={this.state.capacity}
-                onChange={value => this.setState({ capacity:value })} 
-              />
-            </div>
+              <div className='form-button-container'><button className='btn btn-primary'onClick={this.handleSearch}>search</button></div>
             </Row>
-            <Row>
-            <div className='form-button-container'><button className='btn btn-primary'onClick={this.handleSearch}>search</button></div>
-            </Row>
-            </Container>;
+          </Container>
         </div>
       </div>
     );

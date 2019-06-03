@@ -12,7 +12,6 @@ import ReservationManager from './components/ReservationManager.jsx';
 import RoomManager from './components/RoomManager.jsx';
 
 class App extends Component {
-  componentDidMount() {}
 
   render() {
     return (
@@ -24,8 +23,8 @@ class App extends Component {
           <Route path='/admin/reservation' component={ReservationManager} />
           <Route path='/admin/rooms' component={RoomManager} />
           <Route path='/confirmation' component={Confirmation} />
-          <Route path='/:capacity?/:begin?/:end?/:equipment?' component={SearchEngine} />
-          <Route path="*" component={Home}/>
+          <Route path='/:capacity?/:begin?/:end?/:equipment?/:type?' component={SearchEngine} />
+          <Route path='*' component={Home}/>
         </Switch>
     );
   }
