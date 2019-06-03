@@ -1,6 +1,4 @@
 import React from 'react';
-import '../../css/Room.css'
-import Image from 'react-image-resizer';
 import Media from 'react-bootstrap/Media'
 
 const logo = require('../../img/BE3.png');

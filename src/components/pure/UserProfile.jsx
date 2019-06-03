@@ -18,10 +18,10 @@ const UserProfile = (props) => {
         height="100"
         className="d-inline-block align-center"
       />
-      {' BookingExpert '}
+      <span  className="user-profile">{' BookingExpert '}</span>
     </Navbar.Brand>
     <Navbar.Toggle />
-    <Navbar.Collapse className="navbar-nav mr-auto">
+    <Navbar.Collapse className="navbar-nav mr-auto user-profile-wrapper">
           <NavItem right>{!user && <Link to='/register' className='user-profile'>Register</Link>}</NavItem>
           <NavItem right>{user && <div className='user-profile' onClick={logout}>Logout</div>}</NavItem>
           <NavItem right>{!user && <Link to="/login" className="user-profile">Login</Link>}</NavItem>

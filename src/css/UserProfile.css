@@ -11,10 +11,13 @@
 }
 
 .user-profile{
+    color: #007bff;
     padding: 0 10px 0 10px;
     font-family: 'Mandali', sans-serif;
+    
 }
 
 .user-profile:hover{
     border-bottom: 3px solid #aaa;
+    text-decoration: none;
 }

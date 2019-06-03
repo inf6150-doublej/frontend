@@ -1,0 +1,8 @@
+.headerWithMenu {
+    display: flex;
+}
+
+.user-profile-container {
+    align-self: center;
+    margin-left: 10px;
+}

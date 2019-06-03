@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import Room from './pure/RoomAdmin'
 import {
   deleteRoom,
   createRoom,
@@ -9,6 +8,7 @@ import {
   getRooms,
 } from '../store/actions/admin.actions'
 import '../css/CustomBootstrapTable.css'
+import '../css/RoomManager.css'
 import Button from 'react-bootstrap/Button';
 import HeaderAdmin from './pure/HeaderAdmin'
 //font-awesome

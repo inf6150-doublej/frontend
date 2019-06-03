@@ -6,26 +6,8 @@ html{
 
 }
 
-div{
-  width: 100%;
-  height: 100%;
-  justify-content: center;
-  font-family: 'Mandali', sans-serif;
-  color: cornflowerblue;
-}
 
-p{
-
-}
-body {
-
-}
-
-header {
-/*display: flex;*/
-}
-
-table, td, th, tr {
+/*table, td, th, tr {
   border: 1px solid black;
 }
 
@@ -41,6 +23,7 @@ th {
   text-align: center;
 }
 
+
 form p{
   display: none;
 }
@@ -49,7 +32,7 @@ p{
   width: 600px;
   text-align: center;
   text-justify: inter-word;
-}
+}*/
 
 .button {
   border: none;
@@ -86,11 +69,6 @@ h2{
   color: cornflowerblue;
 }
 
-span{
-  color: var(--button-color);
-  font-size: 140%;
-  font-style: normal;
-}
 
 img {
   margin-left: auto;
