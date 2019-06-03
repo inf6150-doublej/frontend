@@ -22,7 +22,7 @@ class App extends Component {
           <Route path='/admin/reservation' component={ReservationManager} />
           <Route path='/admin/rooms' component={RoomManager} />
           <Route path='/confirmation' component={Confirmation} />
-          <Route path='/:capacity?/:begin?/:end?/:equipment?/:type?' component={SearchEngine} />
+          <Route path='/search/:capacity?/:begin?/:end?/:equipment?/:type?' component={SearchEngine} />
           <Route path='*' component={Home}/>
         </Switch>
     );

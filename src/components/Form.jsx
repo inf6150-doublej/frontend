@@ -42,7 +42,7 @@ class Form extends Component {
     const dateEnd = new Date(date);
     [hour, min] = end.split(':');
     dateEnd.setHours(hour, min, '0');
-    history.push(`/${capacity}/${date}/${dateEnd}/${JSON.stringify(equipment)}/${type}`);
+    history.push(`search/${capacity}/${date}/${dateEnd}/${JSON.stringify(equipment)}/${type}`);
   }
 
   onLocationChange = (e) => {
