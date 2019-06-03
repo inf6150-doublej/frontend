@@ -1,6 +1,7 @@
 .user-profile-container{
     /* display:flex;
     justify-content: right; */
+    font-family: 'Mandali', sans-serif;
 }
 
 .user-profile-wrapper{
@@ -11,6 +12,7 @@
 
 .user-profile{
     padding: 0 10px 0 10px;
+    font-family: 'Mandali', sans-serif;
 }
 
 .user-profile:hover{
