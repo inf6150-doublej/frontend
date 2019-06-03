@@ -37,13 +37,6 @@ table {
   margin-right:auto;
 }
 
-
-
-table, td, th {
-  border: 1px solid black;
-}
-
-
 th {
   text-align: center;
 }
@@ -105,9 +98,9 @@ img {
 }
 
 
-label {
+label, input {
   padding-right: 15px;
-  color: black;
+  color: dimgray;
 }
 
 #logo {
@@ -116,4 +109,16 @@ label {
 
 li {
   color:dimgray;
+}
+
+.btnCreate{
+  margin-top: 10px;
+}
+
+.td-odd {
+  background-color: aliceblue;
+}
+
+.td-even {
+  background-color: rgb(212, 227, 241);
 }
