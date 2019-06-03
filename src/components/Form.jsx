@@ -120,7 +120,7 @@ class Form extends Component {
             </div>
             </Row>
             <Row>
-            <div className='form-button-container'><button onClick={this.handleSearch}>search</button></div>
+            <div className='form-button-container'><button className='btn btn-primary'onClick={this.handleSearch}>search</button></div>
             </Row>
             </Container>;
         </div>

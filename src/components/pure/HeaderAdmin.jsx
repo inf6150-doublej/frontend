@@ -1,11 +1,12 @@
 import React from 'react';
 import Logo from './Logo.jsx';
 import { Link } from 'react-router-dom';
+import '../../css/HeaderAdmin.css'
 
 const HeaderAdmin = (props) => {
   const { history } = props;
   return (
-    <header>
+    <header className="headerWithMenu">
       <Logo viewHome={() => history.push('/')} />
       <div className='user-profile-container'>
         <div className='user-profile-wrapper'>

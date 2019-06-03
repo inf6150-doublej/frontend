@@ -50,6 +50,7 @@ export function updateUser(user) {
     const url = `${ADMIN_USERS}/${user.id}`;
     const requestOptions = {
       method: 'PUT',
+      credentials: 'include',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ user }),
     };
@@ -73,7 +74,7 @@ export function updateUser(user) {
     function success(id) { return { type: adminConstants.DELETE_USER_SUCCESS, id }; }
     function failure(id, err) { return { type: adminConstants.DELETE_USER_FAILURE, id, err }; }
     
-    const requestOptions = {method: 'DELETE'};
+    const requestOptions = {method: 'DELETE', credentials: 'include'};
     const {ADMIN_USERS} = urlConstants;
   
     return (dispatch) => {
@@ -94,6 +95,7 @@ export function updateUser(user) {
     const url = `${ADMIN_USERS}/create`;
     const requestOptions = {
       method: 'POST',
+      credentials: 'include',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ user }),
     };
@@ -119,7 +121,7 @@ export function updateUser(user) {
     function failure(err) { return { type: adminConstants.GET_USERS_FAILURE, err }; }
   
     const {ADMIN_USERS} = urlConstants;
-    const requestOptions = {method: 'GET'};
+    const requestOptions = {method: 'GET', credentials: 'include'};
 
     return (dispatch) => {
       dispatch(request());
@@ -145,6 +147,7 @@ export function updateUser(user) {
     const {ROOM_URL} = urlConstants;
     const requestOptions = {
       method: 'PUT',
+      credentials: 'include',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ room }),
     };
@@ -166,7 +169,7 @@ export function updateUser(user) {
     function success(id) { return { type: adminConstants.DELETE_ROOM_SUCCESS, id }; }
     function failure(id, err) { return { type: adminConstants.DELETE_ROOM_FAILURE, id, err }; }
   
-    const requestOptions = {method: 'DELETE'};
+    const requestOptions = {method: 'DELETE', credentials: 'include'};
     const {ROOM_URL} = urlConstants;
     
     return (dispatch) => {
@@ -186,6 +189,7 @@ export function updateUser(user) {
     const {ROOM_URL} = urlConstants;
     const requestOptions = {
       method: 'POST',
+      credentials: 'include',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ room }),
     };
@@ -205,7 +209,7 @@ export function updateUser(user) {
     function failure(err) { return { type: adminConstants.GET_ROOMS_FAILURE, err }; }
   
     const {ROOM_URL} = urlConstants;
-    const requestOptions = {method: 'GET'};
+    const requestOptions = {method: 'GET', credentials: 'include'};
     
     return (dispatch) => {
       dispatch(request());

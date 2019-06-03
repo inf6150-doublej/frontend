@@ -7,7 +7,7 @@ import { userActions, isAuthenticated } from '../store/actions/user.actions';
 import Dialog from '@material-ui/core/Dialog';
 import { urlConstants } from '../constants/url.constants';
 
-const logo = require('../img/logo.svg');
+const logo = require('../img/BE2.png');
 
 class LoginPage extends Component {
   constructor(props) {
@@ -71,7 +71,7 @@ class LoginPage extends Component {
       <form className='form-horizontal'>
       <div className='Hero-login'>
         <div className='foto-login'>
-          <Image src={logo} alt='logo' width={240} height={240} />
+          <Image src={logo} alt='logo' width={240} height={240} /> {/*} onClick={() => goToUrl(history, '/')}  Comment faire? {*/}
         </div>
         <div className='col-md-6 col-md-offset-3 '>
           <h2>Login</h2>

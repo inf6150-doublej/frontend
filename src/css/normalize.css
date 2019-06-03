@@ -2,29 +2,12 @@ html{
   color: gray;
   background-color: ghostwhite;
   padding: 25px;
-}
-
-div{
-  width: 100%;
-  height: 100%;
-  justify-content: center;
-}
-p{
+  font-family: 'Mandali', sans-serif;
 
 }
-body {
-  /* display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%; */
-}
 
-header {
-display: flex;
-}
 
-table, td, th, tr {
+/*table, td, th, tr {
   border: 1px solid black;
 }
 
@@ -36,16 +19,10 @@ table {
   margin-right:auto;
 }
 
-
-
-table, td, th {
-  border: 1px solid black;
-}
-
-
 th {
   text-align: center;
 }
+
 
 form p{
   display: none;
@@ -55,7 +32,7 @@ p{
   width: 600px;
   text-align: center;
   text-justify: inter-word;
-}
+}*/
 
 .button {
   border: none;
@@ -73,16 +50,23 @@ p{
   width: 120px;
 }
 
-
-h1{
-  font-family: Tahoma, Geneva, sans-serif;
-  font-style: normal;
+.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+  background-color:cornflowerblue !important;
 }
 
-span{
-  color: var(--button-color);
-  font-size: 140%;
-  font-style: normal;
+.TextField {
+  color:darkgrey;
+}
+
+
+h1{
+  font-family: 'Mandali', sans-serif;
+  color: cornflowerblue;
+}
+
+h2{
+  font-family: 'Mandali', sans-serif;
+  color: cornflowerblue;
 }
 
 img {
@@ -91,10 +75,15 @@ img {
 }
 
 
-label {
-  padding-right: 15px
+label, input {
+  padding-right: 15px;
+  color: dimgray;
 }
 
 #logo {
   cursor: pointer; 
+}
+
+li {
+  color:dimgray;
 }

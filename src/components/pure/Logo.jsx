@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'react-image-resizer';
 
-const logo = require('../../img/logo.svg');
+const logo = require('../../img/BE2.png');
 
 
 const Logo = (props) => {
@@ -11,7 +11,8 @@ const Logo = (props) => {
       <Image
         src={logo}
         alt="react logo"
-        height={50}
+        height={60}
+        width={60}
       />
     </div>
   );
