@@ -6,7 +6,7 @@ import { logout, checkSession } from '../store/actions/user.actions';
 import { goToUrl } from '../store/actions/router.actions';
 import Header from './pure/Header.jsx';
 import Form from './Form.jsx';
-import '../css/Home.css'
+import '../css/Home.css';
 
 
 class Home extends Component {
@@ -18,7 +18,7 @@ class Home extends Component {
 
   componentDidMount() {
     const { dispatch, user } = this.props;
-    if(!user)dispatch(checkSession());
+    if (!user)dispatch(checkSession());
   }
 
   logout = () => {
@@ -46,7 +46,7 @@ function mapStateToProps(state) {
   const { loggedIn, user } = state.authentication;
   return {
     user,
-    loggedIn
+    loggedIn,
   };
 }
 

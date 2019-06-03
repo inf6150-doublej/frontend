@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Image from 'react-image-resizer';
-import { userActions } from '../store/actions/user.actions';
 import { Dialog } from '@material-ui/core';
+import { userActions } from '../store/actions/user.actions';
 import { goToUrl } from '../store/actions/router.actions';
 import logo from '../img/BE2.png';
 
@@ -27,7 +27,7 @@ class RegisterPage extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleBack = this.handleBack.bind(this); 
+    this.handleBack = this.handleBack.bind(this);
   }
 
 
@@ -42,7 +42,7 @@ class RegisterPage extends Component {
     });
   }
 
-  handleSubmit = (event) =>  {
+  handleSubmit = (event) => {
     event.preventDefault();
     this.setState({ submitted: true });
     const { user } = this.state;
@@ -57,12 +57,12 @@ class RegisterPage extends Component {
     this.props.history.goBack();
   }
 
-  
+
   render() {
     const { registering, error, history, registeredUser } = this.props;
     const { user, submitted } = this.state;
     const { name, last_name, address, phone, username, password, email } = user;
-    const openModal = registeredUser ? true : false;
+    const openModal = !!registeredUser;
     let formClassName = 'form-group';
     if (submitted && !(name || last_name || address || phone || username || password || email)) {
       formClassName = 'form-group has-error';
@@ -114,16 +114,16 @@ class RegisterPage extends Component {
             </div>
             <div className='form-group'>
               <button className='btn btn-primary' onClick={this.handleSubmit}>Register</button>
-              {registering &&
-                <img src='data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==' alt='blabla' />}
+              {registering
+                && <img src='data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==' alt='blabla' />}
               <Link onClick={this.handleBack} className='btn btn-link'>Cancel</Link>
             </div>
           </div>
         </div>
         <Dialog open={openModal}>
           thank you for registering to booking expert
-          <button onClick={()=>goToUrl(history, '/')}>continue searching</button>
-          <button onClick={()=>goToUrl(history, '/myaccount')}>view account</button>
+          <button onClick={() => goToUrl(history, '/')}>continue searching</button>
+          <button onClick={() => goToUrl(history, '/myaccount')}>view account</button>
         </Dialog>
       </form>
     );

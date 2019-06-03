@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import Image from 'react-image-resizer';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { userActions, isAuthenticated } from '../store/actions/user.actions';
 import Dialog from '@material-ui/core/Dialog';
+import { userActions, isAuthenticated } from '../store/actions/user.actions';
 import { isValidEmail } from '../utils/utils';
 import logo from '../img/BE2.png';
 
@@ -23,7 +23,7 @@ class LoginPage extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.login.bind(this);
 
-    if(isAuthenticated()) {
+    if (isAuthenticated()) {
       const { dispatch, history } = this.props;
       history.push('/');
     }
@@ -32,14 +32,14 @@ class LoginPage extends Component {
   handleChange(e) {
     const { name, value } = e.target;
     this.setState({ [name]: value });
-    if(name === 'email')this.validateEmail(value);
+    if (name === 'email') this.validateEmail(value);
   }
 
   validateEmail = (email) => {
-    if(isValidEmail(email)){
-      this.setState({isValidEmail: true});
+    if (isValidEmail(email)) {
+      this.setState({ isValidEmail: true });
     } else {
-      this.setState({isValidEmail: false});
+      this.setState({ isValidEmail: false });
     }
   }
 
@@ -59,7 +59,7 @@ class LoginPage extends Component {
 
   showRecoveringModal = (e) => {
     e.preventDefault();
-    this.setState({showRecoverModal : true})
+    this.setState({ showRecoverModal: true });
   }
 
   recoverPassword = () => {
@@ -74,13 +74,13 @@ class LoginPage extends Component {
     let formClassName = 'form-group';
     if (submitted && (!(email || password) || error)) formClassName = 'form-group has-error';
     let emailClassName = 'form-control';
-    if(!isValidEmail) emailClassName = 'form-control is-invalid'
+    if (!isValidEmail) emailClassName = 'form-control is-invalid';
 
     return (
       <form className='form-horizontal'>
         <div className='Hero-login'>
           <div className='foto-login'>
-            <Image src={logo} alt='logo' width={240} height={240} /> {/*} onClick={() => goToUrl(history, '/')}  Comment faire? {*/}
+            <Image src={logo} alt='logo' width={240} height={240} /> {/* } onClick={() => goToUrl(history, '/')}  Comment faire? {*/}
           </div>
 
           <div className='col-md-6 col-md-offset-3 '>
@@ -101,8 +101,8 @@ class LoginPage extends Component {
 
             <div className='form-group'>
               <button className='btn btn-primary' onClick={this.login}>Login</button>
-              {loggingIn &&
-                <img
+              {loggingIn
+                && <img
                   src='data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==' alt='bonjour' />}
               <Link to='/register' className='btn btn-link'>Register</Link>
               <Link className='btn btn-link' onClick={this.showRecoveringModal}>Recover password</Link>

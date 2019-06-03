@@ -2,20 +2,20 @@ import Cookies from 'universal-cookie';
 import { userConstants } from '../../constants/user.constants';
 
 const cookies = new Cookies();
-const { 
-  LOGIN_FAILURE, 
-  LOGIN_REQUEST, 
-  LOGIN_SUCCESS, 
-  LOGOUT, 
-  SESSION_FAILURE, 
-  SESSION_SUCCESS, 
-  SESSION_REQUEST, 
-  RECOVER_PASSWORD_FAILURE, 
-  RECOVER_PASSWORD_SUCCESS, 
-  RECOVER_PASSWORD_REQUEST, 
+const {
+  LOGIN_FAILURE,
+  LOGIN_REQUEST,
+  LOGIN_SUCCESS,
+  LOGOUT,
+  SESSION_FAILURE,
+  SESSION_SUCCESS,
+  SESSION_REQUEST,
+  RECOVER_PASSWORD_FAILURE,
+  RECOVER_PASSWORD_SUCCESS,
+  RECOVER_PASSWORD_REQUEST,
 } = userConstants;
 const user = cookies.get('user');
-const initialState = user ? {loggedIn: true, ...user} : {};
+const initialState = user ? { loggedIn: true, ...user } : {};
 
 
 function authentication(state = initialState, action) {
@@ -31,28 +31,28 @@ function authentication(state = initialState, action) {
     case SESSION_FAILURE:
       return {};
     case LOGIN_REQUEST:
-      return {loggingIn: true,};
+      return { loggingIn: true };
     case LOGIN_SUCCESS:
       return { loggedIn: true, ...action.user };
     case LOGIN_FAILURE:
-      return { loggedIn: false, error: action.err};
+      return { loggedIn: false, error: action.err };
     case LOGOUT:
       return {};
     case RECOVER_PASSWORD_REQUEST:
-      return {};  
+      return {};
     case RECOVER_PASSWORD_SUCCESS:
       return { message: action.message };
     case RECOVER_PASSWORD_FAILURE:
-      return { error: action.err};
+      return { error: action.err };
     case userConstants.REGISTER_REQUEST:
       return { registering: true };
     case userConstants.REGISTER_SUCCESS:
-      return { 
+      return {
         registering: false,
-        user: action.user
+        user: action.user,
       };
     case userConstants.REGISTER_FAILURE:
-      return {registering: false, error:action.err};  
+      return { registering: false, error: action.err };
     default:
       return state;
   }

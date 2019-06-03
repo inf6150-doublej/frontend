@@ -3,16 +3,15 @@ import { connect } from 'react-redux';
 import { Route, withRouter, Switch } from 'react-router-dom';
 import Login from './components/Login.jsx';
 import Home from './components/Home.jsx';
-import Confirmation from './components/Confirmation';
+import Confirmation from './components/Confirmation.jsx';
 import Register from './components/Register.jsx';
-import SearchEngine from './components/pure/SearchEngine'
-import UserManager from './components/UserManager'
-import './css/normalize.css'
+import SearchEngine from './components/pure/SearchEngine.jsx';
+import UserManager from './components/UserManager.jsx';
+import './css/normalize.css';
 import ReservationManager from './components/ReservationManager.jsx';
 import RoomManager from './components/RoomManager.jsx';
 
 class App extends Component {
-
   render() {
     return (
         <Switch>

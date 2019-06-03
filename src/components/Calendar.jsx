@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import MyCalendar from 'react-calendar';
-import TimePickers  from './pure/TimePickers.jsx';
+import TimePickers from './pure/TimePickers.jsx';
 import '../css/Calendar.css';
 
 class Calendar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showCalendar:false
+      showCalendar: false,
     };
   }
 
@@ -17,19 +17,18 @@ class Calendar extends Component {
 
   showCalendar = (e) => {
     e.preventDefault();
-    this.setState({showCalendar:true})
+    this.setState({ showCalendar: true });
   }
 
   hideCalendar = (date) => {
     const { onChangeDate } = this.props;
-    this.setState({ showCalendar:false })
+    this.setState({ showCalendar: false });
     onChangeDate(date);
   }
 
 
-
   render() {
-    const { showCalendar} = this.state;
+    const { showCalendar } = this.state;
     const { onTimeChange, date } = this.props;
     return (
       <div className='calendar-container'>

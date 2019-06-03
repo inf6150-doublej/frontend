@@ -25,6 +25,3 @@ export function roomsFetcher(state = initialState, action) {
       return state;
   }
 }
-
-
-

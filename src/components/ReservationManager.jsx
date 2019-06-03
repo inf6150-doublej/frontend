@@ -1,51 +1,51 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Reservation from './pure/Reservation'
+import Reservation from './pure/Reservation.jsx';
 import {
   deleteReservation,
   createReservation,
   updateReservation,
   getReservations,
-} from '../store/actions/admin.actions'
+} from '../store/actions/admin.actions';
 
 
 class ReservationManager extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      reservation:{},
+      reservation: {},
       showReservationList: false,
       showUpdateForm: false,
       showCreateForm: false,
     };
   }
 
-  cancel = () =>{this.setState({ showReservationList: false, showCreateForm:false, showUpdateForm:false, showDeleteForm:false })}
+  cancel = () => { this.setState({ showReservationList: false, showCreateForm: false, showUpdateForm: false, showDeleteForm: false }); }
 
   reservationList = () => {
     const { reservations, dispatch } = this.props;
 
     const onDelete = (id) => {
       const confirmation = window.confirm('Confirm delete');
-      if(confirmation){
+      if (confirmation) {
         dispatch(deleteReservation(id));
       }
     };
 
     const onUpdate = (reservation) => {
-      this.setState({reservation:reservation, showUpdateForm:true, showReservationList:false})
+      this.setState({ reservation, showUpdateForm: true, showReservationList: false });
     };
 
-    let reservationMap = []
+    let reservationMap = [];
     if (reservations && reservations.length) {
       reservationMap = reservations.map((reservation, i) => <Reservation key={i} reservation={reservation} onDelete={onDelete} onUpdate={onUpdate} />);
     }
-    return (<div>{reservationMap}</div>)
+    return (<div>{reservationMap}</div>);
   }
 
   createForm = () => {
-    const {reservation} = this.state;
-    const {dispatch} = this.props;
+    const { reservation } = this.state;
+    const { dispatch } = this.props;
     return (
       <div>
         <div>
@@ -67,14 +67,14 @@ class ReservationManager extends Component {
           </div>
         </div>
         <div><button onClick={() => dispatch(createReservation(reservation))}>create</button></div>
-        <div><button onClick={()=>this.cancel()}>cancel</button></div>
+        <div><button onClick={() => this.cancel()}>cancel</button></div>
       </div>
-      )
+    );
   }
 
   updateForm = () => {
-    const {reservation} = this.state;
-    const {dispatch} = this.props;
+    const { reservation } = this.state;
+    const { dispatch } = this.props;
     return (
       <div>
         <div>
@@ -98,12 +98,12 @@ class ReservationManager extends Component {
         <div><button onClick={() => dispatch(updateReservation(reservation))}>update</button></div>
         <div><button onClick={this.cancel}>cancel</button></div>
       </div>
-      )
+    );
   }
 
-  deleteForm = () =>{
-    const {reservation} = this.state;
-    const {dispatch} = this.props;
+  deleteForm = () => {
+    const { reservation } = this.state;
+    const { dispatch } = this.props;
     return (
       <div>
         <div>
@@ -113,23 +113,23 @@ class ReservationManager extends Component {
           </div>
         </div>
         <div><button onClick={() => dispatch(deleteReservation(reservation))}>delete</button></div>
-        <div><button onClick={() =>this.cancel()}>cancel</button></div>
+        <div><button onClick={() => this.cancel()}>cancel</button></div>
       </div>
-      )
+    );
   }
 
   handleReservationsList = () => {
     const { dispatch } = this.props;
     dispatch(getReservations());
-    this.setState({ showReservationList: true, showUpdateForm:false, showCreateForm:false, showDeleteForm:false })
+    this.setState({ showReservationList: true, showUpdateForm: false, showCreateForm: false, showDeleteForm: false });
   };
 
-  handleCreateForm = () =>{
-    this.setState({ showReservationList: false, showUpdateForm:false, showCreateForm:true, showDeleteForm:false })
+  handleCreateForm = () => {
+    this.setState({ showReservationList: false, showUpdateForm: false, showCreateForm: true, showDeleteForm: false });
   };
 
-  handleDeleteForm = () =>{
-    this.setState({ showReservationList: false, showUpdateForm:false, showCreateForm:false, showDeleteForm:true })
+  handleDeleteForm = () => {
+    this.setState({ showReservationList: false, showUpdateForm: false, showCreateForm: false, showDeleteForm: true });
   };
 
   render() {
@@ -144,7 +144,7 @@ class ReservationManager extends Component {
         {showCreateForm && this.createForm()}
         {showDeleteForm && this.deleteForm()}
       </div>
-    )
+    );
   }
 }
 
@@ -153,7 +153,7 @@ function mapStateToProps(state) {
   const { reservation, fetching } = state.administrator;
   return {
     reservation,
-    fetching
+    fetching,
   };
 }
 

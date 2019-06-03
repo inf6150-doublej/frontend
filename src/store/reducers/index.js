@@ -9,7 +9,7 @@ const rootReducer = combineReducers({
   authentication,
   administrator,
   reservation,
-  roomsFetcher
+  roomsFetcher,
 });
 
 export default rootReducer;

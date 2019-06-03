@@ -1,4 +1,3 @@
 export function goToUrl(history, endpoint) {
-    history.push(endpoint);
-  }
-  
+  history.push(endpoint);
+}

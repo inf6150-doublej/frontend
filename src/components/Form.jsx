@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import InputRange from 'react-input-range';
-import Calendar from './Calendar.jsx';
 import 'react-input-range/lib/css/index.css';
 import '../css/Form.css';
-import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import Select from '@material-ui/core/Select';
+import Calendar from './Calendar.jsx';
 
 
 class Form extends Component {
@@ -16,17 +16,17 @@ class Form extends Component {
     super(props);
     this.state = {
       location: 'everywhere',
-      date:new Date(),
+      date: new Date(),
       begin: '07:30',
       end: '07:30',
-      capacity:0,
-      type:0,
-      equipment:{
+      capacity: 0,
+      type: 0,
+      equipment: {
         computer: false,
         whiteboard: false,
         soundsystem: false,
         projector: false,
-      }
+      },
     };
   }
 
@@ -38,7 +38,7 @@ class Form extends Component {
     const { history } = this.props;
     const { date, begin, end, capacity, equipment, type } = this.state;
     let [hour, min] = begin.split(':');
-    date.setHours(hour, min, '0')
+    date.setHours(hour, min, '0');
     const dateEnd = new Date(date);
     [hour, min] = end.split(':');
     dateEnd.setHours(hour, min, '0');
@@ -49,8 +49,8 @@ class Form extends Component {
     this.setState({ location: e.target.value });
   }
 
-  onChangeDate = async(date) => {
-    await this.setState({ date })
+  onChangeDate = async (date) => {
+    await this.setState({ date });
   }
 
   onTypeChange = (e) => {
@@ -58,12 +58,12 @@ class Form extends Component {
   }
 
   onTimeChange = async (e) => {
-    switch(e.target.name){
+    switch (e.target.name) {
       case 'time-picker-begin':
-        await this.setState({begin:e.target.value})
+        await this.setState({ begin: e.target.value });
         break;
       case 'time-picker-end':
-        await this.setState({end:e.target.value})
+        await this.setState({ end: e.target.value });
         break;
     }
   }
@@ -72,11 +72,11 @@ class Form extends Component {
     const { name, checked } = e.target;
     const { equipment } = this.state;
     this.setState({
-      equipment:{
+      equipment: {
         ...equipment,
-        [name] : checked,
-      }
-    })
+        [name]: checked,
+      },
+    });
   }
 
   render() {
@@ -150,7 +150,7 @@ class Form extends Component {
                   maxValue={1000}
                   minValue={0}
                   value={this.state.capacity}
-                  onChange={value => this.setState({ capacity:value })} 
+                  onChange={value => this.setState({ capacity: value })}
                 />
               </div>
             </Row>

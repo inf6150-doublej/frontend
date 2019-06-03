@@ -6,7 +6,7 @@ import { dataConstants, urlConstants } from '../../constants';
 function handleResponse(response) {
   if (!response.ok) {
     return response.json()
-    .then(res => { return Promise.reject(res.error)})
+      .then((res) => Promise.reject(res.error));
   }
   return response.json();
 }
@@ -23,17 +23,17 @@ export function fetchAllRooms(data) {
     method: 'POST',
     credentials: 'include',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({data}),
+    body: JSON.stringify({ data }),
   };
 
   return (dispatch) => {
     dispatch(request());
-    fetch(SEARCH_URL, requestOptions )
+    fetch(SEARCH_URL, requestOptions)
       .then(handleResponse)
-      .then(data => {
+      .then((data) => {
         dispatch(success(data));
       })
-      .catch(err => dispatch(failure, err))
+      .catch(err => dispatch(failure, err));
   };
 }
 
