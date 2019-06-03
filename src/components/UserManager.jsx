@@ -16,6 +16,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import { isValidEmail } from '../utils/utils';
 
 // React-Bootstrap
 const ReactBsTable  = require('react-bootstrap-table');
@@ -33,7 +34,8 @@ class UserManager extends Component {
       showUpdateForm: false,
       showCreateForm: false,
       isSubmitted: false,
-      shouldReload: false
+      shouldReload: false,
+      emailClassName: 'form-control',
     };
 
     const { dispatch } = this.props;
@@ -67,9 +69,14 @@ class UserManager extends Component {
       defaultSortOrder: 'asc'  // default sort order
     };
     
-      return (
-      <BootstrapTable data={users} version='4' hover condensed pagination search insertRow trClassName={this.rowClassNameFormat} options={options}
-      multiColumnSearch={ true }>
+    return (
+      <BootstrapTable 
+        data={users} 
+        version='4' 
+        hover condensed pagination search insertRow trClassName={this.rowClassNameFormat} 
+        options={options}
+        multiColumnSearch={ true }
+      >
         <TableHeaderColumn dataField='edit' width={'80px'}  dataFormat={ this.editFormatter.bind(this) }></TableHeaderColumn>
         <TableHeaderColumn dataField='delete'  width={'90px'} dataFormat={ this.deleteFormatter.bind(this) }></TableHeaderColumn>
         <TableHeaderColumn isKey dataField='id' dataSort hidden={true}></TableHeaderColumn>
@@ -101,7 +108,6 @@ class UserManager extends Component {
       dispatch(updateUser(user, history));
       this.setState({user: user, showUserList: true, showUpdateForm:false, showCreateForm:false, isSubmitted: false })
     } else {
-      
       this.setState({user: user, showUserList: false, showUpdateForm:true, showCreateForm:false, isSubmitted: true })
     }
   }
@@ -109,18 +115,31 @@ class UserManager extends Component {
 
   createForm = () => {
     const { user, isSubmitted } = this.state;
-    const { dispatch, history } = this.props;
-
-    const onChange = (event) => {
-      const { name, value } = event.target;
+    let emailClassName = 'form-control';
+    
+    
+    const onChange = async (event) => {
+      const { name, value, checked } = event.target;
       const { user } = this.state;
-      this.setState({
-        user: {
-          ...user,
-          [name]: value,
-        },
-      });
-    }
+
+      if(name === 'admin'){
+        await this.setState({
+          user: {
+            ...user,
+            [name]: checked,
+          }
+        })
+      } else {
+        await this.setState({
+          user: {
+            ...user,
+            [name]: value,
+          },
+        });
+      }
+      if(!isValidEmail(this.state.user.email)) emailClassName = 'form-control is-invalid'
+      this.setState({emailClassName})
+    };
 
     return (
       <form autoComplete='new-password2' onSubmit={this.handleSubmitCreate}>
@@ -145,7 +164,7 @@ class UserManager extends Component {
           </div>
           <div >
             <label htmlFor='email'>Email</label>
-            <input type='text' className='form-control' name='email' value={user.email} onChange={onChange}/>
+            <input type='text' className={this.state.emailClassName} name='email' value={user.email} onChange={onChange}/>
             {isSubmitted && !user.email && <div className='help-block text-danger'>Email is required</div>}
           </div>
           <div >
@@ -157,9 +176,9 @@ class UserManager extends Component {
             <label htmlFor='password'>Password</label>
             <input type='password' className='form-control' name='password' value={user.password} onChange={onChange} required/>
           </div>
-          <div >
+          <div>
             <label htmlFor='admin'>Administrator</label>
-            <input type='text' className='form-control' name='admin' value={user.admin} onChange={onChange}/>
+            <input type='checkbox' id='create-user-admin' name='admin' onChange={onChange}/>
           </div>
         </div>
         <div><input type='submit' value='Create' /></div>
@@ -170,18 +189,22 @@ class UserManager extends Component {
 
   updateForm = () => {
     const { user, isSubmitted } = this.state;
-
-    const onChange = (event) => {
+    let emailClassName = 'form-control';
+    
+    const onChange = async (event) => {
       const { name, value } = event.target;
       const { user } = this.state;
-      this.setState({
+      await this.setState({
         user: {
           ...user,
           [name]: value,
         },
       });
+      if(!isValidEmail(this.state.user.email)) emailClassName = 'form-control is-invalid'
+      this.setState({emailClassName})
     }
 
+    
     return (
       <form autoComplete='new-password3' onSubmit={this.handleSubmitUpdate}>
         <div>
@@ -205,7 +228,7 @@ class UserManager extends Component {
           </div>
           <div >
             <label htmlFor='email'>Email</label>
-            <input type='text' className='form-control' name='email' value={user.email} onChange={onChange}/>
+            <input type='text' className={this.state.emailClassName} name='email' value={user.email} onChange={onChange}/>
             {isSubmitted && !user.email && <div className='help-block text-danger'>Email is required</div>}
           </div>
           <div>
@@ -221,11 +244,11 @@ class UserManager extends Component {
   }
 
   
-  onEditClick = user => {
+  onEditClick = (user) => {
     this.setState({ user: user, showUserList: false, showUpdateForm:true, showCreateForm:false, isSubmitted: false })
   };
 
-  onCreateClick = user => {
+  onCreateClick = () => {
     this.setState({ user: {
       name: '',
       family_name: '',
@@ -238,9 +261,8 @@ class UserManager extends Component {
     }, showUserList: false, showUpdateForm:false, showCreateForm:true, isSubmitted: false })
   };
 
-  onDeleteClick = user => {
+  onDeleteClick = (user) => {
     const {dispatch} = this.props;
-
     const confirmation = window.confirm('Confirm delete');
     if(confirmation){
       dispatch(deleteUser(user.id));
@@ -259,8 +281,8 @@ class UserManager extends Component {
     const { showUserList, showUpdateForm, showCreateForm, shouldReload } = this.state;
     const {  history, dispatch, shouldRefresh } = this.props;
     
-    console.log({'F': shouldRefresh, 'SR': shouldReload});
     if(shouldRefresh && shouldReload) {
+      // ici le state n'est pas setter, normalement on devrait pas avoir à faire le should reload ni le refresh
       this.state.shouldReload = false;
       dispatch(getUsers());
     }

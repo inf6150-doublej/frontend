@@ -15,7 +15,7 @@ class SearchEngine extends Component {
 
   componentDidMount() {
     const { dispatch } = this.props;
-    const { capacity, begin, end } = this.props.match.params;
+    const { capacity, begin, end, type } = this.props.match.params;
     const equipment = JSON.parse(this.props.match.params.equipment);
 
     const data = {
@@ -23,7 +23,8 @@ class SearchEngine extends Component {
       begin,
       end,
       equipment,
-    }
+      type,
+    };
     dispatch(fetchAllRooms(data))
   }
 
@@ -40,7 +41,7 @@ class SearchEngine extends Component {
       roomMap = rooms.map((room, i) => <Room key={i} room={room} onReservation={this.onReservation} />);
     }
     return (
-      <div className="rooms-container">
+      <div className='rooms-container'>
       {roomMap}
       </div>
     );
