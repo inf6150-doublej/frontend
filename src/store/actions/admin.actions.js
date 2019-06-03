@@ -35,11 +35,12 @@ export const adminConstants = {
 }
 
 function handleResponse(response) {
-    if (!response.ok) {
-      return Promise.reject(response.statusText);
-    }
-    return response.json();
+  if (!response.ok) {
+    return response.json()
+    .then(res => { return Promise.reject(res.error)})
   }
+  return response.json();
+}
 
 // ADMIN USERS ACTIONS
 
@@ -157,7 +158,6 @@ export function updateUser(user) {
         .then(handleResponse)
         .then((res) => {
           dispatch(success(res.room));
-          console.log({"upd": res });
         })
         .catch((err) => {dispatch(failure(err));});
     };

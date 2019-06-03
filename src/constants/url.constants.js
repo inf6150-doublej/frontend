@@ -12,5 +12,6 @@ export const urlConstants = {
   RESERVATION_URL: API_ROOT+'/reservation',
   GET_USER: API_ROOT+'/getuser',
   ADMIN_USERS: API_ROOT + '/admin/users',
+  RECOVER_PASSWORD: API_ROOT + '/recoverpassword',
 };
 

@@ -5,7 +5,8 @@ import { dataConstants, urlConstants } from '../../constants';
 
 function handleResponse(response) {
   if (!response.ok) {
-    return Promise.reject(response.statusText);
+    return response.json()
+    .then(res => { return Promise.reject(res.error)})
   }
   return response.json();
 }
