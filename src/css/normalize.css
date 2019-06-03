@@ -110,15 +110,3 @@ label, input {
 li {
   color:dimgray;
 }
-
-.btnCreate{
-  margin-top: 10px;
-}
-
-.td-odd {
-  background-color: aliceblue;
-}
-
-.td-even {
-  background-color: rgb(212, 227, 241);
-}
