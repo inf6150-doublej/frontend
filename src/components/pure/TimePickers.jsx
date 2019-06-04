@@ -17,7 +17,7 @@ const styles = theme => ({
 
 
 function TimePickers(props) {
-  const { classes, label, onChange, name} = props;
+  const { classes, label, onChange, name } = props;
 
   return (
     <form className={classes.container} noValidate>

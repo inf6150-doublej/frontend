@@ -13,8 +13,6 @@ class Calendar extends Component {
     };
   }
 
-  componentDidMount() {}
-
   showCalendar = (e) => {
     e.preventDefault();
     this.setState({ showCalendar: true });
