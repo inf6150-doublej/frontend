@@ -1,13 +1,13 @@
 import React from 'react';
-import Logo from './Logo.jsx';
 import { Link } from 'react-router-dom';
-import '../../css/HeaderAdmin.css'
+import Logo from './Logo.jsx';
+import '../../css/HeaderAdmin.css';
 
 const HeaderAdmin = (props) => {
   const { history } = props;
   return (
     <header className="headerWithMenu">
-      <Logo viewHome={() => history.push('/')} />
+      <Logo viewHome={() => history.push('/')} width={60} heigth={60} />
       <div className='user-profile-container'>
         <div className='user-profile-wrapper'>
           {<Link to='/admin/users' className='user-profile'>Manage users</Link>}
@@ -15,9 +15,7 @@ const HeaderAdmin = (props) => {
           {<Link to='/admin/rooms' className='user-profile'>Manage rooms</Link>}
         </div>
       </div>
-      
     </header>
-    
   );
 };
 

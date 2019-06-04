@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import Image from 'react-image-resizer';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import Dialog from '@material-ui/core/Dialog';
-import { userActions, isAuthenticated } from '../store/actions/user.actions';
+import { login, recoverPassword } from '../store/actions/user.actions';
 import { isValidEmail } from '../utils/utils';
-import logo from '../img/BE2.png';
+import Logo from './pure/Logo.jsx';
+import Loader from './pure/Loader.jsx';
 
 
 class LoginPage extends Component {
@@ -19,17 +19,9 @@ class LoginPage extends Component {
       showRecoverModal: false,
       isValidEmail: false,
     };
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.login.bind(this);
-
-    if (isAuthenticated()) {
-      const { dispatch, history } = this.props;
-      history.push('/');
-    }
   }
 
-  handleChange(e) {
+  handleChange = (e) => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
     if (name === 'email') this.validateEmail(value);
@@ -53,7 +45,7 @@ class LoginPage extends Component {
     const { email, password } = this.state;
     const { dispatch, history } = this.props;
     if (email && password) {
-      dispatch(userActions.login(email, password, history));
+      dispatch(login(email, password, history));
     }
   }
 
@@ -65,11 +57,11 @@ class LoginPage extends Component {
   recoverPassword = () => {
     const { dispatch } = this.props;
     const { email } = this.state;
-    dispatch(userActions.recoverPassword(email));
+    dispatch(recoverPassword(email));
   }
 
   render() {
-    const { loggingIn, error, message } = this.props;
+    const { loggingIn, error, message, history } = this.props;
     const { email, password, submitted, showRecoverModal, isValidEmail } = this.state;
     let formClassName = 'form-group';
     if (submitted && (!(email || password) || error)) formClassName = 'form-group has-error';
@@ -79,10 +71,7 @@ class LoginPage extends Component {
     return (
       <form className='form-horizontal'>
         <div className='Hero-login'>
-          <div className='foto-login'>
-            <Image src={logo} alt='logo' width={240} height={240} /> {/* } onClick={() => goToUrl(history, '/')}  Comment faire? {*/}
-          </div>
-
+          <Logo viewHome={() => history.push('/')} classNome='foto-login' width={240} height={240} />
           <div className='col-md-6 col-md-offset-3 '>
             <h2>Login</h2>
             {error && <div className='help-block text-danger'>Invalid password or email</div>}
@@ -101,9 +90,7 @@ class LoginPage extends Component {
 
             <div className='form-group'>
               <button className='btn btn-primary' onClick={this.login}>Login</button>
-              {loggingIn
-                && <img
-                  src='data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==' alt='bonjour' />}
+              <Loader loading={loggingIn} />
               <Link to='/register' className='btn btn-link'>Register</Link>
               <Link className='btn btn-link' onClick={this.showRecoveringModal}>Recover password</Link>
             </div>

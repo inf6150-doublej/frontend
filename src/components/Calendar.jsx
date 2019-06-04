@@ -13,8 +13,6 @@ class Calendar extends Component {
     };
   }
 
-  componentDidMount() {}
-
   showCalendar = (e) => {
     e.preventDefault();
     this.setState({ showCalendar: true });
@@ -29,7 +27,7 @@ class Calendar extends Component {
 
   render() {
     const { showCalendar } = this.state;
-    const { onTimeChange, date } = this.props;
+    const { onTimeChange, date, begin, end } = this.props;
     return (
       <div className='calendar-container'>
         <div className='calendar-wrapper'>
@@ -40,8 +38,8 @@ class Calendar extends Component {
           </div>
           <div className='time-picker-container'>
             <h3>Time</h3>
-            <TimePickers name='time-picker-begin' label="Start time" onChange={onTimeChange}></TimePickers>
-            <TimePickers name='time-picker-end' label="End time" onChange={onTimeChange}></TimePickers>
+            <TimePickers name='time-picker-begin' label="Start time" onChange={onTimeChange} value={begin}></TimePickers>
+            <TimePickers name='time-picker-end' label="End time" onChange={onTimeChange} value={end} ></TimePickers>
           </div>
         </div>
       </div>

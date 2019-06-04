@@ -30,9 +30,6 @@ class Form extends Component {
     };
   }
 
-  componentDidMount() {}
-
-
   handleSearch = (e) => {
     e.preventDefault();
     const { history } = this.props;
@@ -42,7 +39,7 @@ class Form extends Component {
     const dateEnd = new Date(date);
     [hour, min] = end.split(':');
     dateEnd.setHours(hour, min, '0');
-    history.push(`/${capacity}/${date}/${dateEnd}/${JSON.stringify(equipment)}/${type}`);
+    history.push(`search/${capacity}/${date}/${dateEnd}/${JSON.stringify(equipment)}/${type}`);
   }
 
   onLocationChange = (e) => {
@@ -58,15 +55,26 @@ class Form extends Component {
   }
 
   onTimeChange = async (e) => {
-    switch (e.target.name) {
+    const { name, value } = e.target;
+    const { begin, end } = this.state;
+    switch (name) {
       case 'time-picker-begin':
-        await this.setState({ begin: e.target.value });
+        await this.setState({ begin: value });
+        if (this.state.begin > end) {
+          await this.setState({ end: this.state.begin });
+        }
         break;
       case 'time-picker-end':
-        await this.setState({ end: e.target.value });
+        await this.setState({ end: value });
+        if (begin > this.state.end) {
+          await this.setState({ begin: this.state.end });
+        }
+        break;
+      default:
         break;
     }
   }
+
 
   onEquipmentChange = (e) => {
     const { name, checked } = e.target;
@@ -80,35 +88,35 @@ class Form extends Component {
   }
 
   render() {
-    const { date } = this.state;
+    const { date, begin, end } = this.state;
 
     return (
       <div className='form-container'>
         <div className='form-wrapper'>
           <div><h1>Create a reservation</h1></div>
-           <Container>
+          <Container>
             <Row>
               <Col><div><br></br><h3>Location</h3><input className='form-location' placeholder='everywhere' onChange={this.onLocationChange}></input></div></Col>
-              <Col xs={6}><Calendar onChangeDate={this.onChangeDate} onTimeChange={this.onTimeChange} date={date}/></Col>
+              <Col xs={6}><Calendar onChangeDate={this.onChangeDate} onTimeChange={this.onTimeChange} date={date} begin={begin} end={end} /></Col>
               <Col>
                 <div className='form-equipment-container'>
                   <br></br>
                   <h3>Equipment</h3>
                   <div className='form-equipment-wrapper'>
                     <div>
-                      <input type='checkbox' id='form-computer' name='computer' onChange={this.onEquipmentChange}/>
+                      <input type='checkbox' id='form-computer' name='computer' onChange={this.onEquipmentChange} />
                       <label htmlFor='form-computer'>Computer</label>
                     </div>
                     <div>
-                      <input type='checkbox' id='form-whiteboard' name='whiteboard' onChange={this.onEquipmentChange}/>
+                      <input type='checkbox' id='form-whiteboard' name='whiteboard' onChange={this.onEquipmentChange} />
                       <label htmlFor='form-whiteboard'>White Board</label>
                     </div>
                     <div>
-                      <input type='checkbox' id='form-soundsystem' name='soundsystem' onChange={this.onEquipmentChange}/>
+                      <input type='checkbox' id='form-soundsystem' name='soundsystem' onChange={this.onEquipmentChange} />
                       <label htmlFor='form-soundsystem'>Sound System</label>
                     </div>
                     <div>
-                      <input type='checkbox' id='form-projector' name='projector' onChange={this.onEquipmentChange}/>
+                      <input type='checkbox' id='form-projector' name='projector' onChange={this.onEquipmentChange} />
                       <label htmlFor='form-projector'>Projector</label>
                     </div>
                   </div>
@@ -155,7 +163,7 @@ class Form extends Component {
               </div>
             </Row>
             <Row>
-              <div className='form-button-container'><button className='btn btn-primary'onClick={this.handleSearch}>search</button></div>
+              <div className='form-button-container'><button className='btn btn-primary' onClick={this.handleSearch}>search</button></div>
             </Row>
           </Container>
         </div>

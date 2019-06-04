@@ -17,7 +17,7 @@ const styles = theme => ({
 
 
 function TimePickers(props) {
-  const { classes, label, onChange, name} = props;
+  const { classes, label, onChange, name, value } = props;
 
   return (
     <form className={classes.container} noValidate>
@@ -25,7 +25,7 @@ function TimePickers(props) {
         name={name}
         label={label}
         type="time"
-        defaultValue="07:30"
+        value={value}
         className={classes.textField}
         InputLabelProps={{
           shrink: true,
