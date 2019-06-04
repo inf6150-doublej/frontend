@@ -7,7 +7,7 @@ const HeaderAdmin = (props) => {
   const { history } = props;
   return (
     <header className="headerWithMenu">
-      <Logo viewHome={() => history.push('/')} width={60} heigth={60} />
+      <Logo viewHome={() => history.push('/')} width={60} height={60} />
       <div className='user-profile-container'>
         <div className='user-profile-wrapper'>
           {<Link to='/admin/users' className='user-profile'>Manage users</Link>}
