@@ -5,6 +5,8 @@ import { Dialog } from '@material-ui/core';
 import { userActions } from '../store/actions/user.actions';
 import { goToUrl } from '../store/actions/router.actions';
 import Logo from './pure/Logo.jsx';
+import Loader from './pure/Loader.jsx';
+import { isValidEmail } from '../utils/utils';
 
 
 class RegisterPage extends Component {
@@ -22,15 +24,12 @@ class RegisterPage extends Component {
         password: '',
       },
       submitted: false,
+      emailClassName: 'form-control',
     };
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleBack = this.handleBack.bind(this);
   }
 
 
-  handleChange(event) {
+  handleChange = (event) => {
     const { name, value } = event.target;
     const { user } = this.state;
     this.setState({
@@ -39,6 +38,13 @@ class RegisterPage extends Component {
         [name]: value,
       },
     });
+    if (name === 'email') {
+      if (isValidEmail(value)) {
+        this.setState({ emailClassName: 'form-control' });
+      } else {
+        this.setState({ emailClassName: 'form-control is-invalid' });
+      }
+    }
   }
 
   handleSubmit = (event) => {
@@ -52,14 +58,14 @@ class RegisterPage extends Component {
     }
   }
 
-  handleBack() {
+  handleBack = () => {
     this.props.history.goBack();
   }
 
 
   render() {
     const { registering, error, history, registeredUser } = this.props;
-    const { user, submitted } = this.state;
+    const { user, submitted, emailClassName } = this.state;
     const { name, last_name, address, phone, username, password, email } = user;
     const openModal = !!registeredUser;
     let formClassName = 'form-group';
@@ -96,7 +102,7 @@ class RegisterPage extends Component {
             </div>
             <div className={formClassName}>
               <label htmlFor='email'>Email </label>
-              <input type='text' className='form-control' name='email' value={user.email} onChange={this.handleChange} required />
+              <input type='text' className={emailClassName} name='email' value={user.email} onChange={this.handleChange} required />
               {submitted && !user.email && <div className='help-block text-danger'>Email is required</div>}
             </div>
             <div className={formClassName}>
@@ -111,8 +117,7 @@ class RegisterPage extends Component {
             </div>
             <div className='form-group'>
               <button className='btn btn-primary' onClick={this.handleSubmit}>Register</button>
-              {registering
-                && <img src='data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==' alt='blabla' />}
+              <Loader loading={registering} />
               <Link onClick={this.handleBack} className='btn btn-link'>Cancel</Link>
             </div>
           </div>

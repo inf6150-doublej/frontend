@@ -30,9 +30,6 @@ class Form extends Component {
     };
   }
 
-  componentDidMount() {}
-
-
   handleSearch = (e) => {
     e.preventDefault();
     const { history } = this.props;
@@ -64,6 +61,8 @@ class Form extends Component {
         break;
       case 'time-picker-end':
         await this.setState({ end: e.target.value });
+        break;
+      default:
         break;
     }
   }
