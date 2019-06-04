@@ -84,7 +84,7 @@ class UserManager extends Component {
       </BootstrapTable>);
   }
 
-  handleSubmitCreate(event) {
+  handleSubmitCreate() {
     const { user } = this.state;
     const { dispatch, history } = this.props;
 
@@ -178,8 +178,8 @@ class UserManager extends Component {
             <input type='checkbox' id='create-user-admin' name='admin' onChange={onChange} />
           </div>
         </div>
-        <div><input type='submit' value='Create' /></div>
-        <div><button onClick={() => this.cancel()}>cancel</button></div>
+        <div className="editFormButtonContainer"><input type='submit' value='Create' className='btn btn-primary' />
+        <button onClick={() => this.cancel()} className='btn btn-secondary'>Cancel</button></div>
       </form>
     );
   }
@@ -234,8 +234,8 @@ class UserManager extends Component {
             {isSubmitted && !user.username && <div className='help-block text-danger'>Username is required</div>}
           </div>
         </div>
-        <div><input type='submit' value='Update' /></div>
-        <div><button onClick={this.cancel}>cancel</button></div>
+        <div className="editFormButtonContainer"><input type='submit' value='Update' className='btn btn-primary' />
+        <button onClick={() => this.cancel()} className='btn btn-secondary'>Cancel</button></div>
       </form>
     );
   }
@@ -266,6 +266,7 @@ class UserManager extends Component {
 
   onDeleteClick = (user) => {
     const { dispatch } = this.props;
+    // eslint-disable-next-line no-alert
     const confirmation = window.confirm('Confirm delete');
     if (confirmation) {
       dispatch(deleteUser(user.id));

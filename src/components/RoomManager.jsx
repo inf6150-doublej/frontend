@@ -172,8 +172,8 @@ class RoomManager extends Component {
             </Select>
           </div>
         </div>
-        <div><input type='submit' value='Create' /></div>
-        <div><button onClick={() => this.cancel()}>cancel</button></div>
+        <div className="editFormButtonContainer"><input type='submit' value='Create' className='btn btn-primary' />
+        <button onClick={() => this.cancel()} className='btn btn-secondary'>Cancel</button></div>
       </form>
     );
   }
@@ -216,8 +216,8 @@ class RoomManager extends Component {
           </div>
         </div>
         </div>
-        <div><div><input type='submit' value='Update' /></div>
-        <div><button onClick={this.cancel}>cancel</button></div>
+        <div>        <div className="editFormButtonContainer"><input type='submit' value='Update' className='btn btn-primary' />
+        <button onClick={() => this.cancel()} className='btn btn-secondary'>Cancel</button></div>
         </div>
       </form>
     );

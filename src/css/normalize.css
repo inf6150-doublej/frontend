@@ -87,3 +87,10 @@ label, input {
 li {
   color:dimgray;
 }
+
+.editFormButtonContainer {
+  margin-top: 30px;
+}
+.editFormButtonContainer input {
+  margin-right: 10px;
+}
