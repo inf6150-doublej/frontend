@@ -4,13 +4,11 @@ import { connect } from 'react-redux';
 import '../css/CustomBootstrapTable.css';
 import '../css/RoomManager.css';
 import Button from 'react-bootstrap/Button';
-import Select from '@material-ui/core/Select'; 
+import Select from '@material-ui/core/Select';
 // font-awesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
-import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import HeaderAdmin from './pure/HeaderAdmin';
+import { faPencilAlt, faTrashAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
+import HeaderAdmin from './pure/HeaderAdmin.jsx';
 import {
   deleteRoom,
   createRoom,
@@ -44,11 +42,13 @@ class RoomManager extends Component {
       shouldReload: false,
     };
 
-    const { dispatch } = this.props;
-    dispatch(getRooms());
-
     this.handleSubmitCreate = this.handleSubmitCreate.bind(this);
     this.handleSubmitUpdate = this.handleSubmitUpdate.bind(this);
+  }
+
+  componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch(getRooms());
   }
 
   rowClassNameFormat = (row, rowIdx) =>
@@ -261,22 +261,18 @@ class RoomManager extends Component {
   }
 
   render() {
-    const { showRoomList, showUpdateForm, showCreateForm, shouldReload } = this.state;
-    const { history, dispatch, shouldRefresh } = this.props;
+    const { showRoomList, showUpdateForm, showCreateForm } = this.state;
+    const { history } = this.props;
 
-    if (shouldRefresh && shouldReload) {
-      this.state.shouldReload = false;
-      dispatch(getRooms());
-    }
 
     return (
       <div className='room-manager-container'>
-      <HeaderAdmin history={history}></HeaderAdmin>
-      <div className='room-manager-body container-fluid'>
-        {showRoomList && this.roomList()}
-        {showUpdateForm && this.updateForm()}
-        {showCreateForm && this.createForm()}
-      </div>
+        <HeaderAdmin history={history}></HeaderAdmin>
+        <div className='room-manager-body container-fluid'>
+          {showRoomList && this.roomList()}
+          {showUpdateForm && this.updateForm()}
+          {showCreateForm && this.createForm()}
+        </div>
       </div>
     );
   }
