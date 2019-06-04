@@ -10,9 +10,9 @@ const HeaderAdmin = (props) => {
       <Logo viewHome={() => history.push('/')} width={60} heigth={60} />
       <div className='user-profile-container'>
         <div className='user-profile-wrapper'>
-          {<Link to='/admin/users' className='user-profile'>Manage users</Link>}
-          {<Link to='/admin/reservation' className='user-profile'>Manage reservations</Link>}
-          {<Link to='/admin/rooms' className='user-profile'>Manage rooms</Link>}
+          <Link to='/admin/users' className='user-profile'>Manage users</Link>
+          <Link to='/admin/reservation' className='user-profile'>Manage reservations</Link>
+          <Link to='/admin/rooms' className='user-profile'>Manage rooms</Link>
         </div>
       </div>
     </header>
