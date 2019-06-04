@@ -4,14 +4,14 @@ import logo from '../../img/BE2.png';
 
 
 const Logo = (props) => {
-  const { viewHome } = props;
+  const { viewHome, className, id, height, width } = props;
   return (
-    <div id="logo" onClick={() => viewHome('/')}>
+    <div id={id} className={className} onClick={viewHome}>
       <Image
         src={logo}
-        alt="react logo"
-        height={60}
-        width={60}
+        alt='logo'
+        height={height}
+        width={width}
       />
     </div>
   );

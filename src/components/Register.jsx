@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import Image from 'react-image-resizer';
 import { Dialog } from '@material-ui/core';
 import { userActions } from '../store/actions/user.actions';
 import { goToUrl } from '../store/actions/router.actions';
-import logo from '../img/BE2.png';
+import Logo from './pure/Logo.jsx';
 
 
 class RegisterPage extends Component {
@@ -71,9 +70,7 @@ class RegisterPage extends Component {
     return (
       <form className='form-horizontal'>
         <div className='Hero-register'>
-          <div className='foto-register'>
-            <Image src={logo} alt='logo' width={240} height={240} />
-          </div>
+          <Logo viewHome={() => history.push('/')} classNome='foto-register' width={240} height={240} />
           <div className='col-md-6 col-md-offset-3'>
             <h2>Register</h2>
 
