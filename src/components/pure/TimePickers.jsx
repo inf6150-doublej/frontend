@@ -25,7 +25,6 @@ function TimePickers(props) {
         name={name}
         label={label}
         type="time"
-        defaultValue='07:30'
         value={value}
         className={classes.textField}
         InputLabelProps={{
