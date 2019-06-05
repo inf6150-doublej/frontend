@@ -70,7 +70,6 @@ class RoomManager extends Component {
       defaultSortName: 'name', // default sort column name
       defaultSortOrder: 'asc', // default sort order
     };
-
     const listEquip = (cell,row) => {
       return  <ul>
                 {cell.computer != 0 && <li>Computer</li>}
@@ -78,6 +77,28 @@ class RoomManager extends Component {
                 {cell.sound_system != 0 && <li>Sound System</li>}
                 {cell.projector != 0 && <li>Projector</li>}
               </ul> 
+    };
+    const typeFilter = (cell,row) => {
+      switch(cell) {
+        case 1:
+          return 'arena';
+        case 2:
+          return 'auditorium';
+        case 3:
+          return 'bar';
+        case 4:
+          return 'university';
+        case 5:
+          return 'theatre';
+        case 6:
+          return 'cultural center';
+        case 7:
+          return 'house';
+        case 8:
+          return 'outdoor';
+        default:
+          return '';
+      }              
     };
     return (
       <BootstrapTable
@@ -91,7 +112,7 @@ class RoomManager extends Component {
         <TableHeaderColumn dataField='delete' width={'90px'} dataFormat={ this.deleteFormatter.bind(this) }></TableHeaderColumn>
         <TableHeaderColumn isKey dataField='id' dataSort hidden={true}></TableHeaderColumn>
         <TableHeaderColumn dataField='name' dataSort>Name</TableHeaderColumn>
-        <TableHeaderColumn dataField='type' dataSort>Type</TableHeaderColumn>
+        <TableHeaderColumn dataField='type' dataFormat={typeFilter} dataSort>Type</TableHeaderColumn>
         <TableHeaderColumn dataField='capacity' dataSort>Capacity</TableHeaderColumn>
         <TableHeaderColumn dataField='description' dataSort>Description</TableHeaderColumn>
         <TableHeaderColumn dataField='equipment' dataFormat={listEquip} dataSort>Equipment</TableHeaderColumn>
@@ -267,10 +288,6 @@ class RoomManager extends Component {
             {isSubmitted && !room.name && <div className='help-block text-danger'>Name is required</div>}
           </div>
           <div >
-            <label htmlFor='type'>Type</label>
-            <input type='text' className='form-control' name='type' value={room.type} onChange={onChange}/>
-          </div>
-          <div >
             <label htmlFor='capacity'>Capacity</label>
             <input type='text' className='form-control' name='capacity' value={room.capacity} onChange={onChange}/>
             {isSubmitted && !room.capacity && <div className='help-block text-danger'>Capacity is required</div>}
@@ -280,7 +297,25 @@ class RoomManager extends Component {
             <input type='text' className='form-control' name='description' value={room.description} onChange={onChange}/>
           </div>
           <div>
-          
+          <div>
+            <label htmlFor='type'>Type</label>
+            <Select
+              native
+              value={this.state.room.type}
+              onChange={onChange}
+              inputProps={{ name: 'type', id: 'create-form-select' }}
+            >
+              <option value={0} />
+              <option value={1}>arena</option>
+              <option value={2}>auditorium</option>
+              <option value={3}>bar</option>
+              <option value={4}>university</option>
+              <option value={5}>theatre</option>
+              <option value={6}>cultural center</option>
+              <option value={7}>house</option>
+              <option value={8}>outdoor</option>
+            </Select>
+          </div>        
             <label htmlFor='equipment' name='equipment'>Equipment :   
               <label htmlFor='computer' name='computer'>Computer 
                 <input type='checkbox' checked={room.equipment.computer === 1} id='computer' name='computer' onChange={onEquipChange}  value={room.equipment.computer}/>
