@@ -88,14 +88,14 @@ export function administrator(state = {}, action) {
     case GET_USERS_SUCCESS:
       return { ...action.users, fetching: false };
     case CREATE_USER_REQUEST:
-      return { fetching: true, shouldRefresh: false };
+      return { fetching: true, shouldRefresh: false, error: null };
     case CREATE_USER_FAILURE:
       return { fetching: false, error: action.err };
     case CREATE_USER_SUCCESS:
-      return { users: [{ ...action.user }], fetching: false, shouldRefresh: true };
+      return { users: [{ ...action.user }], fetching: false, shouldRefresh: true, error: null };
 
     case UPDATE_USER_REQUEST:
-      return { ...state, fetching: true };
+      return { ...state, fetching: true, error: null };
     case UPDATE_USER_FAILURE:
       return { ...state, fetching: false, error: action.err };
     case UPDATE_USER_SUCCESS:
@@ -103,6 +103,8 @@ export function administrator(state = {}, action) {
         ...state,
         users: state.users.map(user => user.id === action.user.id ? action.user : user),
         fetching: false,
+        shouldRefresh: true, 
+        error: null,
       };
     case DELETE_USER_REQUEST:
       // add 'deleting:true' property to user being deleted

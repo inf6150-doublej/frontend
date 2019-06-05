@@ -35,6 +35,7 @@ class UserManager extends Component {
       isSubmitted: false,
       shouldReload: false,
       emailClassName: 'form-control',
+      saveErrorMessage: 'Unable to save.  Username or e-mail already exist'
     };
 
     const { dispatch } = this.props;
@@ -84,13 +85,15 @@ class UserManager extends Component {
       </BootstrapTable>);
   }
 
-  handleSubmitCreate() {
+  handleSubmitCreate(event) {
+    event.preventDefault();
+
     const { user } = this.state;
     const { dispatch, history } = this.props;
 
     if (user.name && user.family_name && user.email && user.username) {
       dispatch(createUser(user, history));
-      this.setState({ user, showUserList: true, showUpdateForm: false, showCreateForm: false, isSubmitted: false, shouldReload: true });
+      this.setState({ shouldReload: true });
     } else {
       this.setState({ user, showUserList: false, showUpdateForm: false, showCreateForm: true, isSubmitted: true });
     }
@@ -103,7 +106,7 @@ class UserManager extends Component {
 
     if (user.name && user.family_name && user.email && user.username) {
       dispatch(updateUser(user, history));
-      this.setState({ user, showUserList: true, showUpdateForm: false, showCreateForm: false, isSubmitted: false });
+      this.setState({ shouldReload: true });
     } else {
       this.setState({ user, showUserList: false, showUpdateForm: true, showCreateForm: false, isSubmitted: true });
     }
@@ -111,13 +114,12 @@ class UserManager extends Component {
 
 
   createForm = () => {
-    const { user, isSubmitted } = this.state;
+    const { user, isSubmitted, saveErrorMessage } = this.state;
+    const { error } = this.props;
     let emailClassName = 'form-control';
-
 
     const onChange = async (event) => {
       const { name, value, checked } = event.target;
-      const { user } = this.state;
 
       if (name === 'admin') {
         await this.setState({
@@ -178,6 +180,9 @@ class UserManager extends Component {
             <input type='checkbox' id='create-user-admin' name='admin' onChange={onChange} />
           </div>
         </div>
+
+        {error && <div className='help-block text-danger'>{saveErrorMessage}</div>}
+
         <div className="editFormButtonContainer"><input type='submit' value='Create' className='btn btn-primary' />
         <button onClick={() => this.cancel()} className='btn btn-secondary'>Cancel</button></div>
       </form>
@@ -185,12 +190,13 @@ class UserManager extends Component {
   }
 
   updateForm = () => {
-    const { user, isSubmitted } = this.state;
+    const { user, isSubmitted, saveErrorMessage } = this.state;
+    const { error } = this.props;
     let emailClassName = 'form-control';
 
     const onChange = async (event) => {
       const { name, value } = event.target;
-      const { user } = this.state;
+
       await this.setState({
         user: {
           ...user,
@@ -234,6 +240,7 @@ class UserManager extends Component {
             {isSubmitted && !user.username && <div className='help-block text-danger'>Username is required</div>}
           </div>
         </div>
+        {error && <div className='help-block text-danger'>{saveErrorMessage}</div>}
         <div className="editFormButtonContainer"><input type='submit' value='Update' className='btn btn-primary' />
         <button onClick={() => this.cancel()} className='btn btn-secondary'>Cancel</button></div>
       </form>
@@ -286,8 +293,9 @@ class UserManager extends Component {
     const { history, dispatch, shouldRefresh } = this.props;
 
     if (shouldRefresh && shouldReload) {
+      console.log('RELOAD');
       // ici le state n'est pas setter, normalement on devrait pas avoir à faire le should reload ni le refresh
-      this.state.shouldReload = false;
+      this.setState({ showUserList: true, showUpdateForm: false, showCreateForm: false, isSubmitted: false, shouldReload: false });
       dispatch(getUsers());
     }
 
@@ -306,11 +314,13 @@ class UserManager extends Component {
 
 
 function mapStateToProps(state) {
-  const { users, fetching, shouldRefresh } = state.administrator;
+  const { users, fetching, shouldRefresh, error } = state.administrator;
+
   return {
     users,
     fetching,
     shouldRefresh,
+    error,
   };
 }
 
