@@ -93,12 +93,13 @@ class RoomManager extends Component {
 
 
   handleSubmitCreate(event) {
+    event.preventDefault();
     const { room } = this.state;
     const { dispatch, history } = this.props;
 
     if (room.name && room.capacity) {
       dispatch(createRoom(room, history));
-      this.setState({ room, showRoomList: true, showUpdateForm: false, showCreateForm: false, isSubmitted: false, shouldReload: true });
+      this.setState({ shouldReload: true });
     } else {
       this.setState({ room, showRoomList: false, showUpdateForm: false, showCreateForm: true, isSubmitted: true });
     }
@@ -111,7 +112,7 @@ class RoomManager extends Component {
 
     if (room.name && room.capacity) {
       dispatch(updateRoom(room, history));
-      this.setState({ room, showRoomList: true, showUpdateForm: false, showCreateForm: false, isSubmitted: false });
+      this.setState({ shouldReload: true });
     } else {
       this.setState({ room, showRoomList: false, showUpdateForm: true, showCreateForm: false, isSubmitted: true });
     }
@@ -119,8 +120,8 @@ class RoomManager extends Component {
 
 
   createForm = () => {
-    const { room, isSubmitted } = this.state;
-    const { dispatch, history } = this.props;
+    const { room, isSubmitted, saveErrorMessage } = this.state;
+    const { error } = this.props;
 
     const onChange = (event) => {
       const { name, value } = event.target;
@@ -172,6 +173,7 @@ class RoomManager extends Component {
             </Select>
           </div>
         </div>
+        {error && <div className='help-block text-danger'>{saveErrorMessage}</div>}
         <div className="editFormButtonContainer"><input type='submit' value='Create' className='btn btn-primary' />
         <button onClick={() => this.cancel()} className='btn btn-secondary'>Cancel</button></div>
       </form>
@@ -179,11 +181,12 @@ class RoomManager extends Component {
   }
 
   updateForm = () => {
-    const { room, isSubmitted } = this.state;
+    const { room, isSubmitted, saveErrorMessage } = this.state;
+    const { error } = this.props;
 
     const onChange = (event) => {
       const { name, value } = event.target;
-      const { room } = this.state;
+
       this.setState({
         room: {
           ...room,
@@ -216,6 +219,7 @@ class RoomManager extends Component {
           </div>
         </div>
         </div>
+        {error && <div className='help-block text-danger'>{saveErrorMessage}</div>}
         <div>        <div className="editFormButtonContainer"><input type='submit' value='Update' className='btn btn-primary' />
         <button onClick={() => this.cancel()} className='btn btn-secondary'>Cancel</button></div>
         </div>
@@ -246,6 +250,7 @@ class RoomManager extends Component {
 
   onDeleteClick = (room) => {
     const { dispatch } = this.props;
+    // eslint-disable-next-line no-alert
     const confirmation = window.confirm('Confirm delete');
     if (confirmation) {
       dispatch(deleteRoom(room.id));
@@ -261,10 +266,16 @@ class RoomManager extends Component {
   }
 
   render() {
-    const { showRoomList, showUpdateForm, showCreateForm } = this.state;
-    const { history } = this.props;
+    const { showRoomList, showUpdateForm, showCreateForm, shouldReload } = this.state;
+    const { history, dispatch, shouldRefresh } = this.props;
 
+    if (shouldRefresh && shouldReload) {
+      // ici le state n'est pas setter, normalement on devrait pas avoir à faire le should reload ni le refresh
+      this.setState({ showRoomList: true, showUpdateForm: false, showCreateForm: false, isSubmitted: false, shouldReload: false });
+      dispatch(getRooms());
+    }
 
+    
     return (
       <div className='room-manager-container'>
         <HeaderAdmin history={history}></HeaderAdmin>
@@ -279,11 +290,12 @@ class RoomManager extends Component {
 }
 
 function mapStateToProps(state) {
-  const { rooms, fetching, shouldRefresh } = state.administrator;
+  const { rooms, fetching, shouldRefresh, error } = state.administrator;
   return {
     rooms,
     fetching,
     shouldRefresh,
+    error,
   };
 }
 
