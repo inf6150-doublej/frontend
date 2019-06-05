@@ -44,7 +44,7 @@ function handleResponse(response) {
 
 // ADMIN USERS ACTIONS
 
-export function updateUser(user) {
+export function updateUser(user, onSuccess) {
   const { UPDATE_USER_REQUEST, UPDATE_USER_SUCCESS, UPDATE_USER_FAILURE } = adminConstants;
   const { ADMIN_USERS } = urlConstants;
   const url = `${ADMIN_USERS}/${user.id}`;
@@ -63,7 +63,10 @@ export function updateUser(user) {
     dispatch(request());
     fetch(url, requestOptions)
       .then(handleResponse)
-      .then((res) => { dispatch(success(res.user)); })
+      .then((res) => { 
+        dispatch(success(res.user));
+        onSuccess();
+      })
       .catch((err) => { dispatch(failure(err)); });
   };
 }
@@ -86,9 +89,9 @@ export function deleteUser(id) {
   };
 }
 
-export function createUser(user) {
+export function createUser(user, onSuccess) {
   function request() { return { type: adminConstants.CREATE_USER_REQUEST }; }
-  function success(user) { return { type: adminConstants.CREATE_USER_SUCCESS, user }; }
+  function success(user2) { return { type: adminConstants.CREATE_USER_SUCCESS, user2 }; }
   function failure(err) { return { type: adminConstants.CREATE_USER_FAILURE, err }; }
 
   const { ADMIN_USERS } = urlConstants;
@@ -106,8 +109,7 @@ export function createUser(user) {
       .then(handleResponse)
       .then((res) => {
         dispatch(success(res.user));
-        // console.log({"Histo create": history});
-        // history.push('/admin/users');
+        onSuccess();
       })
       .catch((err) => { dispatch(failure(err)); });
   };
@@ -135,7 +137,7 @@ export function getUsers() {
 // ADMIN ROOMS ACTIONS
 
 
-export function updateRoom(room) {
+export function updateRoom(room, onSuccess) {
   function request() { return { type: adminConstants.UPDATE_ROOM_REQUEST, room }; }
   function success(room) { return { type: adminConstants.UPDATE_ROOM_SUCCESS, room }; }
   function failure(err) { return { type: adminConstants.UPDATE_ROOM_FAILURE, err }; }
@@ -154,6 +156,7 @@ export function updateRoom(room) {
       .then(handleResponse)
       .then((res) => {
         dispatch(success(res.room));
+        onSuccess();
       })
       .catch((err) => { dispatch(failure(err)); });
   };
@@ -177,7 +180,7 @@ export function deleteRoom(id) {
   };
 }
 
-export function createRoom(room) {
+export function createRoom(room, onSuccess) {
   function request() { return { type: adminConstants.CREATE_ROOM_REQUEST }; }
   function success(room) { return { type: adminConstants.CREATE_ROOM_SUCCESS, room }; }
   function failure(err) { return { type: adminConstants.CREATE_ROOM_FAILURE, err }; }
@@ -194,7 +197,10 @@ export function createRoom(room) {
     dispatch(request());
     fetch(ROOM_URL, requestOptions)
       .then(handleResponse)
-      .then((res) => { dispatch(success(res.room)); })
+      .then((res) => {
+        dispatch(success(res.room));
+        onSuccess();
+      })
       .catch((err) => { dispatch(failure(err)); });
   };
 }

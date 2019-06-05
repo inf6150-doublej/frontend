@@ -42,7 +42,7 @@ export function administrator(state = {}, action) {
     case CREATE_ROOM_FAILURE:
       return { rooms: [], fetching: false, error: action.err };
     case CREATE_ROOM_SUCCESS:
-      return { ...action.rooms, fetching: false, shouldRefresh: true, error: null };
+      return { ...action.rooms, fetching: false, error: null };
 
     case UPDATE_ROOM_REQUEST:
       return { ...state, error: null };
@@ -53,7 +53,6 @@ export function administrator(state = {}, action) {
       return {
         ...state,
         rooms: state.rooms.map(room => room.id === action.room.id ? action.room : room), 
-        shouldRefresh: true,
         error: null,
       };
 
@@ -90,11 +89,11 @@ export function administrator(state = {}, action) {
     case GET_USERS_SUCCESS:
       return { ...action.users, fetching: false };
     case CREATE_USER_REQUEST:
-      return { fetching: true, shouldRefresh: false, error: null };
+      return { fetching: true, error: null };
     case CREATE_USER_FAILURE:
       return { fetching: false, error: action.err };
     case CREATE_USER_SUCCESS:
-      return { users: [{ ...action.user }], fetching: false, shouldRefresh: true, error: null };
+      return { users: [{ ...action.user }], fetching: false, error: null };
 
     case UPDATE_USER_REQUEST:
       return { ...state, fetching: true, error: null };
@@ -105,7 +104,6 @@ export function administrator(state = {}, action) {
         ...state,
         users: state.users.map(user => user.id === action.user.id ? action.user : user),
         fetching: false,
-        shouldRefresh: true,
         error: null,
       };
     case DELETE_USER_REQUEST:

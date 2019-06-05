@@ -33,7 +33,6 @@ class UserManager extends Component {
       showUpdateForm: false,
       showCreateForm: false,
       isSubmitted: false,
-      shouldReload: false,
       emailClassName: 'form-control',
       saveErrorMessage: 'Unable to save.  Username or e-mail already exist'
     };
@@ -89,11 +88,15 @@ class UserManager extends Component {
     event.preventDefault();
 
     const { user } = this.state;
-    const { dispatch, history } = this.props;
+    const { dispatch } = this.props;
 
     if (user.name && user.family_name && user.email && user.username) {
-      dispatch(createUser(user, history));
-      this.setState({ shouldReload: true });
+      const onSuccess = () => {
+        this.setState({ showUserList: true, showCreateForm: false });
+        dispatch(getUsers());
+      };
+
+      dispatch(createUser(user, onSuccess));
     } else {
       this.setState({ user, showUserList: false, showUpdateForm: false, showCreateForm: true, isSubmitted: true });
     }
@@ -102,11 +105,16 @@ class UserManager extends Component {
   handleSubmitUpdate(event) {
     event.preventDefault();
     const { user } = this.state;
-    const { dispatch, history } = this.props;
+    const { dispatch } = this.props;
 
     if (user.name && user.family_name && user.email && user.username) {
-      dispatch(updateUser(user, history));
-      this.setState({ shouldReload: true });
+
+      const onSuccess = () => {
+        this.setState({ showUserList: true, showUpdateForm: false });
+        dispatch(getUsers());
+      };
+
+      dispatch(updateUser(user, onSuccess));
     } else {
       this.setState({ user, showUserList: false, showUpdateForm: true, showCreateForm: false, isSubmitted: true });
     }
@@ -289,15 +297,8 @@ class UserManager extends Component {
   }
 
   render() {
-    const { showUserList, showUpdateForm, showCreateForm, shouldReload } = this.state;
-    const { history, dispatch, shouldRefresh } = this.props;
-
-    if (shouldRefresh && shouldReload) {
-      console.log('RELOAD');
-      // ici le state n'est pas setter, normalement on devrait pas avoir à faire le should reload ni le refresh
-      this.setState({ showUserList: true, showUpdateForm: false, showCreateForm: false, isSubmitted: false, shouldReload: false });
-      dispatch(getUsers());
-    }
+    const { showUserList, showUpdateForm, showCreateForm } = this.state;
+    const { history } = this.props;
 
     return (
       <div className='user-manager-container'>
@@ -314,12 +315,11 @@ class UserManager extends Component {
 
 
 function mapStateToProps(state) {
-  const { users, fetching, shouldRefresh, error } = state.administrator;
+  const { users, fetching, error } = state.administrator;
 
   return {
     users,
     fetching,
-    shouldRefresh,
     error,
   };
 }

@@ -39,7 +39,7 @@ class RoomManager extends Component {
       showRoomList: true,
       showUpdateForm: false,
       showCreateForm: false,
-      shouldReload: false,
+      saveErrorMessage: 'Unable to save.  Name already exist'
     };
 
     this.handleSubmitCreate = this.handleSubmitCreate.bind(this);
@@ -95,11 +95,16 @@ class RoomManager extends Component {
   handleSubmitCreate(event) {
     event.preventDefault();
     const { room } = this.state;
-    const { dispatch, history } = this.props;
+    const { dispatch } = this.props;
 
     if (room.name && room.capacity) {
-      dispatch(createRoom(room, history));
-      this.setState({ shouldReload: true });
+
+      const onSuccess = () => {
+        this.setState({ showRoomList: true, showCreateForm: false });
+        dispatch(getRooms());
+      };
+
+      dispatch(createRoom(room, onSuccess));
     } else {
       this.setState({ room, showRoomList: false, showUpdateForm: false, showCreateForm: true, isSubmitted: true });
     }
@@ -108,11 +113,15 @@ class RoomManager extends Component {
   handleSubmitUpdate(event) {
     event.preventDefault();
     const { room } = this.state;
-    const { dispatch, history } = this.props;
+    const { dispatch } = this.props;
 
     if (room.name && room.capacity) {
-      dispatch(updateRoom(room, history));
-      this.setState({ shouldReload: true });
+
+      const onSuccess = () => {
+        this.setState({ showRoomList: true, showUpdateForm: false });
+      };
+
+      dispatch(updateRoom(room, onSuccess));
     } else {
       this.setState({ room, showRoomList: false, showUpdateForm: true, showCreateForm: false, isSubmitted: true });
     }
@@ -266,16 +275,9 @@ class RoomManager extends Component {
   }
 
   render() {
-    const { showRoomList, showUpdateForm, showCreateForm, shouldReload } = this.state;
-    const { history, dispatch, shouldRefresh } = this.props;
+    const { showRoomList, showUpdateForm, showCreateForm } = this.state;
+    const { history } = this.props;
 
-    if (shouldRefresh && shouldReload) {
-      // ici le state n'est pas setter, normalement on devrait pas avoir à faire le should reload ni le refresh
-      this.setState({ showRoomList: true, showUpdateForm: false, showCreateForm: false, isSubmitted: false, shouldReload: false });
-      dispatch(getRooms());
-    }
-
-    
     return (
       <div className='room-manager-container'>
         <HeaderAdmin history={history}></HeaderAdmin>
@@ -290,11 +292,10 @@ class RoomManager extends Component {
 }
 
 function mapStateToProps(state) {
-  const { rooms, fetching, shouldRefresh, error } = state.administrator;
+  const { rooms, fetching, error } = state.administrator;
   return {
     rooms,
     fetching,
-    shouldRefresh,
     error,
   };
 }
