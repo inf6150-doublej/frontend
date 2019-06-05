@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Route, withRouter, Switch } from 'react-router-dom';
+import { Route, withRouter, Switch, Redirect } from 'react-router-dom';
 import Login from './components/Login.jsx';
 import Home from './components/Home.jsx';
 import Confirmation from './components/Confirmation.jsx';
@@ -23,7 +23,7 @@ class App extends Component {
           <Route path='/admin/rooms' component={RoomManager} />
           <Route path='/confirmation' component={Confirmation} />
           <Route path='/search/:capacity?/:begin?/:end?/:equipment?/:type?' component={SearchEngine} />
-          <Route path='*' component={Home}/>
+          <Redirect from='*' to='/'/>
         </Switch>
     );
   }
