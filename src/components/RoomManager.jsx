@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, cloneElement } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import '../css/CustomBootstrapTable.css';
@@ -33,7 +33,7 @@ class RoomManager extends Component {
         type: 0,
         capacity: 0,
         description: '',
-        equipment_id: '',
+        equipment: {computer : 0 ,white_board : 0, sound_system : 0, projector : 0},
         id: '',
       },
       showRoomList: true,
@@ -71,6 +71,14 @@ class RoomManager extends Component {
       defaultSortOrder: 'asc', // default sort order
     };
 
+    const listEquip = (cell,row) => {
+      return  <ul>
+                {cell.computer != 0 && <li>Computer</li>}
+                {cell.white_board != 0 && <li>Whiteboard</li>}
+                {cell.sound_system != 0 && <li>Sound System</li>}
+                {cell.projector != 0 && <li>Projector</li>}
+              </ul> 
+    };
     return (
       <BootstrapTable
         data={rooms}
@@ -86,6 +94,7 @@ class RoomManager extends Component {
         <TableHeaderColumn dataField='type' dataSort>Type</TableHeaderColumn>
         <TableHeaderColumn dataField='capacity' dataSort>Capacity</TableHeaderColumn>
         <TableHeaderColumn dataField='description' dataSort>Description</TableHeaderColumn>
+        <TableHeaderColumn dataField='equipment' dataFormat={listEquip} dataSort>Equipment</TableHeaderColumn>
       </BootstrapTable>);
   }
 
@@ -133,11 +142,25 @@ class RoomManager extends Component {
     const { error } = this.props;
 
     const onChange = (event) => {
-      const { name, value } = event.target;
+      const { name, value, checked } = event.target;
       this.setState({
         room: {
           ...room,
-          [name]: value,
+          [name]: value,           
+                 
+        },
+      });
+    };
+
+    const onEquipChange = (event) => {
+      const { name,checked } = event.target;
+      this.setState({
+        room: {
+          ...room,
+          equipment: {
+            ...room.equipment,
+            [name] : checked ? 1 : 0}          
+                 
         },
       });
     };
@@ -180,7 +203,25 @@ class RoomManager extends Component {
               <option value={7}>house</option>
               <option value={8}>outdoor</option>
             </Select>
+          </div>          
+          <div>
+          
+            <label htmlFor='equipment' name='equipment'>Equipment :   
+              <label htmlFor='computer' name='computer'>Computer 
+                <input type='checkbox' id='computer' name='computer' onChange={onEquipChange}  value={room.equipment.computer}/>
+              </label>
+              <label htmlFor='white_board' name='white_board'>Whiteboard 
+                <input type='checkbox' id='white_board' name='white_board' onChange={onEquipChange}  value={room.equipment.white_board}/>
+              </label>
+              <label htmlFor='equisound_systempment' name='sound_system'>Soundsystem 
+                <input type='checkbox' id='sound_system' name='sound_system' onChange={onEquipChange}  value={room.equipment.sound_system}/>
+              </label>
+              <label htmlFor='projector' name='projector'>Projector 
+                <input type='checkbox' id='projector' label='projector' name='projector' onChange={onEquipChange}  value={room.equipment.projector}/>
+              </label>
+            </label>
           </div>
+          
         </div>
         {error && <div className='help-block text-danger'>{saveErrorMessage}</div>}
         <div className="editFormButtonContainer"><input type='submit' value='Create' className='btn btn-primary' />
@@ -204,6 +245,18 @@ class RoomManager extends Component {
       });
     };
 
+    const onEquipChange = (event) => {
+      const { name,checked } = event.target;
+      this.setState({
+        room: {
+          ...room,
+          equipment: {
+            ...room.equipment,
+            [name] : checked ? 1 : 0}          
+                 
+        },
+      });
+    };
     return (
       <form autoComplete='new-password3' onSubmit={this.handleSubmitUpdate}>
         <div>
@@ -226,6 +279,23 @@ class RoomManager extends Component {
             <label htmlFor='description'>Description</label>
             <input type='text' className='form-control' name='description' value={room.description} onChange={onChange}/>
           </div>
+          <div>
+          
+            <label htmlFor='equipment' name='equipment'>Equipment :   
+              <label htmlFor='computer' name='computer'>Computer 
+                <input type='checkbox' checked={room.equipment.computer === 1} id='computer' name='computer' onChange={onEquipChange}  value={room.equipment.computer}/>
+              </label>
+              <label htmlFor='white_board' name='white_board'>Whiteboard 
+                <input type='checkbox' checked={room.equipment.white_board === 1} id='white_board' name='white_board' onChange={onEquipChange}  value={room.equipment.white_board}/>
+              </label>
+              <label htmlFor='equisound_systempment' name='sound_system'>Soundsystem 
+                <input type='checkbox' checked={room.equipment.sound_system === 1} id='sound_system' name='sound_system' onChange={onEquipChange}  value={room.equipment.sound_system}/>
+              </label>
+              <label htmlFor='projector' name='projector'>Projector 
+                <input type='checkbox' checked={room.equipment.projector === 1} id='projector' label='projector' name='projector' onChange={onEquipChange}  value={room.equipment.projector}/>
+              </label>
+            </label>
+          </div>
         </div>
         </div>
         {error && <div className='help-block text-danger'>{saveErrorMessage}</div>}
@@ -247,7 +317,7 @@ class RoomManager extends Component {
       type: '',
       capacity: '',
       description: '',
-      equipment_id: '',
+      equipment: {computer : 0 ,white_board : 0, sound_system : 0, projector : 0},
       id: '',
 
     },
