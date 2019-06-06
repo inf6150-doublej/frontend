@@ -123,9 +123,8 @@ class RegisterPage extends Component {
           </div>
         </div>
         <Dialog open={openModal}>
-          thank you for registering to booking expert
-          <button onClick={() => goToUrl(history, '/')}>continue searching</button>
-          <button onClick={() => goToUrl(history, '/myaccount')}>view account</button>
+          Thank you for registering to BookingExpert
+          <button onClick={() => goToUrl(history, '/')}>OK</button>
         </Dialog>
       </form>
     );

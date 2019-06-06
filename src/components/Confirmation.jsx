@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import Room from './pure/Room.jsx';
 import User from './pure/User.jsx';
 import '../css/Confirmation.css';
+import Media from 'react-bootstrap/Media';
 
 class Confirmation extends Component {
   constructor(props) {
@@ -21,11 +22,20 @@ class Confirmation extends Component {
       <div>
         {confirmation
         && <div className='confirmation-container'>
-          <h2>You have successfully reserved a room. Please check your email for validation.</h2>
+          <h3>You have successfully reserved a room. Please check your email for validation.</h3>
           <Room room={confirmation.room}></Room>
-          <User user={confirmation.user}></User>
-          <div>start: {confirmation.begin}</div>
-          <div>ending: {confirmation.end}</div>
+          <ul>
+            <Media as="li">
+              <Media.Body>   
+                <li><h5>Confirmation to:</h5></li>
+                <User user={confirmation.user}></User>
+                <br></br>
+                <li><h5>Date and Time:</h5></li>
+                <li><p>start: {confirmation.begin}</p></li>
+                <li><p>ending: {confirmation.end}</p></li>                 
+              </Media.Body>
+            </Media>
+          </ul>
         </div>}
         {error && <div>{error}</div>}
       </div>
