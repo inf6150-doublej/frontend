@@ -21,7 +21,7 @@ class Confirmation extends Component {
       <div>
         {confirmation
         && <div className='confirmation-container'>
-          <h2>you have successfully reserved a room, please check your email for the receive.</h2>
+          <h2>You have successfully reserved a room. Please check your email for validation.</h2>
           <Room room={confirmation.room}></Room>
           <User user={confirmation.user}></User>
           <div>start: {confirmation.begin}</div>
