@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { logout, checkSession } from '../store/actions/user.actions';
+import { logout, checkSession, isAuthenticated } from '../store/actions/user.actions';
 import { goToUrl } from '../store/actions/router.actions';
 import Header from './pure/Header.jsx';
 import Form from './Form.jsx';
@@ -18,7 +18,7 @@ class Home extends Component {
 
   componentDidMount() {
     const { dispatch, user } = this.props;
-    if (!user)dispatch(checkSession());
+    if (!user || !isAuthenticated())dispatch(checkSession());
   }
 
   logout = () => {
