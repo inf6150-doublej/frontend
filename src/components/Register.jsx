@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Dialog } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import DialogContent from '@material-ui/core/DialogContent';
 import { userActions } from '../store/actions/user.actions';
 import { goToUrl } from '../store/actions/router.actions';
 import Logo from './pure/Logo.jsx';
@@ -123,8 +125,12 @@ class RegisterPage extends Component {
           </div>
         </div>
         <Dialog open={openModal}>
-          Thank you for registering to BookingExpert
-          <button onClick={() => goToUrl(history, '/')}>OK</button>
+          <DialogContent>
+            Thank you for registering to BookingExpert
+          </DialogContent>  
+          <Button onClick={() => goToUrl(history, '/')} color="primary">
+            OK
+          </Button>
         </Dialog>
       </form>
     );

@@ -2,7 +2,12 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import TextField from '@material-ui/core/TextField';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogActions from '@material-ui/core/DialogActions';
 import { login, recoverPassword } from '../store/actions/user.actions';
 import { isValidEmail } from '../utils/utils';
 import Logo from './pure/Logo.jsx';
@@ -96,11 +101,27 @@ class LoginPage extends Component {
             </div>
 
             <Dialog open={showRecoverModal}>
-              {message && <div>{message}</div>}
-              <label>email</label>
-              <input name='email' onChange={this.handleChange}></input>
-              <button onClick={this.recoverPassword}>recover</button>
-              <button onClick={this.cancel}>cancel</button>
+            <DialogTitle id="simple-dialog-title">Recover Password</DialogTitle>
+              <DialogContent>
+                Please enter your email below so that we can send you a recovery password.
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  id="name"
+                  label="Email Address"
+                  type="email"
+                  fullWidth
+                 />
+                 {message && <div>{message}</div>}
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={this.recoverPassword} color="primary">
+                  Recover Password
+                </Button>
+                <Button onClick={this.cancel} color="primary" autoFocus>
+                  Cancel
+                </Button>
+              </DialogActions>
             </Dialog>
           </div>
         </div>
