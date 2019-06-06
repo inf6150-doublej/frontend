@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchAllRooms } from '../../store/actions/data.actions';
 import { reserve } from '../../store/actions/user.actions';
-import Room from './Room';
+import Room from './Room.jsx';
 import '../../css/SearchEngine.css';
 
 
@@ -25,24 +25,24 @@ class SearchEngine extends Component {
       equipment,
       type,
     };
-    dispatch(fetchAllRooms(data))
+    dispatch(fetchAllRooms(data));
   }
 
-  onReservation = (room) =>{
+  onReservation = (room) => {
     const { dispatch, history, user } = this.props;
     const { begin, end } = this.props.match.params;
-    dispatch(reserve(room, user, begin, end, history))
+    dispatch(reserve(room, user, begin, end, history));
   }
 
   render() {
     const { rooms } = this.props;
-    let roomMap = []
+    let roomMap = [];
     if (rooms && rooms.length) {
       roomMap = rooms.map((room, i) => <Room key={i} room={room} onReservation={this.onReservation} />);
     }
     return (
       <div className='rooms-container'>
-      {roomMap}
+        {roomMap}
       </div>
     );
   }
@@ -50,13 +50,13 @@ class SearchEngine extends Component {
 
 
 function mapStateToProps(state) {
-    const { rooms, fetching } = state.roomsFetcher;
-    const { user } = state.authentication
-    return {
-      rooms,
-      fetching,
-      user
-    };
-  }
+  const { rooms, fetching } = state.roomsFetcher;
+  const { user } = state.authentication;
+  return {
+    rooms,
+    fetching,
+    user,
+  };
+}
 
 export default connect(mapStateToProps)(SearchEngine);
