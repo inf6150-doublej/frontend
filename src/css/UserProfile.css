@@ -14,7 +14,7 @@
     color: #007bff;
     padding: 0 10px 0 10px;
     font-family: 'Mandali', sans-serif;
-    
+    cursor: pointer;
 }
 
 .user-profile:hover{

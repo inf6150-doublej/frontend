@@ -1,4 +1,4 @@
-import React, { Component, cloneElement } from 'react';
+import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import '../css/CustomBootstrapTable.css';
@@ -15,6 +15,7 @@ import {
   updateRoom,
   getRooms,
 } from '../store/actions/admin.actions';
+import getType from '../utils/utils';
 
 // React-Bootstrap
 const ReactBsTable = require('react-bootstrap-table');
@@ -79,26 +80,8 @@ class RoomManager extends Component {
               </ul> 
     };
     const typeFilter = (cell,row) => {
-      switch(cell) {
-        case 1:
-          return 'arena';
-        case 2:
-          return 'auditorium';
-        case 3:
-          return 'bar';
-        case 4:
-          return 'university';
-        case 5:
-          return 'theatre';
-        case 6:
-          return 'cultural center';
-        case 7:
-          return 'house';
-        case 8:
-          return 'outdoor';
-        default:
-          return '';
-      }              
+      return getType(cell)
+                    
     };
     return (
       <BootstrapTable

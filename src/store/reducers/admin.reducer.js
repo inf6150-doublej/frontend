@@ -25,6 +25,18 @@ const {
   DELETE_ROOM_FAILURE,
   DELETE_ROOM_REQUEST,
   DELETE_ROOM_SUCCESS,
+  GET_RESERVATIONS_REQUEST,
+  GET_RESERVATIONS_SUCCESS,
+  GET_RESERVATIONS_FAILURE,
+  CREATE_RESERVATION_REQUEST,
+  CREATE_RESERVATION_SUCCESS,
+  CREATE_RESERVATION_FAILURE,
+  UPDATE_RESERVATION_REQUEST,
+  UPDATE_RESERVATION_SUCCESS,
+  UPDATE_RESERVATION_FAILURE,
+  DELETE_RESERVATION_FAILURE,
+  DELETE_RESERVATION_REQUEST,
+  DELETE_RESERVATION_SUCCESS,
 } = adminConstants;
 
 
@@ -77,6 +89,59 @@ export function administrator(state = {}, action) {
             // return copy of user with 'deleteError:[error]' property
             return { ...roomCopy, error: action.err };
           }
+        }),
+      };
+
+    // ############# RESERVATIONS #############################
+    
+    case GET_RESERVATIONS_REQUEST:
+      return { reservations: [], fetching: true };
+    case GET_RESERVATIONS_FAILURE:
+      return { reservations: [], fetching: false };
+    case GET_RESERVATIONS_SUCCESS:
+      return { ...action.reservations, fetching: false };
+    
+      case CREATE_RESERVATION_REQUEST:
+      return { fetching: true, error: null };
+    case CREATE_RESERVATION_FAILURE:
+      return { fetching: false, error: action.err };
+    case CREATE_RESERVATION_SUCCESS:
+      return { reservations: [{ ...action.reservation }], fetching: false, error: null };
+
+    case UPDATE_RESERVATION_REQUEST:
+      return { ...state, fetching: true, error: null };
+    case UPDATE_RESERVATION_FAILURE:
+      return { ...state, fetching: false, error: action.err };
+    case UPDATE_RESERVATION_SUCCESS:
+      return {
+        ...state,
+        reservations: state.reservations.map(reservation => reservation.id === action.reservation.id ? action.reservation : reservation),
+        fetching: false,
+        error: null,
+      };
+    
+      case DELETE_RESERVATION_REQUEST:
+      // add 'deleting:true' property to reservation being deleted
+      return {
+        ...state,
+        reservations: state.reservations.map(reservation => reservation.id === action.id ? { ...reservation, deleted: true } : reservation),
+      };
+    case DELETE_RESERVATION_SUCCESS:
+      return {
+        reservations: state.reservations.filter(reservation => reservation.id !== action.id),
+      };
+    case DELETE_RESERVATION_FAILURE:
+      // remove 'deleting:true' property and add 'deleteError:[error]' property to reservation
+      return {
+        ...state,
+        reservations: state.reservations.map((reservation) => {
+          if (reservation.id === action.id) {
+            // make copy of reservation without 'deleting:true' property
+            const { deleted, ...reservationCopy } = reservation;
+            // return copy of reservation with 'deleteError:[error]' property
+            return { ...reservationCopy, error: action.err };
+          }
+          return reservation;
         }),
       };
 

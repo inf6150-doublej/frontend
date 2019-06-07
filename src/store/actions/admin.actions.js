@@ -32,6 +32,22 @@ export const adminConstants = {
   GET_ROOMS_REQUEST: 'GET_ROOMS_REQUEST',
   GET_ROOMS_SUCCESS: 'GET_ROOMS_SUCCESS',
   GET_ROOMS_FAILURE: 'GET_ROOMS_FAILURE',
+
+  GET_RESERVATIONS_REQUEST: 'GET_RESERVATIONS_REQUEST',
+  GET_RESERVATIONS_SUCCESS: 'GET_RESERVATIONS_SUCCESS',
+  GET_RESERVATIONS_FAILURE: 'GET_RESERVATIONS_FAILURE',
+
+  CREATE_RESERVATION_REQUEST: 'CREATE_RESERVATION_REQUEST',
+  CREATE_RESERVATION_SUCCESS: 'CREATE_RESERVATION_SUCCESS',
+  CREATE_RESERVATION_FAILURE: 'CREATE_RESERVATION_FAILURE',
+
+  UPDATE_RESERVATION_REQUEST: 'UPDATE_RESERVATION_REQUEST',
+  UPDATE_RESERVATION_SUCCESS: 'UPDATE_RESERVATION_SUCCESS',
+  UPDATE_RESERVATION_FAILURE: 'UPDATE_RESERVATION_FAILURE',
+
+  DELETE_RESERVATION_FAILURE: 'DELETE_RESERVATION_FAILURE',
+  DELETE_RESERVATION_REQUEST: 'DELETE_RESERVATION_REQUEST',
+  DELETE_RESERVATION_SUCCESS: 'DELETE_RESERVATION_SUCCESS',
 };
 
 function handleResponse(response) {
@@ -222,14 +238,94 @@ export function getRooms() {
   };
 }
 
-export function deleteReservation() {
+// ADMIN RESERVATIONS ACTIONS
+
+export function deleteReservation(id) {
+  function request(id) { return { type: adminConstants.DELETE_RESERVATION_REQUEST, id }; }
+  function success(id) { return { type: adminConstants.DELETE_RESERVATION_SUCCESS, id }; }
+  function failure(id, err) { return { type: adminConstants.DELETE_RESERVATION_FAILURE, id, err }; }
+
+  
+  const { ADMIN_RESERVATIONS } = urlConstants;
+  const url = `${ADMIN_RESERVATIONS}/${id}`;
+  const requestOptions = { method: 'DELETE', credentials: 'include' };
+
+  return (dispatch) => {
+    dispatch(request(id));
+    fetch(url, requestOptions)
+      .then(handleResponse)
+      .then((res) => { dispatch(success(res.id)); })
+      .catch((err) => { dispatch(failure(id, err)); });
+  };
 }
 
-export function createReservation() {
+
+export function createReservation(reservation, onSuccess) {
+  function request() { return { type: adminConstants.CREATE_RESERVATION_REQUEST }; }
+  function success(reservation) { return { type: adminConstants.CREATE_RESERVATION_SUCCESS, reservation}; }
+  function failure(err) { return { type: adminConstants.CREATE_RESERVATION_FAILURE, err }; }
+
+  const { ADMIN_RESERVATIONS } = urlConstants;
+  const url = `${ADMIN_RESERVATIONS}/create`;
+  const requestOptions = {
+    method: 'POST',
+    credentials: 'include',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ reservation }),
+  };
+ 
+  return (dispatch) => {
+    dispatch(request());
+    fetch(url, requestOptions)
+      .then(handleResponse)
+      .then((res) => {
+        dispatch(success(res.reservation));
+        onSuccess();
+      })
+      .catch((err) => { dispatch(failure(err)); });
+  };
 }
 
-export function updateReservation() {
+export function updateReservation(reservation, onSuccess) {
+  function request() { return { type: adminConstants.UPDATE_RESERVATION_REQUEST, reservation }; }
+  function success(reservation) { return { type: adminConstants.UPDATE_RESERVATION_SUCCESS, reservation }; }
+  function failure(err) { return { type: adminConstants.UPDATE_RESERVATION_FAILURE, err }; }
+
+  const { ADMIN_RESERVATIONS } = urlConstants;
+  const url = `${ADMIN_RESERVATIONS}/${reservation.id}`;
+  const requestOptions = {
+    method: 'PUT',
+    credentials: 'include',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ reservation }),
+  };
+
+  return (dispatch) => {
+    dispatch(request(reservation));
+    fetch(url, requestOptions)
+      .then(handleResponse)
+      .then((res) => {
+        dispatch(success(res.reservation));
+        onSuccess();
+      })
+      .catch((err) => { dispatch(failure(err)); });
+  };
 }
 
 export function getReservations() {
+  function request() { return { type: adminConstants.GET_RESERVATIONS_REQUEST }; }
+  function success(reservations ) { return { type: adminConstants.GET_RESERVATIONS_SUCCESS, reservations }; }
+  function failure(err) { return { type: adminConstants.GET_RESERVATIONS_FAILURE, err }; }
+
+  const { ADMIN_RESERVATIONS } = urlConstants;
+  const requestOptions = { method: 'GET', credentials: 'include' };
+
+  return (dispatch) => {
+    dispatch(request());
+    fetch(ADMIN_RESERVATIONS, requestOptions)
+      .then(handleResponse)
+      .then((reservations) => { dispatch(success(reservations)); })
+      .catch((err) => { dispatch(failure(err)); });
+  };
 }
+
