@@ -15,10 +15,11 @@ class SearchEngine extends Component {
 
   componentDidMount() {
     const { dispatch } = this.props;
-    const { capacity, begin, end, type } = this.props.match.params;
+    const { location, capacity, begin, end, type } = this.props.match.params;
     const equipment = JSON.parse(this.props.match.params.equipment);
 
     const data = {
+      location,
       capacity,
       begin,
       end,

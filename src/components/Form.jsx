@@ -34,13 +34,15 @@ class Form extends Component {
   handleSearch = (e) => {
     e.preventDefault();
     const { history } = this.props;
-    const { date, begin, end, capacity, equipment, type } = this.state;
+    if(this.state.location === '') this.state.location= 'everywhere'
+    const { location, date, begin, end, capacity, equipment, type } = this.state;
+   
     let [hour, min] = begin.split(':');
     date.setHours(hour, min, '0');
     const dateEnd = new Date(date);
     [hour, min] = end.split(':');
     dateEnd.setHours(hour, min, '0');
-    history.push(`search/${capacity}/${date}/${dateEnd}/${JSON.stringify(equipment)}/${type}`);
+    history.push(`search/${location}/${capacity}/${date}/${dateEnd}/${JSON.stringify(equipment)}/${type}`);
   }
 
   onLocationChange = (e) => {
