@@ -9,6 +9,7 @@ export const urlConstants = {
   SEARCH_URL: `${API_ROOT}/search`,
   USER_URL: `${API_ROOT}/user`,
   ROOM_URL: `${API_ROOT}/admin/rooms`,
+  STATS_URL: `${API_ROOT}/admin/rooms/usage`,
   RESERVATION_URL: `${API_ROOT}/reservation`,
   ADMIN_RESERVATIONS: `${API_ROOT}/admin/reservations`,
   GET_USER: `${API_ROOT}/getuser`,

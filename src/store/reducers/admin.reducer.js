@@ -37,6 +37,10 @@ const {
   DELETE_RESERVATION_FAILURE,
   DELETE_RESERVATION_REQUEST,
   DELETE_RESERVATION_SUCCESS,
+  GET_ROOMS_USAGE_REQUEST,
+  GET_ROOMS_USAGE_SUCCESS,
+  GET_ROOMS_USAGE_FAILURE,
+
 } = adminConstants;
 
 
@@ -92,6 +96,13 @@ export function administrator(state = {}, action) {
         }),
       };
 
+      case GET_ROOMS_USAGE_REQUEST:
+        return { fetching: true };
+      case GET_ROOMS_USAGE_FAILURE:
+        return { fetching: false };
+      case GET_ROOMS_USAGE_SUCCESS:
+        return { ...action.stats, fetching: false };
+  
     // ############# RESERVATIONS #############################
     
     case GET_RESERVATIONS_REQUEST:
