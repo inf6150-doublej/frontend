@@ -43,7 +43,7 @@ class RegisterPage extends Component {
       },
     });
     if (name === 'email') {
-      if (isValidEmail(value)) {
+      if (isValidEmail(value) && value.length <= 64) {
         this.setState({ emailClassName: 'form-control' });
       } else {
         this.setState({ emailClassName: 'form-control is-invalid' });
@@ -95,19 +95,23 @@ class RegisterPage extends Component {
                   <label htmlFor='name'>First Name </label>
                   <input type='text' className='form-control' name='name' value={user.name} onChange={this.handleChange} required />
                   {submitted && !user.name && <div className='help-block text-danger'>First Name is required</div>}
+                  {submitted && user.name.length > 32 && <div className='help-block text-danger'>First Name is too long</div>}
                 </div>
                 <div className={formClassName}>
                   <label htmlFor='last_name'>Last Name </label>
                   <input type='text' className='form-control' name='last_name' value={user.last_name} onChange={this.handleChange} required />
                   {submitted && !user.last_name && <div className='help-block text-danger'>Last Name is required</div>}
+                  {submitted && user.last_name.length > 32 && <div className='help-block text-danger'>Last Name is too long</div>}
                 </div>
                 <div className={formClassName}>
                   <label htmlFor='address'>Address </label>
                   <input type='text' className='form-control' name='address' value={user.address} onChange={this.handleChange} />
+                  {submitted && user.address.length > 128 && <div className='help-block text-danger'>Address is too long</div>}
                 </div>
                 <div className={formClassName}>
                   <label htmlFor='phone'>Phone Number </label>
                   <input type='text' className='form-control' name='phone' value={user.phone} onChange={this.handleChange} />
+                  {submitted && user.phone.length > 32 && <div className='help-block text-danger'>Phone number is too long</div>}
                 </div>
                 <div className={formClassName}>
                   <label htmlFor='email'>Email </label>
@@ -117,7 +121,8 @@ class RegisterPage extends Component {
                 <div className={formClassName}>
                   <label htmlFor='username'>Username </label>
                   <input type='text' className='form-control' name='username' value={user.username} onChange={this.handleChange} required />
-                  {submitted && !user.username && <div className='help-block text-danger'>Username is required</div>}
+                  {submitted && !user.username && <div className='help-block text-danger'>Username is required</div>}                  
+                  {submitted && user.username.length > 32 && <div className='help-block text-danger'>Username is too long</div>}
                 </div>
                 <div className={formClassName}>
                   <label htmlFor='password'>Password </label>
