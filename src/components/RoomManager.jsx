@@ -14,7 +14,6 @@ import {
   createRoom,
   updateRoom,
   getRooms,
-  getPostalCodeProvince,
 } from '../store/actions/admin.actions';
 import getType from '../utils/utils';
 import {isValidPCode} from '../utils/utils';
@@ -126,22 +125,15 @@ class RoomManager extends Component {
 
     if (room.name && room.capacity && room.postalCode && isValidPCode(room.postalCode)) {
 
-      room.postalCode = room.postalCode.replace(/\s/g, '').toUpperCase()
+      
+      room.postalCode = room.postalCode.replace(/\s/g, '').toLowerCase()
 
-      const onExecute = () => {
-        const onSuccess = () => {
-          this.setState({ showRoomList: true, showCreateForm: false });
-          dispatch(getRooms());
-        };
-  
-        dispatch(createRoom(room, onSuccess));
+      const onSuccess = () => {
+        this.setState({ showRoomList: true, showCreateForm: false });
+        dispatch(getRooms());
       };
 
-      const onFailure = () => {
-        this.setState({ isSubmitted: true });
-      };
-
-      dispatch(getPostalCodeProvince(room.postalCode, onExecute, onFailure));
+      dispatch(createRoom(room, onSuccess));
     } else {
       this.setState({ room, showRoomList: false, showUpdateForm: false, showCreateForm: true, isSubmitted: true });
     }
@@ -152,24 +144,15 @@ class RoomManager extends Component {
     const { room } = this.state;
     const { dispatch } = this.props;
 
-    room.postalCode = room.postalCode.replace(/\s/g, '').toUpperCase()
+    room.postalCode = room.postalCode.replace(/\s/g, '').toLowerCase()
 
     if (room.name && room.capacity && room.postalCode && isValidPCode(room.postalCode)) {
 
-      const onExecute = () => {
-
-        const onSuccess = () => {
-          this.setState({ showRoomList: true, showUpdateForm: false });
-        };
-
-        dispatch(updateRoom(room, onSuccess));
+      const onSuccess = () => {
+        this.setState({ showRoomList: true, showUpdateForm: false });
       };
 
-      const onFailure = () => {
-        this.setState({ isSubmitted: true });
-      };
-
-      dispatch(getPostalCodeProvince(room.postalCode, onExecute, onFailure));
+      dispatch(updateRoom(room, onSuccess));
     } else {
       this.setState({ room, showRoomList: false, showUpdateForm: true, showCreateForm: false, isSubmitted: true });
     }
@@ -227,7 +210,7 @@ class RoomManager extends Component {
           <div >
             <label htmlFor='description'>Postal Code</label>
             <input type='text' className='form-control' name='postalCode' value={room.postalCode} onChange={onChange}/>
-            {isSubmitted  && (!room.postalCode || !isValidPCode(room.postalCode)) && <div className='help-block text-danger'>Invalid postal</div>}
+            {isSubmitted  && (!room.postalCode || isValidPCode(room.postalCode)) && <div className='help-block text-danger'>Invalid postal</div>}
          </div>
 
           <div >
@@ -328,7 +311,7 @@ class RoomManager extends Component {
           <div >
             <label htmlFor='description'>Postal Code</label>
             <input type='text' className='form-control' name='postalCode' value={room.postalCode} onChange={onChange}/>
-            {isSubmitted && (!room.postalCode || !isValidPCode(room.postalCode)) && <div className='help-block text-danger'>Invalid postal</div>}
+            {isSubmitted && (!room.postalCode || isValidPCode(room.postalCode)) && <div className='help-block text-danger'>Invalid postal</div>}
           </div>
 
           <div >

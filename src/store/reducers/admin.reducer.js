@@ -109,9 +109,9 @@ export function administrator(state = {}, action) {
       /*case GET_PROVINCE_POSTALCODE_REQUEST:
         return { fetching: true };
       case GET_PROVINCE_POSTALCODE_FAILURE:
-        return { fetching: false };
+        return { fetching: false, errorPostalCode: true };
       case GET_PROVINCE_POSTALCODE_SUCCESS:
-        return { ...action.province, fetching: false };*/
+        return { fetching: false };*/
 
     // ############# RESERVATIONS #############################
 

@@ -38,10 +38,6 @@ export const adminConstants = {
   GET_ROOMS_USAGE_SUCCESS: 'GET_ROOMS_USAGE_SUCCESS',
   GET_ROOMS_USAGE_FAILURE: 'GET_ROOMS_USAGE_FAILURE',
 
-  GET_PROVINCE_POSTALCODE_REQUEST: 'GET_PROVINCE_POSTALCODE_REQUEST',
-  GET_PROVINCE_POSTALCODE_SUCCESS: 'GET_PROVINCE_POSTALCODE_SUCCESS',
-  GET_PROVINCE_POSTALCODE_FAILURE: 'GET_PROVINCE_POSTALCODE_FAILURE',
-
   GET_RESERVATIONS_REQUEST: 'GET_RESERVATIONS_REQUEST',
   GET_RESERVATIONS_SUCCESS: 'GET_RESERVATIONS_SUCCESS',
   GET_RESERVATIONS_FAILURE: 'GET_RESERVATIONS_FAILURE',
@@ -271,35 +267,6 @@ export function getRoomsUsage(selectedDate, onSuccess) {
   };
 }
 
-export function getPostalCodeProvince(postalCode, onSuccess, onError) {
-  function request() { return { type: adminConstants.GET_PROVINCE_POSTALCODE_REQUEST }; }
-  function success(province) { return { type: adminConstants.GET_PROVINCE_POSTALCODE_SUCCESS, province }; }
-  function failure(err) { return { type: adminConstants.GET_PROVINCE_POSTALCODE_FAILURE, err }; }
-
-  const { POSTAL_CODE_URL } = urlConstants;
-  
-  const url = `${POSTAL_CODE_URL}/${postalCode}`;
-  const requestOptions = { method: 'GET', credentials: 'include' };
-
-  return (dispatch) => {
-    dispatch(request());
-    fetch(url, requestOptions)
-      .then(handleResponse)
-      .then((province) => {
-        
-        dispatch(success(province));
-
-        onSuccess();
-      })
-      .catch((err) => {
-        
-        dispatch(failure(err)); 
-
-        onError();
-      });
-  };
-}
-
 // ADMIN RESERVATIONS ACTIONS
 
 export function deleteReservation(id) {
@@ -390,4 +357,3 @@ export function getReservations() {
       .catch((err) => { dispatch(failure(err)); });
   };
 }
-
