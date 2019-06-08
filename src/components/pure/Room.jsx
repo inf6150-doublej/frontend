@@ -2,33 +2,34 @@ import React from 'react';
 import Media from 'react-bootstrap/Media';
 import logo from '../../img/BE2.png';
 import getType from '../../utils/utils';
+import Loader from './Loader';
 
 { /*} Figure out how to display the logo and title at the top { */ }
 
 
 const Room = (props) => {
-  const equipment = (equip)=>{
+  const equipment = (equip) => {
     const liste = [];
-    for(var e in equip){
-      if(equip[e] === 1)liste.push(e);
+    for (var e in equip) {
+      if (equip[e] === 1) liste.push(e);
     }
-      
-    
+
+
     return <ul>
-          {liste.join(", ")}
-          </ul>
+      {liste.join(', ')}
+    </ul>
   }
-  const { room, onReservation } = props;
+  const { room, onReservation, loading } = props;
   return (
-    <div className="room-container">
-      <ul className="list-unstyled">
-        <Media as="li"> {/* } Replace with the room blob when we have it? {*/}
+    <div className='room-container'>
+      <ul className='list-unstyled'>
+        <Media as='li'> {/* } Replace with the room blob when we have it? {*/}
           <img
             width={80}
             height={80}
-            className="mr-3"
+            className='mr-3'
             src={logo}
-            alt="Generic placeholder"
+            alt='Generic placeholder'
           />
           <Media.Body>
             <br></br>
@@ -41,7 +42,8 @@ const Room = (props) => {
           </Media.Body>
         </Media>
       </ul>
-      {onReservation && <div><button className='btn btn-primary' onClick={() => onReservation(room)} value={room}>reserve</button></div>}
+
+      {onReservation && <div><button className='btn btn-primary' onClick={() => onReservation(room)} value={room}>reserve</button><Loader loading={loading} /></div>}
       <br></br>
     </div>
 
