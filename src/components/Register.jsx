@@ -11,6 +11,7 @@ import { goToUrl } from '../store/actions/router.actions';
 import Logo from './pure/Logo.jsx';
 import Loader from './pure/Loader.jsx';
 import { isValidEmail } from '../utils/utils';
+import Header from './pure/Header.jsx';
 
 // Register opage
 class RegisterPage extends Component {
@@ -80,10 +81,9 @@ class RegisterPage extends Component {
 
     return (
       <form className='form-horizontal'>
+      <Header logout={this.logout} goToUrl={goToUrl} history={history} user={user}></Header>
          <Row className="justify-content-md-center">
-          <Col md={{ span: 8, offset: 5 }}>
-            <Logo viewHome={() => history.push('/')} className='foto-login' width={240} height={240} />
-          </Col>
+
           <Col md={{ span: 11, offset: 5 }}>
             <div className='Hero-register'>
               <div className='col-md-5 col-md-offset-3'>
