@@ -93,7 +93,7 @@ class ReservationManager extends Component {
     const { user_id, room_id, begin, end, date } = reservation;
     const { dispatch } = this.props;
 
-    if (user_id && room_id && begin && end) {
+    if (user_id && room_id && begin && end && date) {
 
       const onSuccess = () => {
         this.setState({ showReservationList: true, showCreateForm: false });
