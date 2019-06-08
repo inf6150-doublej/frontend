@@ -1,6 +1,6 @@
 
 // import * as types from '../../constants/actionTypes';
-import { dataConstants, urlConstants } from '../../constants';
+import { dataConstants, urlConstants, userConstants } from '../../constants';
 
 
 function handleResponse(response) {
@@ -43,6 +43,29 @@ export function viewRoom(room, history) {
   return (dispatch) => {
     dispatch(success(room));
     history.push(`/rooms/${room.id}`);
+  };
+}
+
+export function leaveFeedback(feedback, onSuccess) {
+  function request(user) { return { type: userConstants.LEAVE_FEEDBACK_REQUEST, user }; }
+  function success(user) { return { type: userConstants.LEAVE_FEEDBACK_SUCCESS, user }; }
+  function failure(err) { return { type: userConstants.LEAVE_FEEDBACK_FAILURE, err }; }
+
+  const requestOptions = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+    body: JSON.stringify({ feedback }),
+  };
+  return (dispatch) => {
+    dispatch(request(feedback));
+    fetch(urlConstants.LEAVE_FEEDBACK_URL, requestOptions)
+      .then(handleResponse)
+      .then((res) => {
+        dispatch(success(res.feedback));
+        onSuccess();
+      })
+      .catch(err => dispatch(failure(err)));
   };
 }
 

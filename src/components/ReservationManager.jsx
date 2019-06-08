@@ -5,6 +5,8 @@ import '../css/CustomBootstrapTable.css';
 import '../css/ReservationManager.css';
 import Button from 'react-bootstrap/Button';
 import Calendar from './Calendar.jsx';
+import Select from '@material-ui/core/Select';
+import API_ROOT from '../constants/api-config'
 // font-awesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencilAlt, faTrashAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -29,15 +31,22 @@ class ReservationManager extends Component {
     super(props);
     this.state = {
       reservation: {
-          date : new Date(),
+        date: new Date(),
       },
+      rooms: [],
+      users: [],
       showReservationList: true,
       showUpdateForm: false,
       showCreateForm: false,
-      isSubmitted: false,  
-      saveErrorMessage: 'Unable to save.  Reservation already exist'   
+      isSubmitted: false,
+      saveErrorMessage: 'Unable to save.  Reservation already exist'
     };
-
+    fetch(API_ROOT + '/admin/rooms')
+      .then(response => response.json())
+      .then(data => this.setState({ ...this.state, rooms: data.rooms }));
+    fetch(API_ROOT + '/admin/users')
+      .then(response => response.json())
+      .then(data => this.setState({ ...this.state, users: data.users }));
     const { dispatch } = this.props;
     dispatch(getReservations());
 
@@ -45,14 +54,14 @@ class ReservationManager extends Component {
     this.handleSubmitUpdate = this.handleSubmitUpdate.bind(this);
   }
 
-  cancel = () => { this.setState({ showReservationList: true, showCreateForm: false, showUpdateForm: false, isSubmitted: false  }); }
+  cancel = () => { this.setState({ showReservationList: true, showCreateForm: false, showUpdateForm: false, isSubmitted: false }); }
 
 
   rowClassNameFormat = (row, rowIdx) =>
-  // row is whole row object
-  // rowIdx is index of row
-  (rowIdx % 2 === 0 ? 'td-even' : 'td-odd')
-  ;
+    // row is whole row object
+    // rowIdx is index of row
+    (rowIdx % 2 === 0 ? 'td-even' : 'td-odd')
+    ;
 
   createCustomInsertButton = onClick => (
     <Button size='sm' className='btnCreate' variant='info' onClick={() => this.onCreateClick(null)}><FontAwesomeIcon icon={faPlus} />&nbsp;Create</Button>
@@ -64,8 +73,16 @@ class ReservationManager extends Component {
 
     const options = {
       insertBtn: this.createCustomInsertButton,
-      defaultSortName: 'user_id', // default sort column by user id
+      defaultSortName: 'id', // default sort column by user id
       defaultSortOrder: 'asc', // default sort order
+    };
+
+    const getUser = (cell, row, enumObject, index) => {
+      return (cell + '- ' + row.user_name + ' ' + row.user_family_name)
+    };
+
+    const getRoom = (cell, row, enumObject, index) => {
+      return (cell + '- ' + row.room_name)
     };
 
     return (
@@ -74,13 +91,13 @@ class ReservationManager extends Component {
         version='4'
         hover condensed pagination search insertRow trClassName={this.rowClassNameFormat}
         options={options}
-        multiColumnSearch={ true }
+        multiColumnSearch={true}
       >
-        <TableHeaderColumn dataField='edit' width={'80px'} dataFormat={ this.editFormatter.bind(this) }></TableHeaderColumn>
-        <TableHeaderColumn dataField='delete' width={'90px'} dataFormat={ this.deleteFormatter.bind(this) }></TableHeaderColumn>
+        <TableHeaderColumn dataField='edit' width={'80px'} dataFormat={this.editFormatter.bind(this)}></TableHeaderColumn>
+        <TableHeaderColumn dataField='delete' width={'90px'} dataFormat={this.deleteFormatter.bind(this)}></TableHeaderColumn>
         <TableHeaderColumn isKey dataField='id' dataSort hidden={true}></TableHeaderColumn>
-        <TableHeaderColumn dataField='user_id' dataSort>User</TableHeaderColumn>
-        <TableHeaderColumn dataField='room_id' dataSort>Room</TableHeaderColumn>
+        <TableHeaderColumn dataField='user_id' dataFormat={getUser} dataSort>User</TableHeaderColumn>
+        <TableHeaderColumn dataField='room_id' dataFormat={getRoom} dataSort>Room</TableHeaderColumn>
         <TableHeaderColumn dataField='date_begin' dataSort>Begin time</TableHeaderColumn>
         <TableHeaderColumn dataField='date_end' dataSort>End time</TableHeaderColumn>
       </BootstrapTable>);
@@ -106,10 +123,10 @@ class ReservationManager extends Component {
       [hour, min] = end.split(':');
       dateEnd.setHours(hour, min, '0');
 
-      const data = { 
-          ...reservation,
-          begin: date.toString(),
-          end: dateEnd.toString(),
+      const data = {
+        ...reservation,
+        begin: date.toString(),
+        end: dateEnd.toString(),
       }
 
       dispatch(createReservation(data, onSuccess));
@@ -138,10 +155,10 @@ class ReservationManager extends Component {
       [hour, min] = end.split(':');
       dateEnd.setHours(hour, min, '0');
 
-      const data = { 
-          ...reservation,
-          begin: date.toString(),
-          end: dateEnd.toString(),
+      const data = {
+        ...reservation,
+        begin: date.toString(),
+        end: dateEnd.toString(),
       }
       dispatch(updateReservation(data, onSuccess));
     } else {
@@ -154,67 +171,79 @@ class ReservationManager extends Component {
   createForm = () => {
     const { reservation, isSubmitted, saveErrorMessage } = this.state;
     const { error } = this.props;
-
     const onChangeDate = async (date) => {
-        await this.setState({ reservation:{ ...reservation, date } });
+      await this.setState({ reservation: { ...reservation, date } });
     }
-   
-    
-    
     const onTimeChange = async (e) => {
-        const { name, value } = e.target;
-        const { begin, end } = this.state.reservation;
-        switch (name) {
-        
+      const { name, value } = e.target;
+      const { begin, end } = this.state.reservation;
+      switch (name) {
+
         case 'time-picker-begin':
-            await this.setState({ reservation:{ ...reservation, begin: value } });
-            if (this.state.begin > end) {
-            await this.setState({ reservation:{ ...reservation, end: this.state.begin } });
-            }
-            break;
+          await this.setState({ reservation: { ...reservation, begin: value } });
+          if (this.state.begin > end) {
+            await this.setState({ reservation: { ...reservation, end: this.state.begin } });
+          }
+          break;
         case 'time-picker-end':
-            await this.setState({ reservation: { ...reservation, end: value } });
-            if (begin > this.state.end) {
-            await this.setState({ reservation:{ ...reservation, begin: this.state.end } });
-            }
-            break;
+          await this.setState({ reservation: { ...reservation, end: value } });
+          if (begin > this.state.end) {
+            await this.setState({ reservation: { ...reservation, begin: this.state.end } });
+          }
+          break;
         default:
-            break;
-        }
+          break;
+      }
 
     }
 
     const onChange = (event) => {
       const { name, value } = event.target;
       this.setState({
-          reservation: {
-            ...reservation,
-            [name]: value,
-          },
-      });      
+        reservation: {
+          ...reservation,
+          [name]: value,
+        },
+      });
     };
     return (
-        <form autoComplete='new-password2' onSubmit={this.handleSubmitCreate}> 
-            <div>
-                <div>
-                    <label htmlFor='user_id'>User id</label>
-                    <input type='text' className='form-control' name='user_id' value={reservation.user_id} onChange={onChange} />
-                    {isSubmitted && !reservation.user_id && <div className='help-block text-danger'>User ID is required</div>}
-                </div>
-                <div >
-                    <label htmlFor='room_id'>Room id</label>
-                    <input type='text' className='form-control' name='room_id' value={reservation.room_id} onChange={onChange} />
-                    {isSubmitted && !reservation.room_id && <div className='help-block text-danger'>Room ID is required</div>}
-                </div>
-               
-               <Calendar onChangeDate={onChangeDate} onTimeChange={onTimeChange} date={this.state.reservation.date} begin={this.state.reservation.begin} end={this.state.reservation.end} />
-            </div>   
+      <form autoComplete='new-password2' onSubmit={this.handleSubmitCreate}>
+        <div>
+          <div>
+            <label htmlFor='user_id'>User id</label>
+            <Select
+              native
+              Value={this.state.reservation.user_id}
+              onChange={onChange}
+              inputProps={{ name: 'user_id', id: 'create-form-select' }}
+            >
+              <option value={0} />
+              {this.state.users.map(t => <option value={t.id}>{t.name + ' ' + t.family_name}</option>)}
+            </Select>
+            {isSubmitted && !reservation.user_id && <div className='help-block text-danger'>User ID is required</div>}
+          </div>
+          <div >
+            <label htmlFor='room_id'>Room id</label>
+            <Select
+              native
+              Value={this.state.reservation.room_id}
+              onChange={onChange}
+              inputProps={{ name: 'room_id', id: 'create-form-select' }}
+            >
+              <option value={0} />
+              {this.state.rooms.map(t => <option value={t.id}>{t.name}</option>)}
+            </Select>
+            {isSubmitted && !reservation.room_id && <div className='help-block text-danger'>Room ID is required</div>}
+          </div>
 
-            {error && <div className='help-block text-danger'>{saveErrorMessage}</div>}
+          <Calendar onChangeDate={onChangeDate} onTimeChange={onTimeChange} date={this.state.reservation.date} begin={this.state.reservation.begin} end={this.state.reservation.end} />
+        </div>
 
-            <div className="editFormButtonContainer"><input type='submit' value='Create' className='btn btn-primary' />
-            <button onClick={() => this.cancel()} className='btn btn-secondary'>Cancel</button></div>
-        </form>
+        {error && <div className='help-block text-danger'>{saveErrorMessage}</div>}
+
+        <div className="editFormButtonContainer"><input type='submit' value='Create' className='btn btn-primary' />
+          <button onClick={() => this.cancel()} className='btn btn-secondary'>Cancel</button></div>
+      </form>
     );
   }
 
@@ -223,66 +252,82 @@ class ReservationManager extends Component {
     const { error } = this.props;
 
     const onChangeDate = async (date) => {
-        await this.setState({ reservation:{ ...reservation, date } });
-        console.log(this.state.reservation)
+      await this.setState({ reservation: { ...reservation, date } });
+      console.log(this.state.reservation)
     }
-   
-    
-    
+
+
+
     const onTimeChange = async (e) => {
-        const { name, value } = e.target;
-        const { begin, end } = this.state.reservation;
-        switch (name) {
-        
+      const { name, value } = e.target;
+      const { begin, end } = this.state.reservation;
+      switch (name) {
+
         case 'time-picker-begin':
-            await this.setState({ reservation:{ ...reservation, begin: value } });
-            if (this.state.begin > end) {
-            await this.setState({ reservation:{ ...reservation, end: this.state.begin } });
-            }
-            break;
+          await this.setState({ reservation: { ...reservation, begin: value } });
+          if (this.state.begin > end) {
+            await this.setState({ reservation: { ...reservation, end: this.state.begin } });
+          }
+          break;
         case 'time-picker-end':
-            await this.setState({ reservation: { ...reservation, end: value } });
-            if (begin > this.state.end) {
-            await this.setState({ reservation:{ ...reservation, begin: this.state.end } });
-            }
-            break;
+          await this.setState({ reservation: { ...reservation, end: value } });
+          if (begin > this.state.end) {
+            await this.setState({ reservation: { ...reservation, begin: this.state.end } });
+          }
+          break;
         default:
-            break;
-        }
+          break;
+      }
     }
 
     const onChange = (event) => {
       const { name, value } = event.target;
       this.setState({
-          reservation: {
-            ...reservation,
-            [name]: value,
-          },
-      });      
+        reservation: {
+          ...reservation,
+          [name]: value,
+        },
+      });
     };
 
     return (
-        <form autoComplete='new-password2' onSubmit={this.handleSubmitUpdate}> 
+      <form autoComplete='new-password2' onSubmit={this.handleSubmitUpdate}>
+        <div>
           <div>
-            <div>
-                <label htmlFor='user_id'>User id</label>
-                <input type='text' className='form-control' name='user_id' value={reservation.user_id} onChange={onChange} />
-                {isSubmitted && !reservation.user_id && <div className='help-block text-danger'>User ID is required</div>}
-            </div>
-            <div >
-                <label htmlFor='room_id'>Room id</label>
-                <input type='text' className='form-control' name='room_id' value={reservation.room_id} onChange={onChange} />
-                {isSubmitted && !reservation.room_id && <div className='help-block text-danger'>Room ID is required</div>}
-            </div>
-            <Calendar onChangeDate={onChangeDate} onTimeChange={onTimeChange} date={this.state.reservation.date} begin={this.state.reservation.begin} end={this.state.reservation.end} />
-          </div>    
+            <label htmlFor='user_id'>User id</label>
+            <Select
+              native
+              value={this.state.reservation.user_id}
+              onChange={onChange}
+              inputProps={{ name: 'user_id', id: 'create-form-select' }}
+            >
+              <option value={0} />
+              {this.state.users.map(t => <option value={t.id}>{t.name + ' ' + t.family_name}</option>)}
+            </Select>
+            {isSubmitted && !reservation.user_id && <div className='help-block text-danger'>User ID is required</div>}
+          </div>
+          <div >
+            <label htmlFor='room_id'>Room id</label>
+            <Select
+              native
+              value={this.state.reservation.room_id}
+              onChange={onChange}
+              inputProps={{ name: 'room_id', id: 'create-form-select' }}
+            >
+              <option value={0} />
+              {this.state.rooms.map(t => <option value={t.id}>{t.name}</option>)}
+            </Select>
+            {isSubmitted && !reservation.room_id && <div className='help-block text-danger'>Room ID is required</div>}
+          </div>
+          <Calendar onChangeDate={onChangeDate} onTimeChange={onTimeChange} date={this.state.reservation.date} begin={this.state.reservation.begin} end={this.state.reservation.end} />
+        </div>
 
-          {error && <div className='help-block text-danger'>{saveErrorMessage}</div>}
+        {error && <div className='help-block text-danger'>{saveErrorMessage}</div>}
 
-          <div className="editFormButtonContainer"><input type='submit' value='Create' className='btn btn-primary' />
+        <div className="editFormButtonContainer"><input type='submit' value='Create' className='btn btn-primary' />
           <button onClick={() => this.cancel()} className='btn btn-secondary'>Cancel</button></div>
-        </form>
-    );  
+      </form>
+    );
   }
 
 
@@ -292,7 +337,8 @@ class ReservationManager extends Component {
   };
 
   onCreateClick = () => {
-    this.setState({ reservation: {
+    this.setState({
+      reservation: {
         user_id: '',
         room_id: '',
         begin: '',
@@ -345,7 +391,7 @@ class ReservationManager extends Component {
 
 function mapStateToProps(state) {
   const { reservations, fetching, error } = state.administrator;
-  
+
   return {
     reservations,
     fetching,

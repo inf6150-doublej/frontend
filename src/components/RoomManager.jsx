@@ -16,6 +16,7 @@ import {
   getRooms,
 } from '../store/actions/admin.actions';
 import getType from '../utils/utils';
+import {isValidPCode} from '../utils/utils';
 
 // React-Bootstrap
 const ReactBsTable = require('react-bootstrap-table');
@@ -36,6 +37,8 @@ class RoomManager extends Component {
         description: '',
         equipment: {computer : 0 ,white_board : 0, sound_system : 0, projector : 0},
         id: '',
+        city :'',
+        postalCode:'',
       },
       showRoomList: true,
       showUpdateForm: false,
@@ -79,6 +82,14 @@ class RoomManager extends Component {
                 {cell.projector != 0 && <li>Projector</li>}
               </ul> 
     };
+    const postal = (cell,row) => {
+      if(cell && cell.length === 6){ 
+        return (cell.slice(0,3) + ' ' + cell.slice(3)).toLocaleUpperCase()
+      }else
+      {
+         return cell 
+      }
+    };
     const typeFilter = (cell,row) => {
       return getType(cell)
                     
@@ -99,6 +110,7 @@ class RoomManager extends Component {
         <TableHeaderColumn dataField='capacity' dataSort>Capacity</TableHeaderColumn>
         <TableHeaderColumn dataField='description' dataSort>Description</TableHeaderColumn>
         <TableHeaderColumn dataField='equipment' dataFormat={listEquip} dataSort>Equipment</TableHeaderColumn>
+        <TableHeaderColumn dataField='postalCode' dataFormat={postal} dataSort>Postal Code</TableHeaderColumn>
       </BootstrapTable>);
   }
 
@@ -110,7 +122,10 @@ class RoomManager extends Component {
     const { room } = this.state;
     const { dispatch } = this.props;
 
-    if (room.name && room.capacity) {
+    if (room.name && room.capacity && room.postalCode) {
+
+      
+      room.postalCode = room.postalCode.replace(/\s/g, '').toLowerCase()
 
       const onSuccess = () => {
         this.setState({ showRoomList: true, showCreateForm: false });
@@ -128,7 +143,9 @@ class RoomManager extends Component {
     const { room } = this.state;
     const { dispatch } = this.props;
 
-    if (room.name && room.capacity) {
+    room.postalCode = room.postalCode.replace(/\s/g, '').toLowerCase()
+
+    if (room.name && room.capacity && room.postalCode) {
 
       const onSuccess = () => {
         this.setState({ showRoomList: true, showUpdateForm: false });
@@ -187,6 +204,17 @@ class RoomManager extends Component {
           <div >
             <label htmlFor='description'>Description</label>
             <input type='text' className='form-control' name='description' value={room.description} onChange={onChange}/>
+          </div>
+
+          <div >
+            <label htmlFor='description'>Postal Code</label>
+            <input type='text' className='form-control' name='postalCode' value={room.postalCode} onChange={onChange}/>
+            {isSubmitted && room.postalCode &&  isValidPCode(room.postalCode) && <div className='help-block text-danger'>Invalid postal</div>}
+          </div>
+
+          <div >
+            <label htmlFor='description'>City</label>
+            <input type='text' className='form-control' name='city' value={room.city} onChange={onChange}/>
           </div>
 
           <div>
@@ -279,6 +307,16 @@ class RoomManager extends Component {
             <label htmlFor='description'>Description</label>
             <input type='text' className='form-control' name='description' value={room.description} onChange={onChange}/>
           </div>
+          <div >
+            <label htmlFor='description'>Postal Code</label>
+            <input type='text' className='form-control' name='postalCode' value={room.postalCode} onChange={onChange}/>
+            {isSubmitted && room.postalCode && isValidPCode(room.postalCode) && <div className='help-block text-danger'>Invalid postal</div>}
+          </div>
+
+          <div >
+            <label htmlFor='description'>City</label>
+            <input type='text' className='form-control' name='city' value={room.city} onChange={onChange}/>
+          </div>
           <div>
           <div>
             <label htmlFor='type'>Type</label>
@@ -337,6 +375,8 @@ class RoomManager extends Component {
       description: '',
       equipment: {computer : 0 ,white_board : 0, sound_system : 0, projector : 0},
       id: '',
+      postalCode:'',
+      city:'',
 
     },
     showRoomList: false,
