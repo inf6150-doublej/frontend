@@ -11,10 +11,7 @@ import './css/normalize.css';
 import ReservationManager from './components/ReservationManager.jsx';
 import RoomManager from './components/RoomManager.jsx';
 import StatsManager from './components/StatsManager.jsx';
-import FAQ from './components/Faq';
 import LeaveFeedback from './components/LeaveFeedback.jsx';
-
-class App extends Component {
   render() {
     return (
         <Switch>
