@@ -52,7 +52,7 @@ class StatsManager extends Component {
   usageList = () => {
     const { stats } = this.props;
 
-    return ( <ul className="list-unstyled">
+    return (<ul className="list-unstyled containerStats">
         <Media as="li">
           <img
             width={80}
@@ -63,11 +63,11 @@ class StatsManager extends Component {
           />
           <Media.Body>
             <br></br>
-            <h5></h5>
-            <li>Computer: {stats.computer}</li>
-            <li>Projector: {stats.computer}</li>
-            <li>Sound System: {stats.computer}</li>
-            <li>White Board: {stats.white_board}</li>
+            <h5>Usage</h5>
+            <li>Computer: <span className='percentage'>{stats.computer * 100}%</span></li>
+            <li>Projector: <span className='percentage'>{stats.projector * 100}%</span></li>
+            <li>Sound System: <span className='percentage'>{stats.sound_system * 100}%</span></li>
+            <li>White Board: <span className='percentage'>{stats.white_board * 100}%</span></li>
           </Media.Body>
         </Media>
       </ul>

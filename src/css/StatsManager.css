@@ -5,3 +5,11 @@
 .stats-manager-body {
     margin-top: 50px;
 }
+
+.percentage {
+    font-weight: bold;
+}
+
+.containerStats {
+    margin-top: 20px;
+}
