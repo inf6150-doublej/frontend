@@ -18,7 +18,7 @@ class SearchEngine extends Component {
 
   componentDidMount() {
     const { dispatch } = this.props;
-    const { location, capacity, begin, end, type } = this.props.match.params;
+    const { location, capacity, begin, end, type, city, postalCode } = this.props.match.params;
     const equipment = JSON.parse(this.props.match.params.equipment);
 
     const data = {
@@ -28,6 +28,8 @@ class SearchEngine extends Component {
       end,
       equipment,
       type,
+      city,
+      postalCode,
     };
     dispatch(fetchAllRooms(data));
   }
