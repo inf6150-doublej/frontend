@@ -101,7 +101,7 @@ class LeaveFeedback extends Component {
                 </div>
                 <div className={formClassName}>
                   <label htmlFor='comment'>Comments </label>
-                  <input type='comment' className='form-control' name='comment' value={user.comment} onChange={this.handleChange} required />
+                  <textarea className='form-control' name='comment' value={user.comment} onChange={this.handleChange} required rows="3" maxLength="1000" />
                   {submitted && !user.comment && <div className='help-block text-danger'>Comments are required</div>}
                 </div>
                 <div className='form-group'>
