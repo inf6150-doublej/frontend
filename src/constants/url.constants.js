@@ -4,6 +4,7 @@ export const urlConstants = {
   HOME_URL: `${API_ROOT}/`,
   API_URL: `${API_ROOT}/api`,
   REGISTER_URL: `${API_ROOT}/register`,
+  LEAVE_FEEDBACK_URL: `${API_ROOT}/feedback`,
   LOGIN_URL: `${API_ROOT}/login`,
   LOGOUT_URL: `${API_ROOT}/logout`,
   SEARCH_URL: `${API_ROOT}/search`,

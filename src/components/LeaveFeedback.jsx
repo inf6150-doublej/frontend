@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import DialogContent from '@material-ui/core/DialogContent';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { userActions } from '../store/actions/user.actions';
+import { leaveFeedback } from '../store/actions/data.actions';
 import { goToUrl } from '../store/actions/router.actions';
 import Logo from './pure/Logo.jsx';
 import Loader from './pure/Loader.jsx';
@@ -54,10 +54,10 @@ class LeaveFeedback extends Component {
     event.preventDefault();
     this.setState({ submitted: true });
     const { user } = this.state;
-    const { dispatch, history } = this.props;
-    const { register } = userActions;
+    const { dispatch } = this.props;
+
     if (user.name && user.email) {
-      dispatch(register(user, history));
+      dispatch(leaveFeedback(user, () => { this.setState({ openModal: true }); }));
     }
   }
 
@@ -67,7 +67,7 @@ class LeaveFeedback extends Component {
 
 
   render() {
-    const { registering, error, history, registeredUser } = this.props;
+    const { registering, error, history } = this.props;
     const { user, submitted, emailClassName, openModal } = this.state;
     const { name, last_name, address, phone, username, password, email } = user;
 
