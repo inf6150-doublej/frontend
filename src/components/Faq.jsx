@@ -7,6 +7,7 @@ import { goToUrl } from '../store/actions/router.actions';
 import Row from 'react-bootstrap/Row';
 import Logo from './pure/Logo.jsx';
 import Col from 'react-bootstrap/Col';
+import Header from './pure/Header.jsx';
 import '../css/Home.css';
 import '../css/faq.css';
 
@@ -33,10 +34,9 @@ class FAQ extends Component {
     const { user, history } = this.props;
     return (
       <div>
+        <Header logout={this.logout} goToUrl={goToUrl} history={history} user={user}></Header>
         <Row className="justify-content-md-center">
-          <Col md={{ span: 8, offset: 5 }}>
-            <Logo viewHome={() => history.push('/')} className='foto-login' width={240} height={240} />
-          </Col>
+          
         <div>
         <Col md={{ span: 12, offset: 3 }}>
             <h1> FAQ</h1>

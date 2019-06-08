@@ -24,8 +24,9 @@ const UserProfile = (props) => {
           <NavItem right>{!user && <Link to='/register' className='user-profile'>Register</Link>}</NavItem>
           <NavItem right>{user && <div className='user-profile' onClick={logout}>Logout</div>}</NavItem>
           <NavItem right>{!user && <Link to='/login' className='user-profile'>Login</Link>}</NavItem>
-          <NavItem right>{user && user.admin && <div className='user-profile' onClick={viewAdmin}>Manage</div>}</NavItem>
-          <NavItem right>{user && <Link to='/feedback' className='user-profile'>Leave Feedback</Link>}</NavItem>
+          <NavItem right>{(user && user.admin) && <div className='user-profile' onClick={viewAdmin}>Manage</div>}</NavItem>
+          <NavItem right>{<Link to='/faq' className='user-profile'>FAQ</Link>}</NavItem>
+          <NavItem right>{<Link to='/feedback' className='user-profile'>Leave Feedback</Link>}</NavItem>
         </Navbar.Collapse>
       </Navbar>
 
