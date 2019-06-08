@@ -14,6 +14,7 @@ const HeaderAdmin = (props) => {
           <Link to='/admin/users' className='user-profile'>Manage users</Link>
           <Link to='/admin/reservation' className='user-profile'>Manage reservations</Link>
           <Link to='/admin/rooms' className='user-profile'>Manage rooms</Link>
+          <Link to='/admin/rooms/usage' className='user-profile'>Statistics</Link>
         </div>
       </div>
     </header>
