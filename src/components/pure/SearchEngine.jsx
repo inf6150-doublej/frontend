@@ -35,13 +35,14 @@ class SearchEngine extends Component {
   }
 
   render() {
-    const { rooms } = this.props;
+    const { rooms, nothingFound } = this.props;
     let roomMap = [];
     if (rooms && rooms.length) {
       roomMap = rooms.map((room, i) => <Room key={i} room={room} onReservation={this.onReservation} />);
     }
     return (
       <div className='rooms-container'>
+        {nothingFound && <div className='text-danger noRows'>No rooms found matching criterias.  Here is a proposal</div>}
         {roomMap}
       </div>
     );
@@ -50,10 +51,11 @@ class SearchEngine extends Component {
 
 
 function mapStateToProps(state) {
-  const { rooms, fetching } = state.roomsFetcher;
+  const { rooms, nothingFound, fetching } = state.roomsFetcher;
   const { user } = state.authentication;
   return {
     rooms,
+    nothingFound,
     fetching,
     user,
   };
