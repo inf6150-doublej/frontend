@@ -106,12 +106,12 @@ export function administrator(state = {}, action) {
     case GET_ROOMS_USAGE_SUCCESS:
       return { ...action.stats, fetching: false };
 
-      case GET_PROVINCE_POSTALCODE_REQUEST:
+      /*case GET_PROVINCE_POSTALCODE_REQUEST:
         return { fetching: true };
       case GET_PROVINCE_POSTALCODE_FAILURE:
         return { fetching: false };
       case GET_PROVINCE_POSTALCODE_SUCCESS:
-        return { ...action.province, fetching: false };
+        return { ...action.province, fetching: false };*/
 
     // ############# RESERVATIONS #############################
 
