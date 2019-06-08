@@ -5,6 +5,9 @@ import Media from 'react-bootstrap/Media';
 import Room from './pure/Room.jsx';
 import User from './pure/User.jsx';
 import '../css/Confirmation.css';
+import Logo from './pure/Logo.jsx';
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
 
 // Confirmation of a reservation
 class Confirmation extends Component {
@@ -17,11 +20,16 @@ class Confirmation extends Component {
   componentDidMount() {}
 
   render() {
-    const { confirmation, error } = this.props;
+    const { confirmation, error, history } = this.props;
     return (
       <div>
+        <Row className="justify-content-md-center">
+          <Col md={{ span: 8, offset: 5 }}>
+            <Logo viewHome={() => history.push('/')} className='foto-login' width={240} height={240} />
+          </Col>
+          <Col md={{ span: 11, offset: 5 }}>
         {confirmation
-        && <div className='confirmation-container'>
+        && <div className='col-md-5 col-md-offset-3 '>
           <h3>You have successfully reserved a room. Please check your email for validation.</h3>
           <Room room={confirmation.room}></Room>
           <ul>
@@ -32,12 +40,14 @@ class Confirmation extends Component {
                 <br></br>
                 <li><h5>Date and Time:</h5></li>
                 <li><p>start: {confirmation.begin}</p></li>
-                <li><p>ending: {confirmation.end}</p></li>                 
+                <li><p>end: {confirmation.end}</p></li>                 
               </Media.Body>
             </Media>
           </ul>
         </div>}
         {error && <div>{error}</div>}
+        </Col>
+        </Row>
       </div>
     );
   }
