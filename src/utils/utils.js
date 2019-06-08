@@ -8,8 +8,8 @@ export function isValidEmail (email) {
 export  function isValidPCode(pCode)
   {
     let outCode = (pCode).replace(/\s+/g, '')
-    const regex = /^[a-z]\d[a-z]\d[a-z]\d$/;
-    return !regex.test(String(outCode).toLowerCase());
+    const regex = /^[A-Z]\d[A-Z]\d[A-Z]\d$/;
+    return regex.test(String(outCode).toUpperCase());
   }
 
 export default  function getType (type){

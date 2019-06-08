@@ -40,6 +40,9 @@ const {
   GET_ROOMS_USAGE_REQUEST,
   GET_ROOMS_USAGE_SUCCESS,
   GET_ROOMS_USAGE_FAILURE,
+  GET_PROVINCE_POSTALCODE_REQUEST,
+  GET_PROVINCE_POSTALCODE_SUCCESS,
+  GET_PROVINCE_POSTALCODE_FAILURE,
 
 } = adminConstants;
 
@@ -102,6 +105,13 @@ export function administrator(state = {}, action) {
       return { fetching: false };
     case GET_ROOMS_USAGE_SUCCESS:
       return { ...action.stats, fetching: false };
+
+      /*case GET_PROVINCE_POSTALCODE_REQUEST:
+        return { fetching: true };
+      case GET_PROVINCE_POSTALCODE_FAILURE:
+        return { fetching: false, errorPostalCode: true };
+      case GET_PROVINCE_POSTALCODE_SUCCESS:
+        return { fetching: false };*/
 
     // ############# RESERVATIONS #############################
 

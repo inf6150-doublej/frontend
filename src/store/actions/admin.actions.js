@@ -357,4 +357,3 @@ export function getReservations() {
       .catch((err) => { dispatch(failure(err)); });
   };
 }
-
