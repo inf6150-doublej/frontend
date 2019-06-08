@@ -4,7 +4,8 @@ export function isValidEmail (email) {
   }
 
 export default function getType (type){
-  switch(type) {
+  
+  switch(parseInt(type)) {
     case 1:
       return 'Arena';
     case 2:
