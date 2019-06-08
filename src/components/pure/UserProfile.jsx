@@ -7,6 +7,9 @@ import logo from '../../img/BE2.png';
 // Control used on Home page to display logo and login options
 const UserProfile = (props) => {
   const { user, logout, viewAdmin } = props;
+  let admin = false;
+  if (user && user.admin) admin = true;
+
   return (
       <Navbar bg='white' variant='light'>
         <Navbar.Brand href='/'>
@@ -24,7 +27,7 @@ const UserProfile = (props) => {
           <NavItem right>{!user && <Link to='/register' className='user-profile'>Register</Link>}</NavItem>
           <NavItem right>{user && <div className='user-profile' onClick={logout}>Logout</div>}</NavItem>
           <NavItem right>{!user && <Link to='/login' className='user-profile'>Login</Link>}</NavItem>
-          <NavItem right>{(user && user.admin) && <div className='user-profile' onClick={viewAdmin}>Manage</div>}</NavItem>
+          <NavItem right>{admin && <div className='user-profile' onClick={viewAdmin}>Manage</div>}</NavItem>
           <NavItem right>{<Link to='/faq' className='user-profile'>FAQ</Link>}</NavItem>
           <NavItem right>{<Link to='/feedback' className='user-profile'>Leave Feedback</Link>}</NavItem>
         </Navbar.Collapse>
