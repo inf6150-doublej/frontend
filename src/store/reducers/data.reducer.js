@@ -15,6 +15,7 @@ export function roomsFetcher(state = initialState, action) {
       return {
         fetching: false,
         rooms: action.data.rooms,
+        nothingFound: action.data.nothingFound,
       };
     case FETCH_FAILURE_SEARCH_RESULT:
       return {
