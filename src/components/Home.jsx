@@ -8,7 +8,7 @@ import Header from './pure/Header.jsx';
 import Form from './Form.jsx';
 import '../css/Home.css';
 
-
+// Home page to search rooms
 class Home extends Component {
   constructor(props) {
     super(props);

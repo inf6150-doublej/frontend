@@ -25,7 +25,7 @@ const { BootstrapTable } = ReactBsTable;
 const { TableHeaderColumn } = ReactBsTable;
 require('../../node_modules/react-bootstrap-table/dist/react-bootstrap-table-all.min.css');
 
-
+// Reservation by an admin
 class ReservationManager extends Component {
   constructor(props) {
     super(props);
@@ -60,8 +60,9 @@ class ReservationManager extends Component {
     <Button size='sm' className='btnCreate' variant='info' onClick={() => this.onCreateClick(null)}><FontAwesomeIcon icon={faPlus} />&nbsp;Create</Button>
   )
 
+  // List all reservations
   reservationList = () => {
-    const { reservations} = this.props;
+    const { reservations } = this.props;
 
     const options = {
       insertBtn: this.createCustomInsertButton,
@@ -87,6 +88,7 @@ class ReservationManager extends Component {
       </BootstrapTable>);
   }
 
+  // Click on Create
   handleSubmitCreate(event) {
     event.preventDefault();
     const { reservation } = this.state;

@@ -1,3 +1,4 @@
+import * as moment from 'moment'
 import { urlConstants } from '../../constants/url.constants';
 
 export const adminConstants = {
@@ -32,6 +33,10 @@ export const adminConstants = {
   GET_ROOMS_REQUEST: 'GET_ROOMS_REQUEST',
   GET_ROOMS_SUCCESS: 'GET_ROOMS_SUCCESS',
   GET_ROOMS_FAILURE: 'GET_ROOMS_FAILURE',
+
+  GET_ROOMS_USAGE_REQUEST: 'GET_ROOMS_USAGE_REQUEST',
+  GET_ROOMS_USAGE_SUCCESS: 'GET_ROOMS_USAGE_SUCCESS',
+  GET_ROOMS_USAGE_FAILURE: 'GET_ROOMS_USAGE_FAILURE',
 
   GET_RESERVATIONS_REQUEST: 'GET_RESERVATIONS_REQUEST',
   GET_RESERVATIONS_SUCCESS: 'GET_RESERVATIONS_SUCCESS',
@@ -234,6 +239,30 @@ export function getRooms() {
     fetch(ROOM_URL, requestOptions)
       .then(handleResponse)
       .then((rooms) => { dispatch(success(rooms)); })
+      .catch((err) => { dispatch(failure(err)); });
+  };
+}
+
+export function getRoomsUsage(selectedDate, onSuccess) {
+  function request() { return { type: adminConstants.GET_ROOMS_USAGE_REQUEST }; }
+  function success(stats) { return { type: adminConstants.GET_ROOMS_USAGE_SUCCESS, stats }; }
+  function failure(err) { return { type: adminConstants.GET_ROOMS_USAGE_FAILURE, err }; }
+
+  const { STATS_URL } = urlConstants;
+  
+  const url = `${STATS_URL}/${moment(selectedDate).format('YYYY-MM-DD')}`;
+  const requestOptions = { method: 'GET', credentials: 'include' };
+
+  return (dispatch) => {
+    dispatch(request());
+    fetch(url, requestOptions)
+      .then(handleResponse)
+      .then((stats) => { 
+        console.log(stats);
+        dispatch(success(stats));
+
+        onSuccess();
+      })
       .catch((err) => { dispatch(failure(err)); });
   };
 }

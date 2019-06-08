@@ -15,7 +15,7 @@ const styles = theme => ({
   },
 });
 
-
+// Used to display a time pickers
 function TimePickers(props) {
   const { classes, label, onChange, name, value } = props;
 

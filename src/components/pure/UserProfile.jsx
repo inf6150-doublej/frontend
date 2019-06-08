@@ -4,7 +4,7 @@ import '../../css/UserProfile.css';
 import { Navbar, NavItem } from 'react-bootstrap';
 import logo from '../../img/BE2.png';
 
-
+// Control used on Home page to display logo and login options
 const UserProfile = (props) => {
   const { user, logout, viewAdmin } = props;
   return (

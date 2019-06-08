@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import Media from 'react-bootstrap/Media';
 import Room from './pure/Room.jsx';
 import User from './pure/User.jsx';
 import '../css/Confirmation.css';
 
+// Confirmation of a reservation
 class Confirmation extends Component {
   constructor(props) {
     super(props);
@@ -21,11 +22,20 @@ class Confirmation extends Component {
       <div>
         {confirmation
         && <div className='confirmation-container'>
-          <h2>you have successfully reserved a room, please check your email for the receive.</h2>
+          <h3>You have successfully reserved a room. Please check your email for validation.</h3>
           <Room room={confirmation.room}></Room>
-          <User user={confirmation.user}></User>
-          <div>start: {confirmation.begin}</div>
-          <div>ending: {confirmation.end}</div>
+          <ul>
+            <Media as="li">
+              <Media.Body>   
+                <li><h5>Confirmation to:</h5></li>
+                <User user={confirmation.user}></User>
+                <br></br>
+                <li><h5>Date and Time:</h5></li>
+                <li><p>start: {confirmation.begin}</p></li>
+                <li><p>ending: {confirmation.end}</p></li>                 
+              </Media.Body>
+            </Media>
+          </ul>
         </div>}
         {error && <div>{error}</div>}
       </div>

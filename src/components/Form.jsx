@@ -10,7 +10,7 @@ import Col from 'react-bootstrap/Col';
 import Select from '@material-ui/core/Select';
 import Calendar from './Calendar.jsx';
 
-
+// Home page form
 class Form extends Component {
   constructor(props) {
     super(props);
@@ -30,6 +30,7 @@ class Form extends Component {
     };
   }
 
+  // Click on Search
   handleSearch = (e) => {
     e.preventDefault();
     const { history } = this.props;
@@ -46,6 +47,7 @@ class Form extends Component {
     this.setState({ location: e.target.value });
   }
 
+  // Change date in state when we change date in calendar
   onChangeDate = async (date) => {
     await this.setState({ date });
   }
@@ -54,6 +56,7 @@ class Form extends Component {
     this.setState({ type: e.target.value });
   }
 
+  // When time change
   onTimeChange = async (e) => {
     const { name, value } = e.target;
     const { begin, end } = this.state;
@@ -75,7 +78,7 @@ class Form extends Component {
     }
   }
 
-
+  // Update state when we change equipment
   onEquipmentChange = (e) => {
     const { name, checked } = e.target;
     const { equipment } = this.state;

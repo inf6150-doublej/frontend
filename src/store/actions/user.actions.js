@@ -1,8 +1,5 @@
-import Cookies from 'universal-cookie';
 import { userConstants, urlConstants } from '../../constants';
-
-const cookies = new Cookies();
-
+// TODO remove cookie-universal from npm
 
 function handleResponse(response) {
   if (!response.ok) {
@@ -30,7 +27,6 @@ export function checkSession() {
     fetch(GET_USER, requestOptions)
       .then(handleResponse)
       .then((user) => {
-        cookies.set('user', user);
         dispatch(success(user));
       })
       .catch((err) => { dispatch(failure(err)); });
@@ -77,7 +73,6 @@ export function logout(history) {
     .then(res => console.log(res))
     .catch(err => console.log(err));
   history.push('/');
-  cookies.remove('user', { path: '/' });
   return { type: userConstants.LOGOUT };
 }
 
@@ -104,7 +99,7 @@ export function register(user) {
 }
 
 export function isAuthenticated() {
-  return cookies.get('user') && cookies.get('user').user;
+  // return cookies.get('user') && cookies.get('user').user;
 }
 
 export function reserve(room, user, begin, end, history) {

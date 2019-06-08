@@ -1,19 +1,20 @@
 import React from 'react';
+import Media from 'react-bootstrap/Media';
 import '../../css/User.css';
 
-
+// Display a user
 const User = (props) => {
-  const { user, onDelete, onUpdate } = props;
+  const { user } = props;
 
   return (
     <div className="user-container">
       <ul>
-        <li>{user.id}</li>
-        <li>{user.name}</li>
+      <Media as="li">
+        <Media.Body>
+        <li>{user.name} {user.family_name}</li>
         <li>{user.email}</li>
-        <li>{user.family_name}</li>
-        {onDelete && <button onClick={() => onUpdate(user)}>update</button>}
-        {onUpdate && <button onClick={() => onDelete(user.id)}>delete</button>}
+        </Media.Body>
+      </Media>
       </ul>
     </div>
   );

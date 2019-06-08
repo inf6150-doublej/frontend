@@ -1,0 +1,9 @@
+li {
+    list-style-type: none;
+    margin: 0;
+    padding-left: 30px;
+  }
+
+  p {
+    text-indent:40px;
+  }

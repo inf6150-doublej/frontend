@@ -1,7 +1,7 @@
 import React from 'react';
 import UserProfile from './UserProfile.jsx';
 
-
+// Header used on Home page
 const Header = (props) => {
   const { user, history, logout, goToUrl } = props;
   return (
