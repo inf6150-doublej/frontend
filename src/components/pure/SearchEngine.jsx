@@ -3,7 +3,10 @@ import { connect } from 'react-redux';
 import { fetchAllRooms } from '../../store/actions/data.actions';
 import { reserve } from '../../store/actions/user.actions';
 import Room from './Room.jsx';
+import Row from 'react-bootstrap/Row'
 import '../../css/SearchEngine.css';
+import Col from 'react-bootstrap/Col';
+import Logo from './Logo.jsx';
 
 // Search engine used to display result values
 class SearchEngine extends Component {
@@ -36,16 +39,30 @@ class SearchEngine extends Component {
   }
 
   render() {
-    const { rooms, nothingFound } = this.props;
+    const { rooms, nothingFound, history } = this.props;
     let roomMap = [];
     if (rooms && rooms.length) {
       roomMap = rooms.map((room, i) => <Room key={i} room={room} onReservation={this.onReservation} />);
     }
     return (
-      <div className='rooms-container'>
+      <Row className="justify-content-md-center">
+        <Col md={{ span: 8, offset: 5 }}>
+          <Logo viewHome={() => history.push('/')} className='foto-login' width={240} height={240} />
+        </Col>
+        <Col  md={{ span: 8, offset: 3 }}>
+          <br></br>
+        <h3>Click on the "reserve" to reserve the room/venue</h3>
+        <br></br>
+        </Col>
+        <Col md={{ span: 8, offset: 0 }}>
+      <div className='col-md-12 col-md-offset-8 '>
+        
         {nothingFound && <div className='text-danger noRows'>No rooms found matching criterias.  Here is a proposal</div>}
         {roomMap}
+        
       </div>
+      </Col>
+      </Row>
     );
   }
 }

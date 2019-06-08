@@ -2,8 +2,11 @@ import React from 'react';
 import Media from 'react-bootstrap/Media';
 import logo from '../../img/BE2.png';
 import getType from '../../utils/utils';
+import Logo from './Logo.jsx';
+import Col from 'react-bootstrap/Col';
 
-{ /*} Figure out how to display the logo and title at the top { */ }
+
+
 
 
 const Room = (props) => {
@@ -18,7 +21,7 @@ const Room = (props) => {
           {liste.join(", ")}
           </ul>
   }
-  const { room, onReservation } = props;
+  const { room, onReservation, history } = props;
   return (
     <div className="room-container">
       <ul className="list-unstyled">
@@ -33,18 +36,17 @@ const Room = (props) => {
           <Media.Body>
             <br></br>
             <h5>#{room.id} - {room.name}</h5>
-            <li>{getType(room.type)}</li> {/*} Type de salle? Devrait=on ne pas plutot y voir le type plutot qu'un chiffre? { */}
+            <li>{getType(room.type)}</li>
             <li>Description: {room.description}</li>
             <li>Maximum capacity: {room.capacity}</li>
-            <li>{room.reservation_id}</li> {/* } Pourquoi on display ca? {*/}
-            <li>Equipment available: {equipment(room.equipment)}</li> {/*} Je ne comprends pas c'est quoi cet ID, devrait-on ne pas plutot avoir une liste des equipements offerts?{ */}
+            <li>{room.reservation_id}</li> 
+            <li>Equipment available: {equipment(room.equipment)}</li>
           </Media.Body>
         </Media>
       </ul>
-      {onReservation && <div><button className='btn btn-primary' onClick={() => onReservation(room)} value={room}>reserve</button></div>}
+      {onReservation && <div class="mt-auto p-2 bd-highlight"><button className='btn btn-primary' onClick={() => onReservation(room)} value={room}>reserve</button></div>}
       <br></br>
     </div>
-
   );
 };
 
