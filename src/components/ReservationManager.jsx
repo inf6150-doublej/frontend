@@ -5,6 +5,8 @@ import '../css/CustomBootstrapTable.css';
 import '../css/ReservationManager.css';
 import Button from 'react-bootstrap/Button';
 import Calendar from './Calendar.jsx';
+import Select from '@material-ui/core/Select';
+import API_ROOT from '../constants/api-config'
 // font-awesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencilAlt, faTrashAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -31,13 +33,20 @@ class ReservationManager extends Component {
       reservation: {
           date : new Date(),
       },
+      rooms: [],
+      users: [],
       showReservationList: true,
       showUpdateForm: false,
       showCreateForm: false,
       isSubmitted: false,  
       saveErrorMessage: 'Unable to save.  Reservation already exist'   
     };
-
+    fetch(API_ROOT + '/admin/rooms')
+    .then(response => response.json())
+    .then(data => this.setState({...this.state,rooms : data.rooms}));
+    fetch(API_ROOT + '/admin/users')
+    .then(response => response.json())
+    .then(data => this.setState({...this.state,users : data.users}));
     const { dispatch } = this.props;
     dispatch(getReservations());
 
@@ -64,8 +73,16 @@ class ReservationManager extends Component {
 
     const options = {
       insertBtn: this.createCustomInsertButton,
-      defaultSortName: 'user_id', // default sort column by user id
+      defaultSortName: 'id', // default sort column by user id
       defaultSortOrder: 'asc', // default sort order
+    };
+
+    const getUser = (cell,row,enumObject,index) => {     
+      return (cell + '- ' + row.user_name + ' ' + row.user_family_name)                    
+    };
+
+    const getRoom= (cell,row,enumObject,index) => {     
+      return (cell + '- ' + row.room_name)                    
     };
 
     return (
@@ -79,8 +96,8 @@ class ReservationManager extends Component {
         <TableHeaderColumn dataField='edit' width={'80px'} dataFormat={ this.editFormatter.bind(this) }></TableHeaderColumn>
         <TableHeaderColumn dataField='delete' width={'90px'} dataFormat={ this.deleteFormatter.bind(this) }></TableHeaderColumn>
         <TableHeaderColumn isKey dataField='id' dataSort hidden={true}></TableHeaderColumn>
-        <TableHeaderColumn dataField='user_id' dataSort>User</TableHeaderColumn>
-        <TableHeaderColumn dataField='room_id' dataSort>Room</TableHeaderColumn>
+        <TableHeaderColumn dataField='user_id' dataFormat={getUser} dataSort>User</TableHeaderColumn>
+        <TableHeaderColumn dataField='room_id' dataFormat={getRoom} dataSort>Room</TableHeaderColumn>
         <TableHeaderColumn dataField='date_begin' dataSort>Begin time</TableHeaderColumn>
         <TableHeaderColumn dataField='date_end' dataSort>End time</TableHeaderColumn>
       </BootstrapTable>);
@@ -153,14 +170,10 @@ class ReservationManager extends Component {
 
   createForm = () => {
     const { reservation, isSubmitted, saveErrorMessage } = this.state;
-    const { error } = this.props;
-
+    const { error } = this.props;   
     const onChangeDate = async (date) => {
         await this.setState({ reservation:{ ...reservation, date } });
     }
-   
-    
-    
     const onTimeChange = async (e) => {
         const { name, value } = e.target;
         const { begin, end } = this.state.reservation;
@@ -195,15 +208,31 @@ class ReservationManager extends Component {
     };
     return (
         <form autoComplete='new-password2' onSubmit={this.handleSubmitCreate}> 
-            <div>
+            <div>            
                 <div>
                     <label htmlFor='user_id'>User id</label>
-                    <input type='text' className='form-control' name='user_id' value={reservation.user_id} onChange={onChange} />
+                    <Select
+                      native
+                      Value={this.state.reservation.user_id}
+                      onChange={onChange}                      
+                      inputProps={{ name: 'user_id', id: 'create-form-select' }}
+                    >
+                      <option value={0} />
+                      {this.state.users.map(t => <option value={t.id}>{t.name + ' ' + t.family_name}</option>)}              
+                    </Select>                    
                     {isSubmitted && !reservation.user_id && <div className='help-block text-danger'>User ID is required</div>}
                 </div>
                 <div >
                     <label htmlFor='room_id'>Room id</label>
-                    <input type='text' className='form-control' name='room_id' value={reservation.room_id} onChange={onChange} />
+                    <Select
+                      native
+                      Value={this.state.reservation.room_id}
+                      onChange={onChange}                      
+                      inputProps={{ name: 'room_id', id: 'create-form-select' }}
+                    >
+                      <option value={0} />
+                      {this.state.rooms.map(t => <option value={t.id}>{t.name}</option>)}              
+                    </Select>
                     {isSubmitted && !reservation.room_id && <div className='help-block text-danger'>Room ID is required</div>}
                 </div>
                
@@ -266,13 +295,29 @@ class ReservationManager extends Component {
           <div>
             <div>
                 <label htmlFor='user_id'>User id</label>
-                <input type='text' className='form-control' name='user_id' value={reservation.user_id} onChange={onChange} />
+                <Select
+                      native
+                      value={this.state.reservation.user_id}
+                      onChange={onChange}                      
+                      inputProps={{ name: 'user_id', id: 'create-form-select' }}
+                    >
+                      <option value={0} />
+                      {this.state.users.map(t => <option value={t.id}>{t.name + ' ' + t.family_name}</option>)}              
+                    </Select>           
                 {isSubmitted && !reservation.user_id && <div className='help-block text-danger'>User ID is required</div>}
             </div>
             <div >
                 <label htmlFor='room_id'>Room id</label>
-                <input type='text' className='form-control' name='room_id' value={reservation.room_id} onChange={onChange} />
-                {isSubmitted && !reservation.room_id && <div className='help-block text-danger'>Room ID is required</div>}
+                <Select
+                      native
+                      value={this.state.reservation.room_id}
+                      onChange={onChange}                      
+                      inputProps={{ name: 'room_id', id: 'create-form-select' }}
+                    >
+                      <option value={0} />
+                      {this.state.rooms.map(t => <option value={t.id}>{t.name}</option>)}              
+                 </Select>
+                 {isSubmitted && !reservation.room_id && <div className='help-block text-danger'>Room ID is required</div>}
             </div>
             <Calendar onChangeDate={onChangeDate} onTimeChange={onTimeChange} date={this.state.reservation.date} begin={this.state.reservation.begin} end={this.state.reservation.end} />
           </div>    
