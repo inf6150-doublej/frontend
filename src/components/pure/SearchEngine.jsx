@@ -39,10 +39,12 @@ class SearchEngine extends Component {
   }
 
   render() {
-    const { rooms, nothingFound, history } = this.props;
+    
+    const { rooms, nothingFound, isReserving, history } = this.props;
+
     let roomMap = [];
     if (rooms && rooms.length) {
-      roomMap = rooms.map((room, i) => <Room key={i} room={room} onReservation={this.onReservation} />);
+      roomMap = rooms.map((room, i) => <Room key={i} room={room} onReservation={this.onReservation} loading={isReserving} />);
     }
     return (
       <Row className="justify-content-md-center">
@@ -71,11 +73,13 @@ class SearchEngine extends Component {
 function mapStateToProps(state) {
   const { rooms, nothingFound, fetching } = state.roomsFetcher;
   const { user } = state.authentication;
+  const isReserving = state.reservation.fetching;
   return {
     rooms,
     nothingFound,
     fetching,
     user,
+    isReserving,
   };
 }
 
