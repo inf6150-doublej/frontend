@@ -40,13 +40,14 @@ class FAQ extends Component {
         <div>
         <Col md={{ span: 12, offset: 3 }}>
             <h1> FAQ</h1>
-            <br></br>
-            <h3>How do I register myself on the website?</h3>
-            <p className='faq-par'>When on the home page, click on the register button in the top right.
-            When registering, you will be asked to enter your name, your phone number, a valid email address and a password of your choice</p>
+            <h3>How do I register to the website?</h3>
+            <p className='faq-par'>From the home page, click on the register button at the top.
+            When registering, you will be asked to enter your name, your phone number, a valid email address and a password of your choice.
+            Upon registering, you will receive a confirmation email</p>
             <h3>How do I make a reservation?</h3>
-            <p className='faq-par'>When you are logged in, you use the search engine on the home page with the time you want for your reservation
-            and a search will put you on the list of available room meeting your criterias</p>
+            <p className='faq-par'>When you are logged in, use the search engine on the home page with the search criterias that match what you want for your reservation.
+            A list will then be displayed for you with all the available rooms/venues. Simply click reserve on the one you wish to book.
+            A confirmation page will be displayed and you will also receive a confirmation email.</p>
         </Col>
         </div>  
         </Row>
