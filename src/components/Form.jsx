@@ -15,6 +15,7 @@ class Form extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      postalCode: 'X1X1X1',
       location: 'everywhere',
       date: new Date(),
       begin: '07:30',
@@ -35,16 +36,20 @@ class Form extends Component {
     e.preventDefault();
     const { history } = this.props;
     if(this.state.location === '') this.state.location= 'everywhere'
-    const { location, date, begin, end, capacity, equipment, type } = this.state;
+    const { postalCode, location, date, begin, end, capacity, equipment, type } = this.state;
    
     let [hour, min] = begin.split(':');
     date.setHours(hour, min, '0');
     const dateEnd = new Date(date);
     [hour, min] = end.split(':');
     dateEnd.setHours(hour, min, '0');
-    history.push(`search/${location}/${capacity}/${date}/${dateEnd}/${JSON.stringify(equipment)}/${type}`);
+    history.push(`search/${location}/${capacity}/${date}/${dateEnd}/${JSON.stringify(equipment)}/${type}/${postalCode}`);
   }
 
+  onPostalCodeChange = (e) => {
+    this.setState({ postalCode: e.target.value });
+  }
+  
   onLocationChange = (e) => {
     this.setState({ location: e.target.value });
   }
@@ -101,7 +106,8 @@ class Form extends Component {
           <div><h1>Create a reservation</h1></div>
           <Container>
             <Row>
-              <Col><div><br></br><h3>Location</h3><input className='form-location' placeholder='everywhere' onChange={this.onLocationChange}></input></div></Col>
+              <Col><div><br></br><h3>Postal Code</h3><input className='form-location' placeholder='X1X1X1' onChange={this.onPostalCodeChange}></input></div></Col>
+              <Col><div><br></br><h3>Name</h3><input className='form-location' placeholder='everywhere' onChange={this.onLocationChange}></input></div></Col>
               <Col xs={6}><Calendar onChangeDate={this.onChangeDate} onTimeChange={this.onTimeChange} date={date} begin={begin} end={end} /></Col>
               <Col>
                 <div className='form-equipment-container'>
