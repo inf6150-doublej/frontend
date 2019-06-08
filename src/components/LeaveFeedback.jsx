@@ -93,16 +93,19 @@ class LeaveFeedback extends Component {
                   <label htmlFor='name'>Name </label>
                   <input type='text' className='form-control' name='name' value={user.name} onChange={this.handleChange} required />
                   {submitted && !user.name && <div className='help-block text-danger'>Name is required</div>}
+                  {submitted && user.name.length > 64 && <div className='help-block text-danger'>Name is too long</div>}
                 </div>
                 <div className={formClassName}>
                   <label htmlFor='email'>Email </label>
                   <input type='text' className={emailClassName} name='email' value={user.email} onChange={this.handleChange} required />
                   {submitted && !user.email && <div className='help-block text-danger'>Email is required</div>}
+                  {submitted && user.email.length > 64 && <div className='help-block text-danger'>Email is too long</div>}
                 </div>
                 <div className={formClassName}>
                   <label htmlFor='comment'>Comments </label>
                   <input type='comment' className='form-control' name='comment' value={user.comment} onChange={this.handleChange} required />
                   {submitted && !user.comment && <div className='help-block text-danger'>Comments are required</div>}
+                  {submitted && user.comment.length > 1000 && <div className='help-block text-danger'>Comment is too long</div>}
                 </div>
                 <div className='form-group'>
                   <button className='btn btn-primary' onClick={this.handleSubmit}>Leave feedback</button>
