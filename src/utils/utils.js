@@ -1,9 +1,18 @@
+import { string } from "prop-types";
+
 export function isValidEmail (email) {
     const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return regex.test(String(email).toLowerCase());
   }
 
-export default function getType (type){
+export  function isValidPCode(pCode)
+  {
+    let outCode = (pCode).replace(/\s+/g, '')
+    const regex = /^[a-z]\d[a-z]\d[a-z]\d$/;
+    return !regex.test(String(outCode).toLowerCase());
+  }
+
+export default  function getType (type){
   
   switch(parseInt(type)) {
     case 1:
