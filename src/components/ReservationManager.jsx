@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 import '../css/CustomBootstrapTable.css';
 import '../css/ReservationManager.css';
 import Button from 'react-bootstrap/Button';
+import MyCalendar from 'react-calendar';
+import TimePickers from './pure/TimePickers.jsx';
+import Calendar from './Calendar.jsx';
 // font-awesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencilAlt, faTrashAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -27,7 +30,9 @@ class ReservationManager extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      reservation: {},
+      reservation: {
+          date : new Date(),
+      },
       showReservationList: true,
       showUpdateForm: false,
       showCreateForm: false,
@@ -85,16 +90,29 @@ class ReservationManager extends Component {
   handleSubmitCreate(event) {
     event.preventDefault();
     const { reservation } = this.state;
+    const { user_id, room_id, begin, end, date } = reservation;
     const { dispatch } = this.props;
 
-    if (reservation.user_id && reservation.room_id && reservation.date_begin && reservation.date_end) {
+    if (user_id && room_id && begin && end) {
 
       const onSuccess = () => {
         this.setState({ showReservationList: true, showCreateForm: false });
         dispatch(getReservations());
       };
 
-      dispatch(createReservation(reservation, onSuccess));
+      let [hour, min] = begin.split(':');
+      date.setHours(hour, min, '0');
+      const dateEnd = new Date(date);
+      [hour, min] = end.split(':');
+      dateEnd.setHours(hour, min, '0');
+
+      const data = { 
+          ...reservation,
+          begin: date.toString(),
+          end: dateEnd.toString(),
+      }
+
+      dispatch(createReservation(data, onSuccess));
     } else {
       this.setState({ reservation, showReservationList: false, showUpdateForm: false, showCreateForm: true, isSubmitted: true });
     }
@@ -104,15 +122,27 @@ class ReservationManager extends Component {
   handleSubmitUpdate(event) {
     event.preventDefault();
     const { reservation } = this.state;
+    const { user_id, room_id, begin, end, date } = reservation;
     const { dispatch } = this.props;
 
-    if (reservation.user_id && reservation.room_id && reservation.date_begin && reservation.date_end) {
+    if (user_id && room_id && begin && end) {
 
       const onSuccess = () => {
         this.setState({ showReservationList: true, showUpdateForm: false });
       };
 
-      dispatch(updateReservation(reservation, onSuccess));
+      let [hour, min] = begin.split(':');
+      date.setHours(hour, min, '0');
+      const dateEnd = new Date(date);
+      [hour, min] = end.split(':');
+      dateEnd.setHours(hour, min, '0');
+
+      const data = { 
+          ...reservation,
+          begin: date.toString(),
+          end: dateEnd.toString(),
+      }
+      dispatch(updateReservation(data, onSuccess));
     } else {
       this.setState({ reservation, showReservationList: false, showUpdateForm: true, showCreateForm: false, isSubmitted: true });
     }
@@ -123,6 +153,35 @@ class ReservationManager extends Component {
   createForm = () => {
     const { reservation, isSubmitted, saveErrorMessage } = this.state;
     const { error } = this.props;
+
+    const onChangeDate = async (date) => {
+        await this.setState({ reservation:{ ...reservation, date } });
+    }
+   
+    
+    
+    const onTimeChange = async (e) => {
+        const { name, value } = e.target;
+        const { date, begin, end } = this.state.reservation;
+        switch (name) {
+        
+        case 'time-picker-begin':
+            await this.setState({ reservation:{ ...reservation, begin: value } });
+            if (this.state.begin > end) {
+            await this.setState({ reservation:{ ...reservation, end: this.state.begin } });
+            }
+            break;
+        case 'time-picker-end':
+            await this.setState({ reservation: { ...reservation, end: value } });
+            if (begin > this.state.end) {
+            await this.setState({ reservation:{ ...reservation, begin: this.state.end } });
+            }
+            break;
+        default:
+            break;
+        }
+
+    }
 
     const onChange = (event) => {
       const { name, value } = event.target;
@@ -146,16 +205,8 @@ class ReservationManager extends Component {
                     <input type='text' className='form-control' name='room_id' value={reservation.room_id} onChange={onChange} />
                     {isSubmitted && !reservation.room_id && <div className='help-block text-danger'>Room ID is required</div>}
                 </div>
-                <div >
-                    <label htmlFor='begin'>Begin time</label>
-                    <input type='text' className='form-control' name='begin' value={reservation.date_begin} onChange={onChange} />
-                    {isSubmitted && !reservation.date_begin && <div className='help-block text-danger'>Begin time is required</div>}
-                </div>
-                <div >
-                    <label htmlFor='end'>End time</label>
-                    <input type='text' className='form-control' name='end' value={reservation.date_end} onChange={onChange} />
-                    {isSubmitted && !reservation.date_end && <div className='help-block text-danger'>End time is required</div>}
-                </div>
+               
+               <Calendar onChangeDate={onChangeDate} onTimeChange={onTimeChange} date={this.state.reservation.date} begin={this.state.reservation.begin} end={this.state.reservation.end} />
             </div>   
 
             {error && <div className='help-block text-danger'>{saveErrorMessage}</div>}
@@ -169,6 +220,36 @@ class ReservationManager extends Component {
   updateForm = () => {
     const { reservation, isSubmitted, saveErrorMessage } = this.state;
     const { error } = this.props;
+
+    const onChangeDate = async (date) => {
+        await this.setState({ reservation:{ ...reservation, date } });
+        console.log(this.state.reservation)
+    }
+   
+    
+    
+    const onTimeChange = async (e) => {
+        const { name, value } = e.target;
+        const { date, begin, end } = this.state.reservation;
+        switch (name) {
+        
+        case 'time-picker-begin':
+            await this.setState({ reservation:{ ...reservation, begin: value } });
+            if (this.state.begin > end) {
+            await this.setState({ reservation:{ ...reservation, end: this.state.begin } });
+            }
+            break;
+        case 'time-picker-end':
+            await this.setState({ reservation: { ...reservation, end: value } });
+            if (begin > this.state.end) {
+            await this.setState({ reservation:{ ...reservation, begin: this.state.end } });
+            }
+            break;
+        default:
+            break;
+        }
+        console.log(this.state.reservation)
+    }
 
     const onChange = (event) => {
       const { name, value } = event.target;
@@ -193,16 +274,7 @@ class ReservationManager extends Component {
                 <input type='text' className='form-control' name='room_id' value={reservation.room_id} onChange={onChange} />
                 {isSubmitted && !reservation.room_id && <div className='help-block text-danger'>Room ID is required</div>}
             </div>
-            <div >
-                <label htmlFor='begin'>Begin time</label>
-                <input type='text' className='form-control' name='begin' value={reservation.date_begin} onChange={onChange} />
-                {isSubmitted && !reservation.date_begin && <div className='help-block text-danger'>Begin time is required</div>}
-            </div>
-            <div >
-                <label htmlFor='end'>End time</label>
-                <input type='text' className='form-control' name='end' value={reservation.date_end} onChange={onChange} />
-                {isSubmitted && !reservation.date_end && <div className='help-block text-danger'>End time is required</div>}
-            </div>
+            <Calendar onChangeDate={onChangeDate} onTimeChange={onTimeChange} date={this.state.reservation.date} begin={this.state.reservation.begin} end={this.state.reservation.end} />
           </div>    
 
           {error && <div className='help-block text-danger'>{saveErrorMessage}</div>}
