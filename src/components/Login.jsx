@@ -14,6 +14,8 @@ import { login, recoverPassword } from '../store/actions/user.actions';
 import { isValidEmail } from '../utils/utils';
 import Logo from './pure/Logo.jsx';
 import Loader from './pure/Loader.jsx';
+import Header from './pure/Header.jsx';
+import { goToUrl } from '../store/actions/router.actions';
 
 // Lopin page
 class LoginPage extends Component {
@@ -72,7 +74,7 @@ class LoginPage extends Component {
   }
 
   render() {
-    const { loggingIn, error, message, history } = this.props;
+    const { user, loggingIn, error, message, history } = this.props;
     const { email, password, submitted, showRecoverModal, isValidEmail } = this.state;
     let formClassName = 'form-group';
     if (submitted && (!(email || password) || error)) formClassName = 'form-group has-error';
@@ -81,10 +83,9 @@ class LoginPage extends Component {
 
     return (
       <form className='form-horizontal'>
+      <Header logout={this.logout} goToUrl={goToUrl} history={history} user={user}></Header>
         <Row className="justify-content-md-center">
-          <Col md={{ span: 8, offset: 5 }}>
-            <Logo viewHome={() => history.push('/')} className='foto-login' width={240} height={240} />
-          </Col>
+
           <Col md={{ span: 11, offset: 5 }}>
             <div className='Hero-login'>
               <div className='col-md-5 col-md-offset-3 '>
