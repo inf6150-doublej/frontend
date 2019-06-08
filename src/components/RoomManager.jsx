@@ -111,6 +111,7 @@ class RoomManager extends Component {
         <TableHeaderColumn dataField='description' dataSort>Description</TableHeaderColumn>
         <TableHeaderColumn dataField='equipment' dataFormat={listEquip} dataSort>Equipment</TableHeaderColumn>
         <TableHeaderColumn dataField='postalCode' dataFormat={postal} dataSort>Postal Code</TableHeaderColumn>
+        <TableHeaderColumn dataField='city' dataSort>City</TableHeaderColumn>
       </BootstrapTable>);
   }
 
@@ -122,7 +123,7 @@ class RoomManager extends Component {
     const { room } = this.state;
     const { dispatch } = this.props;
 
-    if (room.name && room.capacity && room.postalCode) {
+    if (room.name && room.capacity && room.postalCode && isValidPCode(room.postalCode)) {
 
       
       room.postalCode = room.postalCode.replace(/\s/g, '').toLowerCase()
@@ -145,7 +146,7 @@ class RoomManager extends Component {
 
     room.postalCode = room.postalCode.replace(/\s/g, '').toLowerCase()
 
-    if (room.name && room.capacity && room.postalCode) {
+    if (room.name && room.capacity && room.postalCode && isValidPCode(room.postalCode)) {
 
       const onSuccess = () => {
         this.setState({ showRoomList: true, showUpdateForm: false });
@@ -209,8 +210,8 @@ class RoomManager extends Component {
           <div >
             <label htmlFor='description'>Postal Code</label>
             <input type='text' className='form-control' name='postalCode' value={room.postalCode} onChange={onChange}/>
-            {isSubmitted && room.postalCode &&  isValidPCode(room.postalCode) && <div className='help-block text-danger'>Invalid postal</div>}
-          </div>
+            {isSubmitted  && (!room.postalCode || isValidPCode(room.postalCode)) && <div className='help-block text-danger'>Invalid postal</div>}
+         </div>
 
           <div >
             <label htmlFor='description'>City</label>
@@ -310,7 +311,7 @@ class RoomManager extends Component {
           <div >
             <label htmlFor='description'>Postal Code</label>
             <input type='text' className='form-control' name='postalCode' value={room.postalCode} onChange={onChange}/>
-            {isSubmitted && room.postalCode && isValidPCode(room.postalCode) && <div className='help-block text-danger'>Invalid postal</div>}
+            {isSubmitted && (!room.postalCode || isValidPCode(room.postalCode)) && <div className='help-block text-danger'>Invalid postal</div>}
           </div>
 
           <div >

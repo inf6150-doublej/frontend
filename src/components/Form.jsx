@@ -103,16 +103,14 @@ class Form extends Component {
     return (
       <div className='form-container'>
         <div className='form-wrapper'>
-          <div><h1>Create a reservation</h1></div>
+          <div><h2>Create a reservation</h2></div>
           <Container>
-            <Row>
-              <Col><div><br></br><h3>Postal Code</h3><input className='form-location' placeholder='X1X1X1' onChange={this.onPostalCodeChange}></input></div></Col>
-              <Col><div><br></br><h3>Name</h3><input className='form-location' placeholder='everywhere' onChange={this.onLocationChange}></input></div></Col>
+            <Row>  
               <Col xs={6}><Calendar onChangeDate={this.onChangeDate} onTimeChange={this.onTimeChange} date={date} begin={begin} end={end} /></Col>
               <Col>
                 <div className='form-equipment-container'>
                   <br></br>
-                  <h3>Equipment</h3>
+                  <h4>Equipment</h4>
                   <div className='form-equipment-wrapper'>
                     <div>
                       <input type='checkbox' id='form-computer' name='computer' onChange={this.onEquipmentChange} />
@@ -136,7 +134,7 @@ class Form extends Component {
               <Col>
                 <div className='form-type-container'>
                   <br></br>
-                  <h3>Type</h3>
+                  <h4>Type</h4>
                   <div className='form-type-wrapper'>
                     <Select
                       native
@@ -162,8 +160,15 @@ class Form extends Component {
               </Col>
             </Row>
             <Row>
+            <br></br>
+            </Row>
+            <Row>
+              <Col><div><br></br><h4>Capacity</h4></div></Col>
+              <Col xs={{ span: 3, offset: 0 }}><div><br></br><h4>Postal Code</h4><input className='form-location' placeholder='X1X1X1' onChange={this.onPostalCodeChange}></input></div></Col>
+              <Col xs={{ span: 3, offset: 0 }}><div><br></br><h4>Name</h4><input className='form-location' placeholder='everywhere' onChange={this.onLocationChange}></input></div></Col>
+            </Row>
+            <Row>
               <div className='form-capacity-container'>
-                <h3>Capacity</h3>
                 <br></br>
                 <InputRange
                   maxValue={1000}
