@@ -67,6 +67,8 @@ class ReservationManager extends Component {
     <Button size='sm' className='btnCreate' variant='info' onClick={() => this.onCreateClick(null)}><FontAwesomeIcon icon={faPlus} />&nbsp;Create</Button>
   )
 
+
+
   // List all reservations
   reservationList = () => {
     const { reservations } = this.props;
@@ -324,7 +326,7 @@ class ReservationManager extends Component {
 
         {error && <div className='help-block text-danger'>{saveErrorMessage}</div>}
 
-        <div className="editFormButtonContainer"><input type='submit' value='Create' className='btn btn-primary' />
+        <div className="editFormButtonContainer"><input type='submit' value='Update' className='btn btn-primary' />
           <button onClick={() => this.cancel()} className='btn btn-secondary'>Cancel</button></div>
       </form>
     );
