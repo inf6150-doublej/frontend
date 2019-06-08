@@ -3,8 +3,6 @@ import Media from 'react-bootstrap/Media';
 import logo from '../../img/BE2.png';
 import getType from '../../utils/utils';
 import Loader from './Loader';
-import Logo from './Logo.jsx';
-import Col from 'react-bootstrap/Col';
 
 
 
@@ -39,6 +37,7 @@ const Room = (props) => {
             <br></br>
             <h5>#{room.id} - {room.name}</h5>
             <li>{getType(room.type)}</li>
+            <li>{room.city} - {room.postalCode}</li>
             <li>Description: {room.description}</li>
             <li>Maximum capacity: {room.capacity}</li>
             <li>{room.reservation_id}</li> 
