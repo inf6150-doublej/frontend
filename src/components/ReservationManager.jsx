@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 import '../css/CustomBootstrapTable.css';
 import '../css/ReservationManager.css';
 import Button from 'react-bootstrap/Button';
-import MyCalendar from 'react-calendar';
-import TimePickers from './pure/TimePickers.jsx';
 import Calendar from './Calendar.jsx';
 // font-awesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -127,10 +125,11 @@ class ReservationManager extends Component {
     const { user_id, room_id, begin, end, date } = reservation;
     const { dispatch } = this.props;
 
-    if (user_id && room_id && begin && end) {
+    if (user_id && room_id && begin && end && date) {
 
       const onSuccess = () => {
         this.setState({ showReservationList: true, showUpdateForm: false });
+        dispatch(getReservations());
       };
 
       let [hour, min] = begin.split(':');
@@ -164,7 +163,7 @@ class ReservationManager extends Component {
     
     const onTimeChange = async (e) => {
         const { name, value } = e.target;
-        const { date, begin, end } = this.state.reservation;
+        const { begin, end } = this.state.reservation;
         switch (name) {
         
         case 'time-picker-begin':
@@ -232,7 +231,7 @@ class ReservationManager extends Component {
     
     const onTimeChange = async (e) => {
         const { name, value } = e.target;
-        const { date, begin, end } = this.state.reservation;
+        const { begin, end } = this.state.reservation;
         switch (name) {
         
         case 'time-picker-begin':
@@ -250,7 +249,6 @@ class ReservationManager extends Component {
         default:
             break;
         }
-        console.log(this.state.reservation)
     }
 
     const onChange = (event) => {
