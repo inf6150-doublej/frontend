@@ -11,6 +11,7 @@ import './css/normalize.css';
 import ReservationManager from './components/ReservationManager.jsx';
 import RoomManager from './components/RoomManager.jsx';
 import StatsManager from './components/StatsManager.jsx';
+import LeaveFeedback from './components/LeaveFeedback.jsx';
 
 class App extends Component {
   render() {
@@ -19,6 +20,7 @@ class App extends Component {
           <Route exact path='/' component={Home} />
           <Route path='/login' component={Login} />
           <Route path='/register' component={Register} />
+          <Route path='/feedback' component={LeaveFeedback} />
           <Route path='/admin/users' component={UserManager} />
           <Route path='/admin/reservation' component={ReservationManager} />
           <Route path='/admin/rooms/usage' component={StatsManager} />
