@@ -46,7 +46,7 @@ export function viewRoom(room, history) {
   };
 }
 
-export function leaveFeedback(feedback) {
+export function leaveFeedback(feedback, onSuccess) {
   function request(user) { return { type: userConstants.LEAVE_FEEDBACK_REQUEST, user }; }
   function success(user) { return { type: userConstants.LEAVE_FEEDBACK_SUCCESS, user }; }
   function failure(err) { return { type: userConstants.LEAVE_FEEDBACK_FAILURE, err }; }
@@ -63,6 +63,7 @@ export function leaveFeedback(feedback) {
       .then(handleResponse)
       .then((res) => {
         dispatch(success(res.feedback));
+        onSuccess();
       })
       .catch(err => dispatch(failure(err)));
   };
