@@ -27,7 +27,7 @@ class App extends Component {
           <Route path='/admin/rooms/usage' component={StatsManager} />
           <Route path='/admin/rooms' component={RoomManager} />
           <Route path='/confirmation' component={Confirmation} />
-          <Route path='/search/:location?/:capacity?/:begin?/:end?/:equipment?/:type?/:city?/:postCode?' component={SearchEngine} />
+          <Route path='/search/:location?/:capacity?/:begin?/:end?/:equipment?/:type?/:postalCode?' component={SearchEngine} />
           <Route path='/faq' component={FAQ} />
           <Redirect from='*' to='/'/>
         </Switch>
