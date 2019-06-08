@@ -11,6 +11,7 @@ import './css/normalize.css';
 import ReservationManager from './components/ReservationManager.jsx';
 import RoomManager from './components/RoomManager.jsx';
 import StatsManager from './components/StatsManager.jsx';
+import FAQ from './components/Faq';
 
 class App extends Component {
   render() {
@@ -25,6 +26,7 @@ class App extends Component {
           <Route path='/admin/rooms' component={RoomManager} />
           <Route path='/confirmation' component={Confirmation} />
           <Route path='/search/:location?/:capacity?/:begin?/:end?/:equipment?/:type?' component={SearchEngine} />
+          <Route path='/faq' component={FAQ} />
           <Redirect from='*' to='/'/>
         </Switch>
     );
