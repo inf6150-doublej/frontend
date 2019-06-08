@@ -112,6 +112,7 @@ class RoomManager extends Component {
         <TableHeaderColumn dataField='description' dataSort>Description</TableHeaderColumn>
         <TableHeaderColumn dataField='equipment' dataFormat={listEquip} dataSort>Equipment</TableHeaderColumn>
         <TableHeaderColumn dataField='postalCode' dataFormat={postal} dataSort>Postal Code</TableHeaderColumn>
+        <TableHeaderColumn dataField='city' dataSort>City</TableHeaderColumn>
       </BootstrapTable>);
   }
 
