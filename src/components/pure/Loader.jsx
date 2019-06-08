@@ -1,5 +1,6 @@
 import React from 'react';
 
+// Loader used when pages are long to display
 const Loader = (props) => {
   const { loading } = props;
   if (loading) {
