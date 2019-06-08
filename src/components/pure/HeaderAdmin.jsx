@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Logo from './Logo.jsx';
 import '../../css/HeaderAdmin.css';
 
+// Header used onAdmin section
 const HeaderAdmin = (props) => {
   const { history } = props;
   return (

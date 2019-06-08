@@ -15,6 +15,7 @@ import { isValidEmail } from '../utils/utils';
 import Logo from './pure/Logo.jsx';
 import Loader from './pure/Loader.jsx';
 
+// Lopin page
 class LoginPage extends Component {
   constructor(props) {
     super(props);
@@ -47,6 +48,7 @@ class LoginPage extends Component {
     this.setState({ showRecoverModal: false });
   }
 
+  // Click on login
   login = (e) => {
     e.preventDefault();
     this.setState({ submitted: true });
@@ -62,6 +64,7 @@ class LoginPage extends Component {
     this.setState({ showRecoverModal: true });
   }
 
+  // Forgot password
   recoverPassword = () => {
     const { dispatch } = this.props;
     const { email } = this.state;

@@ -5,7 +5,7 @@ import { reserve } from '../../store/actions/user.actions';
 import Room from './Room.jsx';
 import '../../css/SearchEngine.css';
 
-
+// Search engine used to display result values
 class SearchEngine extends Component {
   constructor(props) {
     super(props);

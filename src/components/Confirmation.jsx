@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import Media from 'react-bootstrap/Media';
 import Room from './pure/Room.jsx';
 import User from './pure/User.jsx';
 import '../css/Confirmation.css';
-import Media from 'react-bootstrap/Media';
 
+// Confirmation of a reservation
 class Confirmation extends Component {
   constructor(props) {
     super(props);

@@ -4,15 +4,15 @@ import { connect } from 'react-redux';
 import { Dialog } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import DialogContent from '@material-ui/core/DialogContent';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import { userActions } from '../store/actions/user.actions';
 import { goToUrl } from '../store/actions/router.actions';
 import Logo from './pure/Logo.jsx';
 import Loader from './pure/Loader.jsx';
 import { isValidEmail } from '../utils/utils';
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
 
-
+// Register opage
 class RegisterPage extends Component {
   constructor(props) {
     super(props);
@@ -32,7 +32,7 @@ class RegisterPage extends Component {
     };
   }
 
-
+  // When a control change, we update state
   handleChange = (event) => {
     const { name, value } = event.target;
     const { user } = this.state;
@@ -51,6 +51,7 @@ class RegisterPage extends Component {
     }
   }
 
+  // Click on Register button
   handleSubmit = (event) => {
     event.preventDefault();
     this.setState({ submitted: true });

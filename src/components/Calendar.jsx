@@ -5,6 +5,7 @@ import MyCalendar from 'react-calendar';
 import TimePickers from './pure/TimePickers.jsx';
 import '../css/Calendar.css';
 
+// Calendar control
 class Calendar extends Component {
   constructor(props) {
     super(props);
