@@ -324,7 +324,7 @@ class ReservationManager extends Component {
 
         {error && <div className='help-block text-danger'>{saveErrorMessage}</div>}
 
-        <div className="editFormButtonContainer"><input type='submit' value='Create' className='btn btn-primary' />
+        <div className="editFormButtonContainer"><input type='submit' value='Update' className='btn btn-primary' />
           <button onClick={() => this.cancel()} className='btn btn-secondary'>Cancel</button></div>
       </form>
     );

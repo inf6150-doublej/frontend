@@ -164,8 +164,8 @@ class Form extends Component {
             </Row>
             <Row>
               <Col><div><br></br><h4>Capacity</h4></div></Col>
-              <Col xs={{ span: 4, offset: 0 }}><div><br></br><h4>Postal Code</h4><input className='form-location' placeholder='X1X1X1' onChange={this.onPostalCodeChange}></input></div></Col>
-              <Col><div><br></br><h4>Name</h4><input className='form-location' placeholder='everywhere' onChange={this.onLocationChange}></input></div></Col>
+              <Col xs={{ span: 3, offset: 0 }}><div><br></br><h4>Postal Code</h4><input className='form-location' placeholder='X1X1X1' onChange={this.onPostalCodeChange}></input></div></Col>
+              <Col xs={{ span: 3, offset: 0 }}><div><br></br><h4>Name</h4><input className='form-location' placeholder='everywhere' onChange={this.onLocationChange}></input></div></Col>
             </Row>
             <Row>
               <div className='form-capacity-container'>
