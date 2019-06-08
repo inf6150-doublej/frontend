@@ -90,7 +90,7 @@ class LeaveFeedback extends Component {
                 {error && <div className='help-block text-danger'>Unable to leave feedback.</div>}
 
                 <div className={formClassName}>
-                  <label htmlFor='name'>Name:</label>
+                  <label htmlFor='name'>Name </label>
                   <input type='text' className='form-control' name='name' value={user.name} onChange={this.handleChange} required />
                   {submitted && !user.name && <div className='help-block text-danger'>Name is required</div>}
                 </div>

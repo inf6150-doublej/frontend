@@ -68,7 +68,7 @@ export function administrator(state = {}, action) {
     case UPDATE_ROOM_SUCCESS:
       return {
         ...state,
-        rooms: state.rooms.map(room => room.id === action.room.id ? action.room : room), 
+        rooms: state.rooms.map(room => room.id === action.room.id ? action.room : room),
         error: null,
       };
 
@@ -96,23 +96,23 @@ export function administrator(state = {}, action) {
         }),
       };
 
-      case GET_ROOMS_USAGE_REQUEST:
-        return { fetching: true };
-      case GET_ROOMS_USAGE_FAILURE:
-        return { fetching: false };
-      case GET_ROOMS_USAGE_SUCCESS:
-        return { ...action.stats, fetching: false };
-  
+    case GET_ROOMS_USAGE_REQUEST:
+      return { fetching: true };
+    case GET_ROOMS_USAGE_FAILURE:
+      return { fetching: false };
+    case GET_ROOMS_USAGE_SUCCESS:
+      return { ...action.stats, fetching: false };
+
     // ############# RESERVATIONS #############################
-    
+
     case GET_RESERVATIONS_REQUEST:
       return { reservations: [], fetching: true };
     case GET_RESERVATIONS_FAILURE:
       return { reservations: [], fetching: false };
     case GET_RESERVATIONS_SUCCESS:
       return { ...action.reservations, fetching: false };
-    
-      case CREATE_RESERVATION_REQUEST:
+
+    case CREATE_RESERVATION_REQUEST:
       return { fetching: true, error: null };
     case CREATE_RESERVATION_FAILURE:
       return { fetching: false, error: action.err };
@@ -130,8 +130,8 @@ export function administrator(state = {}, action) {
         fetching: false,
         error: null,
       };
-    
-      case DELETE_RESERVATION_REQUEST:
+
+    case DELETE_RESERVATION_REQUEST:
       // add 'deleting:true' property to reservation being deleted
       return {
         ...state,
